@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "Will_Call",
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+
+      "dest": "server.js"
+
+    }
+  ]
+  
+}
