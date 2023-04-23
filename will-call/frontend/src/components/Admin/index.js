@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider } from '@mui/material';
 import { AdminStyle } from './AdminStyle';
 import TM from '../../asset/Data/TeamMembers.json'
+import Logo from '../../asset/images/GLogo.png'
+
 console.log('????', TM)
 export default function Admin() {
   const [teamMember, setTeamMember] = useState({})
   const [ticket, setTicket] = useState([])
   const [seconds, setSeconds] = useState(0);
-
+  console.log('TICKETS_______', ticket)
   // useEffect(() => {
   //   const interval = setInterval(() => {
   //     setSeconds(seconds => seconds + 1);
@@ -58,21 +60,28 @@ export default function Admin() {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', height: '100%', margin: 2 }}>
           {/* <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center' }}>Currently Helping</Typography> */}
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
-            <Typography variant='h5'>Currently Helping :</Typography>
+            <Typography sx={AdminStyle.reultText} variant='h5'>Currently Helping :</Typography>
             <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customer_name}</Typography>
           </Box>
+          <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
+            <Typography sx={AdminStyle.reultText} variant='h5'>Order Number :</Typography>
+            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.order_number}</Typography>
+          </Box>
+
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
-            <Typography variant='h5'>Time:</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{minutes}: {second}</Typography>
+            <Typography sx={AdminStyle.reultText} variant='h5'>Customer PO :</Typography>
+            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customer_po}</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
-            <Typography variant='h5'>Customer PO :</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customer_po}</Typography>
+            <Typography sx={AdminStyle.reultText} variant='h5'>Time:</Typography>
+            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{minutes}: {second}</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
             <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket.teamMember.id)}>X</Button>
           </Box>
+
         </Box>
+
       </Box>
     ))
   }
@@ -82,7 +91,9 @@ export default function Admin() {
     <Box>
       <form onSubmit={(e) => { addLiveWillCall(e) }}>
         <Box sx={AdminStyle.adminHeader}>
+          <img src={Logo} width="180" alt="Will Call Logo" />
           <Typography variant="h3">Manage Team Members</Typography>
+          <img src='' width="180" />
         </Box>
         <Box sx={AdminStyle.adminContainer}>
           <Box sx={AdminStyle.inputBox}>
@@ -94,7 +105,7 @@ export default function Admin() {
               <Typography sx={AdminStyle.customerText} variant="h5">Customer PO</Typography>
               <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
             </Box>
-            <Divider sx={{ width: '90%', margin: 2, bgcolor: 'black' }} />
+            <Divider sx={{ width: '90%', margin: 3, bgcolor: 'black', marginBottom: 2 }} />
             <Box>
               <Box sx={AdminStyle.imgBox}>
 
@@ -113,6 +124,7 @@ export default function Admin() {
                   </Button>
                 )) : <Typography variant="h5">No Team Members</Typography>}
               </Box>
+
             </Box>
             <Divider sx={{ width: '90%', margin: 2, bgcolor: 'black' }} />
             <Button sx={AdminStyle.submitButton} type='submit'>Submit</Button>
@@ -121,7 +133,9 @@ export default function Admin() {
           <Box sx={AdminStyle.displayBox}>
             <Box sx={AdminStyle.resultBox}>
               {newTicket}
+
             </Box>
+
           </Box>
         </Box >
       </form>

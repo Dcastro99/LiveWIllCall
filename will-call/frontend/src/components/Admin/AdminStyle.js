@@ -1,32 +1,35 @@
 export const AdminStyle = {
   adminHeader: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     // marginTop: 5,
     padding: 3,
+    backgroundColor: 'WhiteSmoke',
   },
   adminContainer: {
     display: 'flex',
     flexDirection: 'row',
-    // backgroundColor: 'grey',
     width: '100%',
-    height: '100%'
+    height: '100%',
+
   },
   inputBox: {
-    // borderRadius: 5,
+    borderRadius: 5,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '30%',
-    // marginTop: 5,
+    border: '3px solid WhiteSmoke',
+    // backgroundColor: '#C8744F',
+    marginTop: 1,
     // height: '20%',
     // backgroundColor: 'pink'
   },
   customerInfoBox: {
     marginTop: 5,
-    // backgroundColor: 'yellow',
+    backgroundColor: 'white',
     borderRadius: 5,
     padding: 3,
     display: 'flex',
@@ -40,7 +43,8 @@ export const AdminStyle = {
   },
   customerText: {
     width: '80%',
-    marginBottom: 1
+    marginBottom: 1,
+    fontWeight: 'bold',
   },
   imgBox: {
     // borderRadius: 5,
@@ -78,7 +82,10 @@ export const AdminStyle = {
     // backgroundColor: 'Ghostwhite'
   },
   submitButton: {
+    color: '#C8744F',
     backgroundColor: 'black',
+    marginTop: 1,
+    marginBottom: 2
   },
   resultBox: {
     borderRadius: 5,
@@ -96,17 +103,18 @@ export const AdminStyle = {
     padding: 1,
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
     width: '60%',
-    height: '20%',
+    height: '25%',
     boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
   },
   resultsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     width: '25%',
-    height: '100%',
+    height: '80%',
     marginLeft: 2,
     // backgroundColor: 'pink',
 
@@ -120,10 +128,14 @@ export const AdminStyle = {
     height: '180px',
     width: '180px',
   },
+  reultText: {
+    fontWeight: 'bold',
+  },
   deleteButton: {
     backgroundColor: 'salmon',
     color: 'WhiteSmoke',
     borderRadius: '10px',
+    marginTop: 3,
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     '&:hover': {
       backgroundColor: 'white',
