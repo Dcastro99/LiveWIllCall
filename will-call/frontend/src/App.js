@@ -9,7 +9,9 @@ function App() {
   return (
 
     <Box sx={{
-      width: '100vw',
+      width: '98vw',
+      // height: '98vh',
+      // border: '1px solid black',
     }} >
       <TicketProvider>
         {/* <Router>
@@ -18,7 +20,7 @@ function App() {
           {/* <Route path='/admin' element={<AdminDisplayPage />} />
               <Route path='/' element={<DisplayPage />} /> */}
           <AdminDisplayPage />
-          <DisplayPage />
+          {/* <DisplayPage /> */}
         </>
         {/* </Routes>
         </Router> */}
