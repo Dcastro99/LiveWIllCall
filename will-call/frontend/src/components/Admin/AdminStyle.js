@@ -12,7 +12,7 @@ export const AdminStyle = {
     flexDirection: 'row',
     width: '100%',
     height: '100%',
-
+    // border: '2px solid purple',
   },
   inputBox: {
     borderRadius: 5,
@@ -36,6 +36,7 @@ export const AdminStyle = {
     flexDirection: 'column',
     alignItems: 'center',
     width: '70%',
+    // height: '20%',
     boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
   },
   customerTextField: {
@@ -89,14 +90,27 @@ export const AdminStyle = {
   },
   resultBox: {
     borderRadius: 5,
-    marginTop: 2,
+    marginTop: -42,
     display: 'flex',
+    // flexDirection: 'column',
     flexWrap: 'wrap',
     justifyContent: 'center',
     // alignItems: 'center',
     width: '95%',
     // backgroundColor: 'lightgrey',
-    height: '95%'
+    height: '100%',
+    // border: '2px solid blue',
+    position: 'absolute',
+    overflowY: 'scroll',
+    scrollbarWidth: 'none', /* Firefox */
+    msOverflowStyle: 'none',
+    // marginTop: '-68px',
+    maxHeight: '1000px',
+    maxWidth: '68%',
+    '&::-webkit-scrollbar': {
+      width: '0',
+      height: '0',
+    },
   },
   resultsMainBox: {
     borderRadius: 2,
@@ -105,8 +119,12 @@ export const AdminStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     width: '60%',
-    height: '25%',
-    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+    marginTop: 2,
+    marginBottom: 2,
+    // height: '25%',
+    maxHeight: '300px',
+    // boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+    boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',
   },
   resultsContainer: {
     display: 'flex',
