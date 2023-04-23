@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
 import DisplayPage from './pages/CustomerDisplayPage'
 import AdminDisplayPage from './pages/AdminDisplayPage';
@@ -9,11 +10,18 @@ function App() {
 
     <Box sx={{
       width: '100vw',
-      // height: '100vh'
     }} >
       <TicketProvider>
-        <AdminDisplayPage />
-        <DisplayPage />
+        {/* <Router>
+          <Routes> */}
+        <>
+          {/* <Route path='/admin' element={<AdminDisplayPage />} />
+              <Route path='/' element={<DisplayPage />} /> */}
+          <AdminDisplayPage />
+          <DisplayPage />
+        </>
+        {/* </Routes>
+        </Router> */}
       </TicketProvider>
     </Box>
   );

@@ -128,7 +128,7 @@ export const AdminStyle = {
     height: '180px',
     width: '180px',
   },
-  reultText: {
+  resultText: {
     fontWeight: 'bold',
   },
   deleteButton: {
