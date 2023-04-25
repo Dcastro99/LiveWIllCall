@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const ticketSchema = new Schema({
   customerName: String,
+  orderNumber: String,
   customerPO: String,
   TimeStamp: String,
   TeamMember: Object
