@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 
 const ticketSchema = new Schema({
   customerName: String,
-  orderNumber: Number,
   customerPO: String,
   TimeStamp: String,
+  TeamMember: Object
 });
 
 const TICKET = mongoose.model('ticket', ticketSchema);

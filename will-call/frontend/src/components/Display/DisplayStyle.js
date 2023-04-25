@@ -16,7 +16,7 @@ export const DisplayStyle = {
     // justifyContent: 'center',
     alignItems: 'center',
     width: '25%',
-    height: '80%',
+    height: '100%',
     marginLeft: 2,
     // backgroundColor: 'pink',
 
@@ -25,6 +25,7 @@ export const DisplayStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: 'pink',
   },
   resultImg: {
     height: '180px',

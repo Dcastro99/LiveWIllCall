@@ -8,10 +8,10 @@ const ticket = require('../models/ticket');
 
 const seed = async () => {
   await ticket.create({
-    customerNam: 'Apex',
-    orderNumber: 1897546,
+    customerName: 'Apex',
     customerPO: 'Stock Truck',
     TimeStamp: '00:00:45',
+    TeamMember: { name: 'John', image: 'https://i.imgur.com/BjdTeN2.jpg' }
   });
   console.log('Ticket seeded in database!');
 
