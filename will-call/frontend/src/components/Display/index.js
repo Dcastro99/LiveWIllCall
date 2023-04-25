@@ -1,47 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, Button, } from '@mui/material';
-import axios from 'axios';
+// import axios from 'axios';
 
-import TicketContext from '../../context/LiveTicket'
-import { AdminStyle } from '../Admin/AdminStyle';
+// import TicketContext from '../../context/LiveTicket'
 import { DisplayStyle } from './DisplayStyle';
 
-export default function Display() {
-  // const { ticket } = useContext(TicketContext)
+export default function Display({ tickets, handleGetAllTickets }) {
+  console.log('DID YOU MAKE IT??', tickets)
   const [seconds, setSeconds] = useState(0);
-  const [tickets, setTickets] = useState([])
 
 
   const minutes = Math.floor(seconds / 60);
   const second = Math.floor(seconds % 60);
 
-  useEffect(() => {
-    // setTickets(ticket)
-    handleGetAllTickets()
-  }, [])
-
-  // const handleDelete = (id) => {
-  //   console.log('delete', id)
-  //   setTickets(ticket.filter((ticket) => ticket.teamMember.id !== id))
-  // }
-
-  const handleGetAllTickets = async () => {
-    const config = {
-      method: 'GET',
-      baseURL: process.env.REACT_APP_VERCEL_URL,
-      url: '/tickets',
-    };
-    const response = await axios(config);
-    console.log('response', response)
-    setTickets(response.data)
-
-  }
 
 
 
   let newTicket = [];
   // console.log('NEW ticket', ticket)
-  if (tickets.length > 0) {
+  if (tickets !== undefined) {
     newTicket = tickets.map((ticket) => (
       <Box sx={DisplayStyle.resultsMainBox}>
         <Card sx={DisplayStyle.resultsContainer}
@@ -83,8 +60,10 @@ export default function Display() {
 
 
   return (
-    <Box sx={DisplayStyle.resultBox}>
-      {newTicket}
+    <Box sx={DisplayStyle.displayBox}>
+      <Box sx={DisplayStyle.resultBox}>
+        {newTicket}
+      </Box>
     </Box>
   )
 }

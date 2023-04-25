@@ -4,9 +4,10 @@ import TicketContext from '../../context/LiveTicket';
 import { AdminStyle } from './AdminStyle';
 import TM from '../../asset/Data/TeamMembers.json'
 import Logo from '../../asset/images/GLogo.png'
+import axios from 'axios';
 
 console.log('????', TM)
-export default function Admin() {
+export default function Admin({ tickets }) {
   const [teamMember, setTeamMember] = useState({})
   const [ticket, setTicket] = useState([])
   const [seconds, setSeconds] = useState(0);
@@ -18,6 +19,35 @@ export default function Admin() {
   //   }, 1000);
   //   return () => clearInterval(interval);
   // }, []);
+  useEffect(() => {
+    setTicket(tickets)
+  }, [tickets])
+
+  const handleCreateTicket = async (ticket) => {
+    console.log('ticket---PRE_POST', ticket)
+    const config = {
+      method: 'POST',
+      baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
+      url: '/ticket',
+      data: { ticket }
+    }
+    const response = await axios(config)
+    console.log('response', response)
+  }
+
+  const handleDeleteTicket = async (id) => {
+    console.log('delete in HERE', id)
+    const config = {
+      method: 'DELETE',
+      baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
+      url: `/ticket/${id}`,
+    }
+    const response = await axios(config)
+    console.log('response', response)
+  }
+
+
+
 
   const minutes = Math.floor(seconds / 60);
   const second = Math.floor(seconds % 60);
@@ -31,63 +61,66 @@ export default function Admin() {
 
   const handleDelete = (id) => {
     console.log('delete', id)
-    setTicket(ticket.filter((ticket) => ticket.teamMember.id !== id))
+    handleDeleteTicket(id);
+    setTicket(ticket.filter((ticket) => ticket._id !== id))
   }
 
   const addLiveWillCall = (e) => {
     // console.log('live!!')
     e.preventDefault();
     const formData = e.target;
-
-    setTicket((prev) => [...prev, {
+    let newTicket = {
       customer_name: formData.customer_name.value,
       order_number: formData.order_number.value,
       customer_po: formData.customer_po.value,
       teamMember: teamMember
-    }])
+    }
+
+    // setTicket((prev) => [...prev, { newTicket }])
     addTicket(
       formData.customer_name.value,
       formData.order_number.value,
       formData.customer_po.value,
       teamMember
-
     )
+    handleCreateTicket(newTicket)
+
     document.getElementById('ticketForm').reset();
   }
   let newTicket = [];
-  console.log('NEW ticket', ticket)
+  // console.log('NEW ticket', ticket)
   if (ticket.length > 0) {
     newTicket = ticket.map((ticket) => (
       <Box sx={AdminStyle.resultsMainBox}>
         <Card sx={AdminStyle.resultsContainer}
           key={ticket.id}>
           {console.log('Map ticket', ticket)}
-          <CardMedia component="img" sx={AdminStyle.resultImg} image={ticket.teamMember.image} alt={ticket.teamMember.name} />
+          <CardMedia component="img" sx={AdminStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
           <CardContent>
-            <Typography sx={AdminStyle.resultsTMName} variant="h5">{ticket.teamMember.name}</Typography>
+            <Typography sx={AdminStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>
           </CardContent>
         </Card>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', height: '100%', margin: 2 }}>
           {/* <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center' }}>Currently Helping</Typography> */}
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
             <Typography sx={AdminStyle.resultText} variant='h5'>Currently Helping :</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customer_name}</Typography>
+            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerName}</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
             <Typography sx={AdminStyle.resultText} variant='h5'>Order Number :</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.order_number}</Typography>
+            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.orderNumber}</Typography>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
             <Typography sx={AdminStyle.resultText} variant='h5'>Customer PO :</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customer_po}</Typography>
+            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerPO}</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
             <Typography sx={AdminStyle.resultText} variant='h5'>Time:</Typography>
             <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{minutes}: {second}</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-            <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket.teamMember.id)}>X</Button>
+            <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket._id)}>X</Button>
           </Box>
 
         </Box>
@@ -123,7 +156,7 @@ export default function Admin() {
                   <Button sx={AdminStyle.carButton} onClick={() => handleTM(member)}>
                     <Card sx={AdminStyle.cardContainer}
                       key={member.id} >
-                      {console.log('in the MAP', member)}
+
                       {/* <CardActionArea> */}
                       <CardMedia key={member.id} component="img" sx={AdminStyle.carImg} image={member.image} alt={member.name} />
                       <CardContent>

@@ -5,6 +5,7 @@ import Logo from '../../asset/images/GLogo.png'
 export default function Header() {
   return (
     <Box sx={{
+      // width: '100%',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
