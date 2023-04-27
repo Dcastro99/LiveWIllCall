@@ -4,7 +4,7 @@ export const AdminStyle = {
     justifyContent: 'space-between',
     alignItems: 'center',
     // marginTop: 5,
-    padding: 3,
+    padding: 2,
     backgroundColor: 'WhiteSmoke',
   },
   adminContainer: {
@@ -22,29 +22,33 @@ export const AdminStyle = {
     alignItems: 'center',
     width: '30%',
     border: '3px solid WhiteSmoke',
+    paddingTop: 2,
+    paddingBottom: 2,
     // backgroundColor: '#C8744F',
-    marginTop: 1,
-    // height: '20%',
+    marginTop: 2,
+    marginBottom: 2,
+    // height: '80%',
     // backgroundColor: 'pink'
   },
   customerInfoBox: {
-    marginTop: 5,
+    marginTop: 1,
     backgroundColor: 'white',
     borderRadius: 5,
-    padding: 3,
+    padding: 1,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '70%',
-    // height: '20%',
+    width: '60%',
+    // border: '3px solid pink',
+    // height: '90%',
     boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
   },
   customerTextField: {
-    width: '80%',
+    width: '60%',
   },
   customerText: {
-    width: '80%',
-    marginBottom: 1,
+    width: '60%',
+    marginBottom: 0,
     fontWeight: 'bold',
   },
   imgBox: {
@@ -59,17 +63,29 @@ export const AdminStyle = {
   cardContainer: {
     margin: 1,
     boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
-    // backgroundColor: 'white',
+    // backgroundColor: 'blue',
+    height: '100px',
   },
   carImg: {
-    height: '180px',
-    width: '180px',
+    height: '70px',
+    width: '70px',
     // borderRadius: '4px'
+  },
+  cardContent: {
+    // backgroundColor: 'pink',
+
+    padding: 0,
+    '&: last-child': {
+      paddingBottom: 0,
+    },
   },
   carName: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
+    marginTop: 1,
+
+    fontSize: '18px',
   },
   carButton: {
     padding: '0px',
@@ -80,7 +96,7 @@ export const AdminStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '70%',
-    // backgroundColor: 'Ghostwhite'
+    // border: '2px solid pink'
   },
   submitButton: {
     color: '#C8744F',
@@ -90,7 +106,7 @@ export const AdminStyle = {
   },
   resultBox: {
     borderRadius: 5,
-    marginTop: -42,
+    // marginTop: -1,
     display: 'flex',
     // flexDirection: 'column',
     flexWrap: 'wrap',
@@ -105,7 +121,7 @@ export const AdminStyle = {
     scrollbarWidth: 'none', /* Firefox */
     msOverflowStyle: 'none',
     // marginTop: '-68px',
-    maxHeight: '1000px',
+    maxHeight: '800px',
     maxWidth: '68%',
     '&::-webkit-scrollbar': {
       width: '0',
@@ -118,22 +134,25 @@ export const AdminStyle = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '60%',
+    width: '40%',
     marginTop: 2,
     marginBottom: 2,
+    margin: 2,
+    // border: '2px solid black',
     // height: '25%',
-    maxHeight: '300px',
+    maxHeight: '250px',
     // boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
     boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px',
   },
   resultsContainer: {
+    // border: '2px solid purple',
     display: 'flex',
     flexDirection: 'column',
     // justifyContent: 'center',
     alignItems: 'center',
-    width: '25%',
-    height: '80%',
-    marginLeft: 2,
+    width: '50%',
+    height: '100%',
+    // marginLeft: 2,
     // backgroundColor: 'pink',
 
   },

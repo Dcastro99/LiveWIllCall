@@ -103,21 +103,21 @@ export default function Admin({ tickets }) {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', height: '100%', margin: 2 }}>
           {/* <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center' }}>Currently Helping</Typography> */}
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
-            <Typography sx={AdminStyle.resultText} variant='h5'>Currently Helping :</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerName}</Typography>
+            <Typography sx={AdminStyle.resultText} variant='6'>Currently Helping :</Typography>
+            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerName}</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
-            <Typography sx={AdminStyle.resultText} variant='h5'>Order Number :</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.orderNumber}</Typography>
+            <Typography sx={AdminStyle.resultText} variant='6'>Order Number :</Typography>
+            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.orderNumber}</Typography>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
-            <Typography sx={AdminStyle.resultText} variant='h5'>Customer PO :</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerPO}</Typography>
+            <Typography sx={AdminStyle.resultText} variant='6'>Customer PO :</Typography>
+            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerPO}</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
-            <Typography sx={AdminStyle.resultText} variant='h5'>Time:</Typography>
-            <Typography variant='h5' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{minutes}: {second}</Typography>
+            <Typography sx={AdminStyle.resultText} variant='6'>Time:</Typography>
+            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{minutes}: {second}</Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
             <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket._id)}>X</Button>
@@ -131,21 +131,21 @@ export default function Admin({ tickets }) {
 
 
   return (
-    <Box>
+    <Box sx={{ height: '100%' }}>
       <form id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
         <Box sx={AdminStyle.adminHeader}>
-          <img src={Logo} width="180" alt="Will Call Logo" />
-          <Typography variant="h3">Manage Team Members</Typography>
-          <img src={null} width="180" />
+          <img src={Logo} width="90" alt="Will Call Logo" />
+          <Typography variant="h4">Manage Team Members</Typography>
+          <img src={null} width="90" />
         </Box>
         <Box sx={AdminStyle.adminContainer}>
           <Box sx={AdminStyle.inputBox}>
             <Box sx={AdminStyle.customerInfoBox}>
-              <Typography sx={AdminStyle.customerText} variant="h5">Customer Name</Typography>
+              <Typography sx={AdminStyle.customerText} variant="h6">Customer Name</Typography>
               <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer Name" variant="outlined" name='customer_name' />
-              <Typography sx={AdminStyle.customerText} variant="h5">Order Number</Typography>
+              <Typography sx={AdminStyle.customerText} variant="h6">Order Number</Typography>
               <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Order Number" variant="outlined" name='order_number' />
-              <Typography sx={AdminStyle.customerText} variant="h5">Customer PO</Typography>
+              <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
               <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
             </Box>
             <Divider sx={{ width: '90%', margin: 3, bgcolor: 'black', marginBottom: 2 }} />
@@ -159,7 +159,7 @@ export default function Admin({ tickets }) {
 
                       {/* <CardActionArea> */}
                       <CardMedia key={member.id} component="img" sx={AdminStyle.carImg} image={member.image} alt={member.name} />
-                      <CardContent>
+                      <CardContent sx={AdminStyle.cardContent}>
                         <Typography sx={AdminStyle.carName} variant="h5">{member.name}</Typography>
                       </CardContent>
                       {/* </CardActionArea> */}
@@ -182,6 +182,6 @@ export default function Admin({ tickets }) {
           </Box>
         </Box >
       </form>
-    </Box>
+    </Box >
   )
 }
