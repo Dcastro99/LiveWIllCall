@@ -1,15 +1,16 @@
 export const DisplayStyle = {
   resultsMainBox: {
     borderRadius: 2,
-    padding: 1,
+    padding: 2,
+    margin: 2,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '60%',
-    height: '25%',
-
+    width: '68%',
+    height: '80%',
+    // border: '2px solid green',
     boxShadow: 'rgba(0,0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
-    marginBottom: 3,
+    // marginBottom: 3,
 
   },
   resultsContainer: {
@@ -31,11 +32,37 @@ export const DisplayStyle = {
   },
   resultImg: {
     marginTop: .5,
-    height: '70%',
-    width: '70%',
+    height: '100%',
+    width: '100%',
   },
   reultText: {
     fontWeight: 'bold',
+
+  },
+  resultCustomerBoxBorder: {
+    display: 'flex',
+    flexDirection: "row",
+    marginLeft: 2,
+    border: '2px solid WhiteSmoke',
+    borderRadius: 3,
+    padding: 1,
+    marginBottom: 1
+  },
+  resultCustomerInfoBox: {
+    // border: '1px solid black',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '80%',
+    height: '100%',
+    margin: 2
+  },
+  resultCustomerInfoText: {
+    marginLeft: 2,
+    textShadow: '1px 2px 6px orange',
+    display: 'flex',
+    alignItems: 'center'
   },
   deleteButton: {
     backgroundColor: 'salmon',
@@ -50,8 +77,9 @@ export const DisplayStyle = {
     },
   },
   resultBox: {
-    borderRadius: 5,
-    marginTop: 2,
+    // border: '2px solid black',
+    // borderRadius: 5,
+    // marginTop: 1,
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -66,19 +94,21 @@ export const DisplayStyle = {
     msOverflowStyle: 'none',
     // marginTop: '-68px',
     maxHeight: '100%',
-    maxWidth: '68%',
+    maxWidth: '100%',
     '&::-webkit-scrollbar': {
       width: '0',
       height: '0',
     },
   },
   displayBox: {
+    // border: '2px solid purple',
+    // paddingBottom: 2,
     display: 'flex',
     flexDirection: 'column',
     // justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '71vh',
+    height: '80vh',
   },
 
 }

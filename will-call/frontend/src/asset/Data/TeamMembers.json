@@ -15,7 +15,7 @@
     "id": 3
   },
   {
-    "name": "Bob",
+    "name": "Banksy",
     "image": "https://i.imgur.com/jTym1yn.jpg",
     "id": 4
   },
@@ -23,5 +23,55 @@
     "name": "Dummy",
     "image": "https://i.imgur.com/QEuVA8N.jpg",
     "id": 5
+  },
+  {
+    "name": "Beans",
+    "image": "https://i.imgur.com/VOqFg7t.jpg",
+    "id": 6
+  },
+  {
+    "name": "Buddy",
+    "image": "https://i.imgur.com/2AuxxG6.jpg",
+    "id": 7
+  },
+  {
+    "name": "Bob",
+    "image": "https://i.imgur.com/gBjgGFD.png",
+    "id": 8
+  },
+  {
+    "name": "TM1",
+    "image": "https://i.imgur.com/3r4hh6c.jpg",
+    "id": 9
+  },
+  {
+    "name": "TM2",
+    "image": "https://i.imgur.com/LG3CoCj.jpg",
+    "id": 10
+  },
+  {
+    "name": "TM3",
+    "image": "https://i.imgur.com/Iovgx6a.jpg",
+    "id": 11
+  },
+  {
+    "name": "TM4",
+    "image": "https://i.imgur.com/4kmRUtP.jpg",
+    "id": 12
+  },
+  {
+    "name": "TM5",
+    "image": "https://i.imgur.com/ujXIA9N.jpg",
+    "id": 13
+  },
+  {
+    "name": "TM6",
+    "image": "https://i.imgur.com/TP6tSKh.jpg",
+    "id": 14
+  },
+  {
+    "name": "TM7",
+    "image": "https://i.imgur.com/i2LBdmx.jpg",
+    "id": 15
   }
 ]

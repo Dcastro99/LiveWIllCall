@@ -10,6 +10,7 @@ function App() {
   const [tickets, setTickets] = useState([])
   console.log('IN APP', tickets)
   useEffect(() => {
+
     setInterval(() => {
       handleGetAllTickets()
     }, 500);
@@ -33,8 +34,7 @@ function App() {
   return (
 
     <Box sx={{
-      width: '99.9%',
-      // height: '98vh',
+      width: '100%',
       // border: '1px solid black',
     }} >
       <TicketProvider>

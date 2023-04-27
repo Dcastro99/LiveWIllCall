@@ -8,11 +8,12 @@ export default function index() {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 5,
+      // marginTop: 2,
       fontFamily: 'Dancing Script',
       fontSize: 25,
-      padding: 2,
-      backgroundColor: 'WhiteSmoke'
+      padding: 1,
+      backgroundColor: 'WhiteSmoke',
+      height: { xs: '5vh', sm: '5vh', md: '5vh', lg: '5vh', xl: '5vh' },
     }}>
       &copy; Danny Castro
     </Box>
