@@ -6,8 +6,9 @@ const ticketSchema = new Schema({
   customerName: String,
   orderNumber: String,
   customerPO: String,
-  TimeStamp: String,
-  TeamMember: Object
+  TimeStamp: Number,
+  TeamMember: Object,
+
 });
 
 const TICKET = mongoose.model('ticket', ticketSchema);

@@ -1,28 +1,88 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider } from '@mui/material';
-import TicketContext from '../../context/LiveTicket';
+// import Time from '../Time/Time';
+// import TicketContext from '../../context/LiveTicket';
 import { AdminStyle } from './AdminStyle';
 import TM from '../../asset/Data/TeamMembers.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 
 console.log('????', TM)
-export default function Admin({ tickets }) {
+export default function Admin({ tickets, Time }) {
   const [teamMember, setTeamMember] = useState({})
-  const [ticket, setTicket] = useState([])
-  const [seconds, setSeconds] = useState(0);
-  const { addTicket } = useContext(TicketContext)
+  const [ticket, setTicket] = useState([{
+    _id: '',
+    customerName: '',
+    orderNumber: '',
+    customerPO: '',
+    TimeStamp: '',
+    TeamMember: {}
+
+  }])
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
   console.log('TICKETS_______', ticket)
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setSeconds(seconds => seconds + 1);
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  console.log('timeYO', time)
+  console.log('tickestssssss', tickets)
   useEffect(() => {
+
     setTicket(tickets)
+
   }, [tickets])
 
+  // useEffect(() => {
+  //   let intervalId;
+
+  //   if (isRunning) {
+  //     intervalId = setInterval(() => {
+  //       setTime(prevTime => prevTime + 1);
+  //     }, 1000);
+  //   }
+
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [isRunning]);
+  // useEffect(() => {
+  //   const intervalIdArray = ticket.map(obj => {
+  //     return setInterval(() => {
+  //       console.log(`${obj.name} is done!`);
+  //       // do something with the object, e.g. update its state
+  //     }, obj.time);
+  //   });
+
+  // Clear all intervals to avoid memory leak
+  //   return () => {
+  //     intervalIdArray.forEach(clearInterval);
+  //   };
+  // }, [ticket]);
+
+
+
+  const handleStart = () => {
+    setIsRunning(true);
+  };
+
+  const handleStop = () => {
+    setIsRunning(false);
+  };
+
+
+
+
+
+
+  const seconds = Math.floor(time % 60);
+  const minutes = Math.floor(time / 60);
+
+
+
+
+
+
+
+
+  //------------------- TICKET-CREATE-CRUD -------------------//
   const handleCreateTicket = async (ticket) => {
     console.log('ticket---PRE_POST', ticket)
     const config = {
@@ -35,6 +95,7 @@ export default function Admin({ tickets }) {
     console.log('response', response)
   }
 
+  //------------------- TICKET-DELETE-CRUD -------------------//
   const handleDeleteTicket = async (id) => {
     console.log('delete in HERE', id)
     const config = {
@@ -47,51 +108,55 @@ export default function Admin({ tickets }) {
   }
 
 
-
-
-  const minutes = Math.floor(seconds / 60);
-  const second = Math.floor(seconds % 60);
-
-
-  console.log('ticket', ticket)
+  //------------------- TEAM-MEMBER -------------------//
   const handleTM = (tm) => {
     console.log('tm here', tm)
     setTeamMember(tm)
   }
 
+  //------------------- TICKET-DELETE -------------------//
   const handleDelete = (id) => {
     console.log('delete', id)
+    handleStop();
     handleDeleteTicket(id);
     setTicket(ticket.filter((ticket) => ticket._id !== id))
   }
 
+  //------------------- TICKET-ADD -------------------//
   const addLiveWillCall = (e) => {
-    // console.log('live!!')
+    // timeHandler();
+    // console.log('min/sec------------->', minutes, seconds)
     e.preventDefault();
     const formData = e.target;
+    const newTime = 0;
+    console.log('New_time_-_--->>', newTime)
     let newTicket = {
       customer_name: formData.customer_name.value,
       order_number: formData.order_number.value,
       customer_po: formData.customer_po.value,
-      teamMember: teamMember
+      teamMember: teamMember,
+      ticket_time: newTime
     }
 
-    // setTicket((prev) => [...prev, { newTicket }])
-    addTicket(
-      formData.customer_name.value,
-      formData.order_number.value,
-      formData.customer_po.value,
-      teamMember
-    )
+    console.log('newTicket', newTicket)
+
     handleCreateTicket(newTicket)
+    handleStart();
 
     document.getElementById('ticketForm').reset();
   }
+
+
+
+
+
   let newTicket = [];
   // console.log('NEW ticket', ticket)
   if (ticket.length > 0) {
     newTicket = ticket.map((ticket) => (
+
       <Box sx={AdminStyle.resultsMainBox}>
+        {console.log('ticket]]]]', ticket)}
         <Card sx={AdminStyle.resultsContainer}
           key={ticket.id}>
           {console.log('Map ticket', ticket)}
@@ -117,7 +182,8 @@ export default function Admin({ tickets }) {
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
             <Typography sx={AdminStyle.resultText} variant='6'>Time:</Typography>
-            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{minutes}: {second}</Typography>
+            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} ><Time ticketTime={ticket.TimeStamp}></Time></Typography>
+
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
             <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket._id)}>X</Button>
@@ -148,7 +214,7 @@ export default function Admin({ tickets }) {
               <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
               <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
             </Box>
-            <Divider sx={{ width: '90%', margin: 3, bgcolor: 'black', marginBottom: 2 }} />
+            <Divider sx={{ width: '90%', margin: 3, bgcolor: 'GhostWhite', marginBottom: 2, }} />
             <Box>
               <Box sx={AdminStyle.imgBox}>
 
@@ -169,7 +235,7 @@ export default function Admin({ tickets }) {
               </Box>
 
             </Box>
-            <Divider sx={{ width: '90%', margin: 2, bgcolor: 'black' }} />
+            <Divider sx={{ width: '90%', margin: 2, bgcolor: 'GhostWhite' }} />
             <Button sx={AdminStyle.submitButton} type='submit'>Submit</Button>
           </Box>
 

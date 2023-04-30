@@ -4,11 +4,11 @@ import Display from '../components/Display'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
-export default function CustomerDisplayPage({ tickets, handleGetAllTickets }) {
+export default function CustomerDisplayPage({ tickets, handleGetAllTickets, Time }) {
   return (
     <Box sx={{ width: '100%' }} >
       <Header />
-      <Display tickets={tickets} />
+      <Display tickets={tickets} Time={Time} />
       <Footer />
     </Box>
   )

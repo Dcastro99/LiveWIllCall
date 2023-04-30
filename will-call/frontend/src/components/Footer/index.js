@@ -8,7 +8,7 @@ export default function index() {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      // marginTop: 2,
+      // marginTop: 10,
       fontFamily: 'Dancing Script',
       fontSize: 25,
       padding: 1,
