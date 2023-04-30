@@ -6,32 +6,53 @@ import { DisplayStyle } from './DisplayStyle';
 
 
 
-export default function Display({ tickets, handleGetAllTickets }) {
+export default function Display({ tickets, handleGetAllTickets, Time }) {
   console.log('DID YOU MAKE IT??', tickets)
-  const [seconds, setSeconds] = useState(0);
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const chance = new Chance();
-  const minutes = Math.floor(seconds / 60);
-  const second = Math.floor(seconds % 60);
 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (containerRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-        const maxScrollPosition = scrollHeight - clientHeight;
-        let nextScrollPosition = scrollPosition + 1;
-        if (nextScrollPosition > maxScrollPosition) {
-          nextScrollPosition = 0;
-        }
-        containerRef.current.scrollTo({ top: nextScrollPosition });
-        setScrollPosition(nextScrollPosition);
-      }
-    }, 5);
-    return () => clearInterval(interval);
-  }, [scrollPosition]);
+
+
+  const customers = tickets.map((ticket) => {
+    return {
+      customerName: ticket.customerName,
+      customerPO: ticket.customerPO,
+      order_number: ticket.orderNumber,
+      TimeStamp: ticket.TimeStamp,
+      TeamMember: ticket.TeamMember
+
+    }
+  }
+  )
+  console.log('customers', customers)
+
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (containerRef.current) {
+  //       const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+  //       const maxScrollPosition = scrollHeight - clientHeight;
+  //       let nextScrollPosition = scrollPosition + 1;
+  //       if (nextScrollPosition > maxScrollPosition) {
+  //         nextScrollPosition = 0;
+  //       }
+  //       containerRef.current.scrollTo({ top: nextScrollPosition });
+  //       setScrollPosition(nextScrollPosition);
+  //     }
+  //   }, 3);
+  //   return () => clearInterval(interval);
+  // }, [scrollPosition]);
+
+  // useEffect(() => {
+  //   newCustomerTime(
+  //     tickets.map(ticket => ticket.TimeStamp)
+
+  //   );
+
+  // }, [tickets])
 
 
 
@@ -39,8 +60,9 @@ export default function Display({ tickets, handleGetAllTickets }) {
   // console.log('NEW ticket', ticket)
   if (tickets !== undefined) {
     // setInterval(() => {
-    newTicket = tickets.map((ticket) => (
+    newTicket = customers.map((ticket) => (
       <Box sx={DisplayStyle.resultsMainBox}>
+        {console.log('HELLO!!!', ticket)}
         <Card sx={DisplayStyle.resultsContainer}
           key={ticket.id}>
           {console.log('Map ticket', ticket.TeamMember.name)}
@@ -66,14 +88,14 @@ export default function Display({ tickets, handleGetAllTickets }) {
           </Box>
           <Box sx={DisplayStyle.resultCustomerBoxBorder}>
             <Typography sx={DisplayStyle.reultText} variant='h3'>Time:</Typography>
-            <Typography variant='h3' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center', color: 'red ' }} >{minutes}: {second}</Typography>
+            <Typography variant='h3' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center', color: 'red ' }} > <Time ticketTime={ticket.TimeStamp}></Time></Typography>
+
           </Box>
           {/* <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
             <Button sx={DisplayStyle.deleteButton} onClick={() => handleDelete(ticket.teamMember.id)}>X</Button>
           </Box> */}
 
         </Box>
-
       </Box>
     ))
     // }, 5000);

@@ -1,7 +1,7 @@
 const TicketModel = require('../models/ticket');
 
 async function getAllTickets(req, res, next) {
-  console.log('getAllTickets', req);
+  // console.log('getAllTickets', req);
   try {
     const allTickets = await TicketModel.find({});
     // console.log('allTickets', allTickets);
@@ -20,7 +20,7 @@ async function createTicket(req, res, next) {
       customerName: req.body.ticket.customer_name,
       orderNumber: req.body.ticket.order_number,
       customerPO: req.body.ticket.customer_po,
-      TimeStamp: req.body.ticket.timeStamp,
+      TimeStamp: req.body.ticket.ticket_time,
       TeamMember: req.body.ticket.teamMember
     });
     res.status(200).send(newTicket);
