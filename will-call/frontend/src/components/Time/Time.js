@@ -2,26 +2,33 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Box } from '@mui/material'
 
 export default function Time({ ticketTime }) {
-  const [time, setTime] = useState(0);
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(0);
   const interval = useRef(null);
+  const newTicketTime = new Date(ticketTime)
 
   useEffect(() => {
     interval.current = setInterval(() => {
-      console.log('tick');
-      setTime(time => time + 1);
+      const now = new Date() - newTicketTime;
+      let elapsed = `${Math.floor(now / 1000)}`;
+      let dateObj = new Date(elapsed * 1000);
+      let minutes = dateObj.getUTCMinutes();
+      let seconds = dateObj.getSeconds();
+      setMin(minutes)
+      setSec(seconds)
+
+
     }, 1000);
     return () => {
       clearInterval(interval.current);
     };
   }, []);
 
-  const seconds = Math.floor(time % 60);
-  const minutes = Math.floor(time / 60);
 
 
   return (
     <Box>
-      {`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`}
+      {`${min}:${sec < 10 ? "0" : ""}${sec}`}
     </Box>
   )
 }

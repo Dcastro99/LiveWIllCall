@@ -9,7 +9,6 @@ import axios from 'axios';
 
 function App() {
   const [tickets, setTickets] = useState([])
-  console.log('IN APP', tickets)
   useEffect(() => {
 
     setInterval(() => {
@@ -25,7 +24,7 @@ function App() {
       url: '/allTickets',
     };
     const response = await axios(config);
-    console.log('response', response)
+    // console.log('response1', response)
     setTickets(response.data)
 
   }

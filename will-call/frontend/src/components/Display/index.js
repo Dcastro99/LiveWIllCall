@@ -1,17 +1,17 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Box, Typography, Card, CardMedia, CardContent, Button, } from '@mui/material';
-import Chance from 'chance';
+import React, { useState, useEffect, useRef } from 'react'
+import { Box, Typography, Card, CardMedia, CardContent, } from '@mui/material';
+// import Chance from 'chance';
 import { DisplayStyle } from './DisplayStyle';
 
 
 
 
 export default function Display({ tickets, handleGetAllTickets, Time }) {
-  console.log('DID YOU MAKE IT??', tickets)
+  // console.log('DID YOU MAKE IT??', tickets)
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  const chance = new Chance();
+  // const chance = new Chance();
 
 
 
@@ -27,32 +27,26 @@ export default function Display({ tickets, handleGetAllTickets, Time }) {
     }
   }
   )
-  console.log('customers', customers)
+  // console.log('customers', customers)
 
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (containerRef.current) {
-  //       const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-  //       const maxScrollPosition = scrollHeight - clientHeight;
-  //       let nextScrollPosition = scrollPosition + 1;
-  //       if (nextScrollPosition > maxScrollPosition) {
-  //         nextScrollPosition = 0;
-  //       }
-  //       containerRef.current.scrollTo({ top: nextScrollPosition });
-  //       setScrollPosition(nextScrollPosition);
-  //     }
-  //   }, 3);
-  //   return () => clearInterval(interval);
-  // }, [scrollPosition]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (containerRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+        const maxScrollPosition = scrollHeight - clientHeight;
+        let nextScrollPosition = scrollPosition + 1;
+        if (nextScrollPosition > maxScrollPosition) {
+          nextScrollPosition = 0;
+        }
+        containerRef.current.scrollTo({ top: nextScrollPosition });
+        setScrollPosition(nextScrollPosition);
+      }
+    }, 3);
+    return () => clearInterval(interval);
+  }, [scrollPosition]);
 
-  // useEffect(() => {
-  //   newCustomerTime(
-  //     tickets.map(ticket => ticket.TimeStamp)
 
-  //   );
-
-  // }, [tickets])
 
 
 
@@ -62,10 +56,9 @@ export default function Display({ tickets, handleGetAllTickets, Time }) {
     // setInterval(() => {
     newTicket = customers.map((ticket) => (
       <Box sx={DisplayStyle.resultsMainBox}>
-        {console.log('HELLO!!!', ticket)}
+        {/* {console.log('HELLO!!!', ticket)} */}
         <Card sx={DisplayStyle.resultsContainer}
           key={ticket.id}>
-          {console.log('Map ticket', ticket.TeamMember.name)}
           <CardMedia component="img" sx={DisplayStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
           <CardContent>
             <Typography sx={DisplayStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>

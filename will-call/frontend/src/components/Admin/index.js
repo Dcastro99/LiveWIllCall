@@ -7,7 +7,7 @@ import TM from '../../asset/Data/TeamMembers.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 
-console.log('????', TM)
+
 export default function Admin({ tickets, Time }) {
   const [teamMember, setTeamMember] = useState({})
   const [ticket, setTicket] = useState([{
@@ -19,62 +19,13 @@ export default function Admin({ tickets, Time }) {
     TeamMember: {}
 
   }])
-  const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  console.log('TICKETS_______', ticket)
-  console.log('timeYO', time)
-  console.log('tickestssssss', tickets)
+
+  const start = Date.now();
+
+
   useEffect(() => {
-
     setTicket(tickets)
-
   }, [tickets])
-
-  // useEffect(() => {
-  //   let intervalId;
-
-  //   if (isRunning) {
-  //     intervalId = setInterval(() => {
-  //       setTime(prevTime => prevTime + 1);
-  //     }, 1000);
-  //   }
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [isRunning]);
-  // useEffect(() => {
-  //   const intervalIdArray = ticket.map(obj => {
-  //     return setInterval(() => {
-  //       console.log(`${obj.name} is done!`);
-  //       // do something with the object, e.g. update its state
-  //     }, obj.time);
-  //   });
-
-  // Clear all intervals to avoid memory leak
-  //   return () => {
-  //     intervalIdArray.forEach(clearInterval);
-  //   };
-  // }, [ticket]);
-
-
-
-  const handleStart = () => {
-    setIsRunning(true);
-  };
-
-  const handleStop = () => {
-    setIsRunning(false);
-  };
-
-
-
-
-
-
-  const seconds = Math.floor(time % 60);
-  const minutes = Math.floor(time / 60);
-
 
 
 
@@ -84,7 +35,6 @@ export default function Admin({ tickets, Time }) {
 
   //------------------- TICKET-CREATE-CRUD -------------------//
   const handleCreateTicket = async (ticket) => {
-    console.log('ticket---PRE_POST', ticket)
     const config = {
       method: 'POST',
       baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
@@ -115,33 +65,25 @@ export default function Admin({ tickets, Time }) {
   }
 
   //------------------- TICKET-DELETE -------------------//
-  const handleDelete = (id) => {
-    console.log('delete', id)
-    handleStop();
-    handleDeleteTicket(id);
-    setTicket(ticket.filter((ticket) => ticket._id !== id))
+  const handleDelete = (tm) => {
+    console.log('delete ticket', tm)
+    handleDeleteTicket(tm._id);
+    setTicket(ticket.filter((id) => id._id !== tm._id))
   }
 
   //------------------- TICKET-ADD -------------------//
   const addLiveWillCall = (e) => {
-    // timeHandler();
-    // console.log('min/sec------------->', minutes, seconds)
     e.preventDefault();
     const formData = e.target;
-    const newTime = 0;
-    console.log('New_time_-_--->>', newTime)
     let newTicket = {
       customer_name: formData.customer_name.value,
       order_number: formData.order_number.value,
       customer_po: formData.customer_po.value,
       teamMember: teamMember,
-      ticket_time: newTime
+      ticket_time: start
     }
 
-    console.log('newTicket', newTicket)
-
     handleCreateTicket(newTicket)
-    handleStart();
 
     document.getElementById('ticketForm').reset();
   }
@@ -156,10 +98,10 @@ export default function Admin({ tickets, Time }) {
     newTicket = ticket.map((ticket) => (
 
       <Box sx={AdminStyle.resultsMainBox}>
-        {console.log('ticket]]]]', ticket)}
+        {/* {console.log('ticket]]]]', ticket)} */}
         <Card sx={AdminStyle.resultsContainer}
           key={ticket.id}>
-          {console.log('Map ticket', ticket)}
+          {/* {console.log('Map ticket', ticket)} */}
           <CardMedia component="img" sx={AdminStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
           <CardContent>
             <Typography sx={AdminStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>
@@ -186,7 +128,7 @@ export default function Admin({ tickets, Time }) {
 
           </Box>
           <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-            <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket._id)}>X</Button>
+            <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket)}>X</Button>
           </Box>
 
         </Box>
