@@ -14,16 +14,22 @@ async function getAllTickets(req, res, next) {
 }
 
 async function createTicket(req, res, next) {
-  console.log('createTicket', req.body.ticket);
+  // console.log('createTicket', req.body.ticket);
   try {
+    // const ticket = await TicketModel.findOne({ orderNumber: req.body.ticket.orderNumber });
+    // console.log('ticketCreate', ticket);
+    // if (ticket) res.status(400).send('ticket already exists');
+    // else {
+
     const newTicket = await TicketModel.create({
-      customerName: req.body.ticket.customer_name,
-      orderNumber: req.body.ticket.order_number,
-      customerPO: req.body.ticket.customer_po,
-      TimeStamp: req.body.ticket.ticket_time,
-      TeamMember: req.body.ticket.teamMember
+      customerName: req.body.ticket.customerName,
+      orderNumber: req.body.ticket.orderNumber,
+      customerPO: req.body.ticket.customerPO,
+      TimeStamp: req.body.ticket.TimeStamp,
+      TeamMember: req.body.ticket.TeamMember
     });
     res.status(200).send(newTicket);
+    // }
   } catch (err) {
     console.error(err);
     next(err);
@@ -44,4 +50,19 @@ async function deleteTicket(req, res, next) {
   }
 }
 
-module.exports = { getAllTickets, createTicket, deleteTicket };
+async function handleUpdateTicket(req, res) {
+  console.log('ticket--Update HIt::', req.body.ticket)
+  console.log('UPDATED!!::', req.params)
+  try {
+    const result = await TicketModel.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body.ticket
+    );
+    res.status(200).send(result);
+  } catch (error) {
+    next(error.message);
+  }
+}
+
+
+module.exports = { getAllTickets, createTicket, deleteTicket, handleUpdateTicket };
