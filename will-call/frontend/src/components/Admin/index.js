@@ -6,24 +6,38 @@ import { AdminStyle } from './AdminStyle';
 import TM from '../../asset/Data/TeamMembers.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
+import Time from '../Time/Time';
+
+export default function Admin() {
+  const [tickets, setTickets] = useState([])
+  useEffect(() => {
+    handleGetAllTickets();
+  }, []);
 
 
-export default function Admin({ tickets, Time }) {
+  const handleGetAllTickets = async () => {
+    const config = {
+      method: 'GET',
+      baseURL: process.env.REACT_APP_VERCEL_URL,
+      url: '/allTickets',
+    };
+    const response = await axios(config);
+    setTickets(response.data)
+  }
+
   const [teamMember, setTeamMember] = useState({})
   console.log('teamMember in admin', teamMember)
   const [clicked, setClicked] = useState(null)
   console.log('clicked', clicked)
   const [time, setTime] = useState(null)
-  const [ticket, setTicket] = useState([{
-    _id: '',
-    customerName: '',
-    orderNumber: '',
-    customerPO: '',
-    TimeStamp: '',
-    TeamMember: {}
-
-  }])
-
+  // const [ticket, setTicket] = useState([{
+  //   _id: '',
+  //   customerName: '',
+  //   orderNumber: '',
+  //   customerPO: '',
+  //   TimeStamp: '',
+  //   TeamMember: {}
+  // }])
 
   const timeFunction = () => {
     return setTime(Date.now());
@@ -36,16 +50,8 @@ export default function Admin({ tickets, Time }) {
   console.log('noTM', noTM)
 
 
-  useEffect(() => {
-    setTicket(tickets)
-  }, [tickets])
-
-
-
   //------------------- TICKET-CREATE-CRUD -------------------//
   const handleCreateTicket = async (ticket) => {
-
-
     const config = {
       method: 'POST',
       baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
@@ -53,7 +59,9 @@ export default function Admin({ tickets, Time }) {
       data: { ticket }
     }
     const response = await axios(config)
-    console.log('response', response)
+    const oldTickets = [...tickets];
+    oldTickets.push(response.data);
+    setTickets(oldTickets);
   }
 
   //------------------- TICKET-DELETE-CRUD -------------------//
@@ -69,15 +77,26 @@ export default function Admin({ tickets, Time }) {
   }
 
   //------------------- TICKET-UPDATE-CRUD -------------------//
-  const handleUpdateTicket = (ticket) => {
-    // console.log('Are you sure you want to update this ticket?', ticket)
+  const handleUpdateTicket = async (ticket) => {
+    console.log('Are you sure you want to update this ticket?', ticket)
     const config = {
       method: 'PUT',
       baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
       url: `/ticket/${ticket._id}`,
       data: { ticket }
     }
-    axios(config)
+    await axios(config)
+    const oldTickets = [...tickets];
+    const updatedTickets = oldTickets.map((t) => {
+      if (t._id === ticket._id) {
+        return ticket;
+      } else {
+        return t;
+      }
+    })
+    console.log('oldTickets', oldTickets)
+    console.log('updatedTickets', updatedTickets)
+    setTickets(updatedTickets);
   }
 
 
@@ -93,7 +112,7 @@ export default function Admin({ tickets, Time }) {
   const handleDelete = (tm) => {
     console.log('delete ticket', tm)
     handleDeleteTicket(tm._id);
-    setTicket(ticket.filter((id) => id._id !== tm._id))
+    setTickets(tickets.filter((id) => id._id !== tm._id))
   }
 
   //------------------- TICKET-ADD -------------------//
@@ -116,16 +135,16 @@ export default function Admin({ tickets, Time }) {
       TimeStamp: time
     }
 
-    let checkOrder = ticket.filter((name) => name.orderNumber === newTicket.orderNumber)
-    console.log('checkOrder', checkOrder)
-    if (checkOrder.length > 0) {
-      // 
-      console.log('Ticket already exists')
-    } else {
+    // let checkOrder = tickets.filter((name) => name.orderNumber === newTicket.orderNumber)
+    // console.log('checkOrder', checkOrder)
+    // if (checkOrder.length > 0) {
+    //   // 
+    //   console.log('Ticket already exists')
+    // } else {
 
-      console.log('Adding to backend')
-      handleCreateTicket(newTicket)
-    }
+    console.log('Adding to backend')
+    handleCreateTicket(newTicket)
+    // }
 
     // handleUpdateTicket(newTicket)
     document.getElementById('ticketForm').reset();
@@ -136,54 +155,9 @@ export default function Admin({ tickets, Time }) {
 
 
 
-  let newTicket = [];
+
   // console.log('NEW ticket', ticket)
-  if (ticket.length > 0) {
-    newTicket = ticket.map((ticket) => (
 
-      <Box sx={AdminStyle.resultsMainBox}>
-        {/* {console.log('ticket]]]]', ticket)} */}
-        <Card sx={AdminStyle.resultsContainer}
-          key={ticket.id}>
-          {/* {console.log('Map ticket', ticket)} */}
-          <CardMedia component="img" sx={AdminStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
-          <CardContent>
-            <Typography sx={AdminStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>
-          </CardContent>
-        </Card>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', height: '100%', margin: 2 }}>
-          <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
-            <Typography sx={AdminStyle.resultText} variant='6'>Currently Helping :</Typography>
-            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerName}</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
-            <Typography sx={AdminStyle.resultText} variant='6'>Order Number :</Typography>
-            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.orderNumber}</Typography>
-          </Box>
-
-          <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
-            <Typography sx={AdminStyle.resultText} variant='6'>Customer PO :</Typography>
-            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerPO}</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
-            <Typography sx={AdminStyle.resultText} variant='6'>Time:</Typography>
-            <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} ><Time ticketTime={ticket.TimeStamp}></Time></Typography>
-
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-              <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket)}><DeleteForeverOutlinedIcon /></Button>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-              <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} setTeamMember={setTeamMember} time={time} />
-              {/* <Button sx={AdminStyle.editButton} onClick={() => handleUpdateTicket(ticket._id)}><MoreHorizIcon /></Button> */}
-            </Box>
-          </Box>
-        </Box>
-
-      </Box>
-    ))
-  }
 
 
   return (
@@ -233,10 +207,53 @@ export default function Admin({ tickets, Time }) {
 
           <Box sx={AdminStyle.displayBox}>
             <Box sx={AdminStyle.resultBox}>
-              {newTicket}
 
+              {tickets.length && tickets.map((ticket) => (
+
+                <Box sx={AdminStyle.resultsMainBox}>
+                  {/* {console.log('ticket]]]]', ticket)} */}
+                  <Card sx={AdminStyle.resultsContainer}
+                    key={ticket.id}>
+                    {/* {console.log('Map ticket', ticket)} */}
+                    <CardMedia component="img" sx={AdminStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
+                    <CardContent>
+                      <Typography sx={AdminStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>
+                    </CardContent>
+                  </Card>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', height: '100%', margin: 2 }}>
+                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
+                      <Typography sx={AdminStyle.resultText} variant='6'>Currently Helping :</Typography>
+                      <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerName}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
+                      <Typography sx={AdminStyle.resultText} variant='6'>Order Number :</Typography>
+                      <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.orderNumber}</Typography>
+                    </Box>
+
+                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
+                      <Typography sx={AdminStyle.resultText} variant='6'>Customer PO :</Typography>
+                      <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerPO}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
+                      <Typography sx={AdminStyle.resultText} variant='6'>Time:</Typography>
+                      <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >
+                        <Time ticketTime={ticket.TimeStamp}></Time></Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                      <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
+                        <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket)}><DeleteForeverOutlinedIcon /></Button>
+                      </Box>
+                      <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
+                        <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} setTeamMember={setTeamMember} time={time} />
+                        {/* <Button sx={AdminStyle.editButton} onClick={() => handleUpdateTicket(ticket._id)}><MoreHorizIcon /></Button> */}
+                      </Box>
+                    </Box>
+                  </Box>
+
+                </Box>
+              ))
+              }
             </Box>
-
           </Box>
         </Box >
       </form>

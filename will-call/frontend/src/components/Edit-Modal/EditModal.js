@@ -37,19 +37,12 @@ export default function EditModal({ ticket, setTeamMember, handleUpdateTicket })
     setNewPO(ticket.customerPO)
   }, [ticket])
 
-  // const handleUpdateTicket = (ticket) => {
-  //   const config = {
-  //     method: 'PUT',
-  //     baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
-  //     url: `/ticket/${ticket._id}`,
-  //     data: { ticket }
-  //   }
-  //   axios(config)
-  // }
 
 
   const updateTicketHandler = (e) => {
     e.preventDefault();
+    e.stopPropagation()
+
     let updatedTM = TM.find(tm => tm.name === newTM)
     console.log('updatedTM', updatedTM)
     const updatedTicket = {

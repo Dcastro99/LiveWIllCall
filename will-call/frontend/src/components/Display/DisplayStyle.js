@@ -18,8 +18,7 @@ export const DisplayStyle = {
     flexDirection: 'column',
     // justifyContent: 'center',
     alignItems: 'center',
-    width: '25%',
-    height: '100%',
+    width: '30%',
     marginLeft: 2,
     // backgroundColor: 'pink',
 
@@ -28,6 +27,8 @@ export const DisplayStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    fontWeight: 'bold',
+    fontSize: '3rem',
     // backgroundColor: 'pink',
   },
   resultImg: {

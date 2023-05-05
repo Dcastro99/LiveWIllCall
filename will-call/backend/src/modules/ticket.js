@@ -14,22 +14,22 @@ async function getAllTickets(req, res, next) {
 }
 
 async function createTicket(req, res, next) {
-  console.log('createTicket', req.body.ticket);
+  // console.log('createTicket', req.body.ticket);
   try {
-    const ticket = await TicketModel.findOne({ orderNumber: req.body.ticket.orderNumber });
-    console.log('ticketCreate', ticket);
-    if (ticket) res.status(400).send('ticket already exists');
-    else {
+    // const ticket = await TicketModel.findOne({ orderNumber: req.body.ticket.orderNumber });
+    // console.log('ticketCreate', ticket);
+    // if (ticket) res.status(400).send('ticket already exists');
+    // else {
 
-      const newTicket = await TicketModel.create({
-        customerName: req.body.ticket.customerName,
-        orderNumber: req.body.ticket.orderNumber,
-        customerPO: req.body.ticket.customerPO,
-        TimeStamp: req.body.ticket.TimeStamp,
-        TeamMember: req.body.ticket.TeamMember
-      });
-      res.status(200).send(newTicket);
-    }
+    const newTicket = await TicketModel.create({
+      customerName: req.body.ticket.customerName,
+      orderNumber: req.body.ticket.orderNumber,
+      customerPO: req.body.ticket.customerPO,
+      TimeStamp: req.body.ticket.TimeStamp,
+      TeamMember: req.body.ticket.TeamMember
+    });
+    res.status(200).send(newTicket);
+    // }
   } catch (err) {
     console.error(err);
     next(err);

@@ -1,18 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, } from '@mui/material';
-import { Carousel } from 'react-bootstrap'; import Chance from 'chance';
 import { DisplayStyle } from './DisplayStyle';
+import Time from '../Time/Time';
+import axios from 'axios';
 
 
 
-
-export default function Display({ tickets, handleGetAllTickets, Time }) {
+export default function Display() {
   // console.log('DID YOU MAKE IT??', tickets)
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [display, setDisplay] = useState([])
+  const [tickets, setTickets] = useState([])
+  useEffect(() => {
+    setInterval(() => {
+      handleGetAllTickets();
+    }, 3000);
+  }, []);
 
-  const chance = new Chance();
+
+  const handleGetAllTickets = async () => {
+    const config = {
+      method: 'GET',
+      baseURL: process.env.REACT_APP_VERCEL_URL,
+      url: '/allTickets',
+    };
+    const response = await axios(config);
+    setTickets(response.data)
+  }
+
+
+
 
 
 
@@ -30,16 +47,6 @@ export default function Display({ tickets, handleGetAllTickets, Time }) {
   console.log('customers', customers)
 
 
-  // const chunkedCustomers = customers.reduce((acc, customer, index) => {
-  //   const chunkIndex = Math.floor(index / chunkSize);
-  //   if (!acc[chunkIndex]) {
-  //     acc[chunkIndex] = [];
-  //   }
-  //   acc[chunkIndex].push(customer);
-  //   return acc;
-  // }, []);
-
-  // console.log('chunkedCustomers', chunkedCustomers[0])
 
 
   useEffect(() => {
@@ -92,14 +99,12 @@ export default function Display({ tickets, handleGetAllTickets, Time }) {
             <Typography sx={DisplayStyle.reultText} variant='h3'>Customer PO :</Typography>
             <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerPO}</Typography>
           </Box>
-          <Box sx={DisplayStyle.resultCustomerBoxBorder}>
+          {/* <Box sx={DisplayStyle.resultCustomerBoxBorder}>
             <Typography sx={DisplayStyle.reultText} variant='h3'>Time:</Typography>
             <Typography variant='h3' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center', color: 'red ' }} > <Time ticketTime={ticket.TimeStamp}></Time></Typography>
 
-          </Box>
-          {/* <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-            <Button sx={DisplayStyle.deleteButton} onClick={() => handleDelete(ticket.teamMember.id)}>X</Button>
           </Box> */}
+
 
         </Box>
       </Box>
