@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, } from '@mui/material';
-// import Chance from 'chance';
+import { Carousel } from 'react-bootstrap'; import Chance from 'chance';
 import { DisplayStyle } from './DisplayStyle';
 
 
@@ -10,9 +10,9 @@ export default function Display({ tickets, handleGetAllTickets, Time }) {
   // console.log('DID YOU MAKE IT??', tickets)
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [display, setDisplay] = useState([])
 
-  // const chance = new Chance();
-
+  const chance = new Chance();
 
 
 
@@ -27,7 +27,19 @@ export default function Display({ tickets, handleGetAllTickets, Time }) {
     }
   }
   )
-  // console.log('customers', customers)
+  console.log('customers', customers)
+
+
+  // const chunkedCustomers = customers.reduce((acc, customer, index) => {
+  //   const chunkIndex = Math.floor(index / chunkSize);
+  //   if (!acc[chunkIndex]) {
+  //     acc[chunkIndex] = [];
+  //   }
+  //   acc[chunkIndex].push(customer);
+  //   return acc;
+  // }, []);
+
+  // console.log('chunkedCustomers', chunkedCustomers[0])
 
 
   useEffect(() => {
@@ -55,6 +67,7 @@ export default function Display({ tickets, handleGetAllTickets, Time }) {
   if (tickets !== undefined) {
     // setInterval(() => {
     newTicket = customers.map((ticket) => (
+
       <Box sx={DisplayStyle.resultsMainBox}>
         {/* {console.log('HELLO!!!', ticket)} */}
         <Card sx={DisplayStyle.resultsContainer}

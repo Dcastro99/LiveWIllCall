@@ -11,9 +11,9 @@ function App() {
   const [tickets, setTickets] = useState([])
   useEffect(() => {
 
-    setInterval(() => {
-      handleGetAllTickets()
-    }, 1000);
+    // setInterval(() => {
+    handleGetAllTickets()
+    // }, 6000);
   }, [])
 
 

@@ -22,16 +22,16 @@ export const AdminStyle = {
     alignItems: 'center',
     width: '30%',
     border: '3px solid WhiteSmoke',
-    paddingTop: 2,
-    paddingBottom: 2,
+    paddingTop: 1,
+    paddingBottom: 1,
     // backgroundColor: '#C8744F',
-    marginTop: 2,
-    marginBottom: 2,
+    marginTop: 1,
+    marginBottom: 1,
     // height: '80%',
     // backgroundColor: 'pink'
   },
   customerInfoBox: {
-    marginTop: 1,
+    // marginTop: 1,
     backgroundColor: 'white',
     borderRadius: 5,
     padding: 1,
@@ -64,11 +64,22 @@ export const AdminStyle = {
     margin: 1,
     boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
     // backgroundColor: 'blue',
-    height: '100px',
+    // border: '2px solid pink',
+
+    height: '115px',
+  },
+  cardContainerClicked: {
+    margin: 1,
+    boxShadow: 'rgba(251, 192, 147) 0px 8px 24px, rgba(251, 192, 147, 9) 0px 16px 56px, rgba(17, 17, 65, 0.1) 0px 24px 80px',
+    backgroundColor: 'black',
+    color: 'GhostWhite',
+    border: '2px solid rgba(275, 192, 147)',
+
+    height: '115px',
   },
   carImg: {
-    height: '70px',
-    width: '70px',
+    height: '80px',
+    width: '80px',
     // borderRadius: '4px'
   },
   cardContent: {
@@ -101,8 +112,8 @@ export const AdminStyle = {
   submitButton: {
     color: '#C8744F',
     backgroundColor: 'black',
-    marginTop: 1,
-    marginBottom: 2
+    // marginTop: 1,
+    // marginBottom: 1
   },
   resultBox: {
     borderRadius: 5,
@@ -150,7 +161,7 @@ export const AdminStyle = {
     flexDirection: 'column',
     // justifyContent: 'center',
     alignItems: 'center',
-    width: '50%',
+    width: '47%',
     height: '100%',
     // marginLeft: 2,
     // backgroundColor: 'pink',
@@ -179,6 +190,22 @@ export const AdminStyle = {
       color: '#676767',
       boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     },
-  }
+  },
+  editButton: {
+
+    backgroundColor: 'white',
+    color: '#D3D3D3',
+    borderRadius: '10px',
+    marginTop: 3,
+    // boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: '#676767',
+      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+
+    },
+  },
+
+
 
 }

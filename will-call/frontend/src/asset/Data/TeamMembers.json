@@ -6,72 +6,83 @@
   },
   {
     "name": "Carter",
-    "image": "https://i.imgur.com/YILvIbe.jpg",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 2
   },
   {
-    "name": "Joker",
-    "image": "https://i.imgur.com/bfyRBvL.jpg",
+    "name": "Michael",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 3
   },
   {
-    "name": "Banksy",
-    "image": "https://i.imgur.com/jTym1yn.jpg",
+    "name": "Rodney",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 4
   },
   {
-    "name": "Dummy",
-    "image": "https://i.imgur.com/QEuVA8N.jpg",
+    "name": "Geno",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 5
   },
   {
-    "name": "Beans",
-    "image": "https://i.imgur.com/VOqFg7t.jpg",
+    "name": "Tanner",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 6
   },
   {
-    "name": "Buddy",
-    "image": "https://i.imgur.com/2AuxxG6.jpg",
+    "name": "Jeremy B",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 7
   },
   {
-    "name": "Bob",
-    "image": "https://i.imgur.com/gBjgGFD.png",
+    "name": "Michael",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 8
   },
+
   {
-    "name": "TM1",
-    "image": "https://i.imgur.com/3r4hh6c.jpg",
-    "id": 9
-  },
-  {
-    "name": "TM2",
-    "image": "https://i.imgur.com/LG3CoCj.jpg",
+    "name": "Ian",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 10
   },
   {
-    "name": "TM3",
-    "image": "https://i.imgur.com/Iovgx6a.jpg",
+    "name": "Brady",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 11
   },
   {
-    "name": "TM4",
-    "image": "https://i.imgur.com/4kmRUtP.jpg",
+    "name": "Dylan",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 12
   },
   {
-    "name": "TM5",
-    "image": "https://i.imgur.com/ujXIA9N.jpg",
+    "name": "Ryan",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 13
   },
   {
-    "name": "TM6",
-    "image": "https://i.imgur.com/TP6tSKh.jpg",
+    "name": "Keith",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 14
   },
   {
-    "name": "TM7",
-    "image": "https://i.imgur.com/i2LBdmx.jpg",
+    "name": "Justin",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
     "id": 15
+  },
+  {
+    "name": "Mike",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
+    "id": 16
+  },
+  {
+    "name": "Bruce",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
+    "id": 17
+  },
+  {
+    "name": "Tom",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
+    "id": 18
   }
 ]
