@@ -164,7 +164,7 @@ export default function Admin() {
         <Box sx={AdminStyle.adminHeader}>
           <img src={Logo} width="90" alt="Will Call Logo" />
           <Typography variant="h4">Manage Team Members</Typography>
-          <img src={null} width="90" alt='logo' />
+          <Box sx={{ width: '180px' }} />
         </Box>
         <Box sx={AdminStyle.adminContainer}>
           <Box sx={AdminStyle.inputBox}>
