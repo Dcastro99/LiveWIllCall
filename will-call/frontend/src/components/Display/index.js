@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, } from '@mui/material';
 import { DisplayStyle } from './DisplayStyle';
-import Time from '../Time/Time';
+// import Time from '../Time/Time';
 import axios from 'axios';
 
 
@@ -52,7 +52,7 @@ export default function Display() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (containerRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+        const { scrollHeight, clientHeight } = containerRef.current;
         const maxScrollPosition = scrollHeight - clientHeight;
         let nextScrollPosition = scrollPosition + 1;
         if (nextScrollPosition > maxScrollPosition) {
