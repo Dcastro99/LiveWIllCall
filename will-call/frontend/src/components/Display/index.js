@@ -61,7 +61,7 @@ export default function Display() {
         containerRef.current.scrollTo({ top: nextScrollPosition });
         setScrollPosition(nextScrollPosition);
       }
-    }, 3);
+    }, 1);
     return () => clearInterval(interval);
   }, [scrollPosition]);
 
