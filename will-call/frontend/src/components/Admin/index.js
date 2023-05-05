@@ -7,6 +7,7 @@ import TM from '../../asset/Data/TeamMembers.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 import Time from '../Time/Time';
+import index from '../Footer';
 
 export default function Admin() {
   const [tickets, setTickets] = useState([])
@@ -28,7 +29,7 @@ export default function Admin() {
   const [teamMember, setTeamMember] = useState({})
   console.log('teamMember in admin', teamMember)
   const [clicked, setClicked] = useState(null)
-  console.log('clicked', clicked)
+  // console.log('clicked', clicked)
   const [time, setTime] = useState(null)
   // const [ticket, setTicket] = useState([{
   //   _id: '',
@@ -74,6 +75,10 @@ export default function Admin() {
     }
     const response = await axios(config)
     console.log('response', response)
+    // const response = await axios(config)
+    // const oldTickets = [...tickets];
+    // oldTickets.push(response.data);
+    // setTickets(oldTickets);
   }
 
   //------------------- TICKET-UPDATE-CRUD -------------------//
@@ -97,6 +102,7 @@ export default function Admin() {
     console.log('oldTickets', oldTickets)
     console.log('updatedTickets', updatedTickets)
     setTickets(updatedTickets);
+
   }
 
 
@@ -111,8 +117,8 @@ export default function Admin() {
   //------------------- TICKET-DELETE -------------------//
   const handleDelete = (tm) => {
     console.log('delete ticket', tm)
-    handleDeleteTicket(tm._id);
     setTickets(tickets.filter((id) => id._id !== tm._id))
+    handleDeleteTicket(tm._id);
   }
 
   //------------------- TICKET-ADD -------------------//
@@ -135,19 +141,11 @@ export default function Admin() {
       TimeStamp: time
     }
 
-    // let checkOrder = tickets.filter((name) => name.orderNumber === newTicket.orderNumber)
-    // console.log('checkOrder', checkOrder)
-    // if (checkOrder.length > 0) {
-    //   // 
-    //   console.log('Ticket already exists')
-    // } else {
-
     console.log('Adding to backend')
     handleCreateTicket(newTicket)
-    // }
-
-    // handleUpdateTicket(newTicket)
     document.getElementById('ticketForm').reset();
+    setClicked('')
+    setTeamMember({})
   }
 
 
@@ -166,7 +164,7 @@ export default function Admin() {
         <Box sx={AdminStyle.adminHeader}>
           <img src={Logo} width="90" alt="Will Call Logo" />
           <Typography variant="h4">Manage Team Members</Typography>
-          <img src={null} width="90" />
+          <img src={null} width="90" alt='logo' />
         </Box>
         <Box sx={AdminStyle.adminContainer}>
           <Box sx={AdminStyle.inputBox}>
