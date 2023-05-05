@@ -15,7 +15,7 @@ export default function Header() {
     }}>
       <img src={Logo} width="180" alt="Will Call Logo" />
       <Typography variant="h3" sx={{ fontWeight: 'bold' }}>Live Will Call</Typography>
-      <img src={null} width="180" alt='logo' />
+      <Box src={null} sx={{ width: '180px' }} />
     </Box>
   )
 }
