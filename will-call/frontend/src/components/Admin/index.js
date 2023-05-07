@@ -220,7 +220,7 @@ export default function Admin() {
                   </Card>
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', height: '100%', margin: 2 }}>
                     <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
-                      <Typography sx={AdminStyle.resultText} variant='6'>Currently Helping :</Typography>
+                      <Typography sx={AdminStyle.resultText} variant='6'>Customer:</Typography>
                       <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerName}</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>

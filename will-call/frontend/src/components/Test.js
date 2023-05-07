@@ -1,62 +1,25 @@
-import { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+// {/* <Box sx={DisplayStyle.resultsMainBox}>
+// <Card sx={DisplayStyle.resultsContainer}
+//   key={ticket.id}>
+//   <CardMedia component="img" sx={DisplayStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
+//   <CardContent>
+//     <Typography sx={DisplayStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>
+//   </CardContent>
+// </Card>
+// <Box sx={DisplayStyle.resultCustomerInfoBox}>
+//   {/* <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center' }}>Currently Helping</Typography> */}
+//   <Box sx={DisplayStyle.resultCustomerBoxBorder}>
+//     <Typography sx={DisplayStyle.reultText} variant='h3'>Currently Helping :</Typography>
+//     <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerName}</Typography>
+//   </Box>
+ 
 
-function MyForm() {
-  const [formValues, setFormValues] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-  });
+//   <Box sx={DisplayStyle.resultCustomerBoxBorder}>
+//     <Typography sx={DisplayStyle.reultText} variant='h3'>Customer PO :</Typography>
+//     <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerPO}</Typography>
+//   </Box>
+ 
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formValues);
-    // do something with the form values, e.g. submit to a server
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        label="First Name"
-        name="firstName"
-        value={formValues.firstName}
-        onChange={handleInputChange}
-      />
-      <TextField
-        label="Last Name"
-        name="lastName"
-        value={formValues.lastName}
-        onChange={handleInputChange}
-      />
-      <TextField
-        label="Email"
-        name="email"
-        type="email"
-        value={formValues.email}
-        onChange={handleInputChange}
-      />
-      <TextField
-        label="Password"
-        name="password"
-        type="password"
-        value={formValues.password}
-        onChange={handleInputChange}
-      />
-      <Button type="submit" variant="contained" color="primary">
-        Submit
-      </Button>
-    </form>
-  );
-}
-
-export default MyForm;
+// </Box>
+// </Box> */}
