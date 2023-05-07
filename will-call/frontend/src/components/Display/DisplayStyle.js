@@ -7,10 +7,8 @@ export const DisplayStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    height: '80%',
+    height: '100%',
     // border: '2px solid green',
-    boxShadow: 'rgba(0,0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
-    // marginBottom: 3,
 
   },
   resultsContainer: {
@@ -21,6 +19,7 @@ export const DisplayStyle = {
     width: '30%',
     marginLeft: 2,
     // backgroundColor: 'pink',
+
 
   },
   resultsTMName: {
@@ -77,30 +76,24 @@ export const DisplayStyle = {
       boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     },
   },
-  resultBox: {
-    // border: '2px solid black',
-    // borderRadius: 5,
-    // marginTop: 1,
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    // alignItems: 'center',
-    // width: '100%',
-    // backgroundColor: 'lightgrey',
-    // height: '100vh',
-    // backgroundColor: 'grey'
-    // position: 'absolute',
-    overflowY: 'scroll',
-    scrollbarWidth: 'none', /* Firefox */
-    msOverflowStyle: 'none',
-    // marginTop: '-68px',
-    maxHeight: '100%',
-    maxWidth: '100%',
-    '&::-webkit-scrollbar': {
-      width: '0',
-      height: '0',
-    },
-  },
+  // resultBox: {
+  //   // border: '2px solid black',
+  //   // borderRadius: 5,
+  //   // marginTop: 1,
+  //   display: 'flex',
+  //   flexWrap: 'wrap',
+  //   justifyContent: 'center',
+  //   overflowY: 'scroll',
+  //   scrollbarWidth: 'none', /* Firefox */
+  //   msOverflowStyle: 'none',
+  //   // marginTop: '-68px',
+  //   maxHeight: '100%',
+  //   maxWidth: '100%',
+  //   '&::-webkit-scrollbar': {
+  //     width: '0',
+  //     height: '0',
+  //   },
+  // },
   displayBox: {
     // border: '2px solid purple',
     // paddingBottom: 2,

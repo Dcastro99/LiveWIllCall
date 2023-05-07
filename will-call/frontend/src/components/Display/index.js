@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, } from '@mui/material';
 import { DisplayStyle } from './DisplayStyle';
+import Carousel from 'react-bootstrap/Carousel';
 // import Time from '../Time/Time';
 import axios from 'axios';
-
+import Danny from '../../asset/images/danny20.jpg'
+import grayGuy from '../../asset/images/grayGuy.jpg'
+import D2 from '../../asset/images/IMG_1420.jpg'
 
 
 export default function Display() {
@@ -12,9 +15,9 @@ export default function Display() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [tickets, setTickets] = useState([])
   useEffect(() => {
-    setInterval(() => {
-      handleGetAllTickets();
-    }, 3000);
+    // setInterval(() => {
+    handleGetAllTickets();
+    // }, 3000);
   }, []);
 
 
@@ -69,14 +72,14 @@ export default function Display() {
 
 
 
-  let newTicket = [];
+  let newTicket = '';
   // console.log('NEW ticket', ticket)
-  if (tickets !== undefined) {
-    // setInterval(() => {
+
+
+  if (newTicket.length !== undefined) {
     newTicket = customers.map((ticket) => (
 
       <Box sx={DisplayStyle.resultsMainBox}>
-        {/* {console.log('HELLO!!!', ticket)} */}
         <Card sx={DisplayStyle.resultsContainer}
           key={ticket.id}>
           <CardMedia component="img" sx={DisplayStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
@@ -85,33 +88,25 @@ export default function Display() {
           </CardContent>
         </Card>
         <Box sx={DisplayStyle.resultCustomerInfoBox}>
-          {/* <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center' }}>Currently Helping</Typography> */}
+          <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center' }}>Currently Helping</Typography>
           <Box sx={DisplayStyle.resultCustomerBoxBorder}>
             <Typography sx={DisplayStyle.reultText} variant='h3'>Currently Helping :</Typography>
             <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerName}</Typography>
           </Box>
-          {/* <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
-            <Typography sx={DisplayStyle.reultText} variant='h3'>Order Number :</Typography>
-            <Typography variant='h3' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.order_number}</Typography>
-          </Box> */}
+
 
           <Box sx={DisplayStyle.resultCustomerBoxBorder}>
             <Typography sx={DisplayStyle.reultText} variant='h3'>Customer PO :</Typography>
             <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerPO}</Typography>
           </Box>
-          {/* <Box sx={DisplayStyle.resultCustomerBoxBorder}>
-            <Typography sx={DisplayStyle.reultText} variant='h3'>Time:</Typography>
-            <Typography variant='h3' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center', color: 'red ' }} > <Time ticketTime={ticket.TimeStamp}></Time></Typography>
 
-          </Box> */}
 
 
         </Box>
       </Box>
     ))
-    // }, 5000);
-  }
 
+  }
 
   return (
     <Box sx={DisplayStyle.displayBox}>
