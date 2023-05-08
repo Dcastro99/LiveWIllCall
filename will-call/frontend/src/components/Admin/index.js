@@ -7,10 +7,14 @@ import TM from '../../asset/Data/TeamMembers.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 import Time from '../Time/Time';
-import index from '../Footer';
 
 export default function Admin() {
   const [tickets, setTickets] = useState([])
+  const [teamMember, setTeamMember] = useState({})
+  const [clicked, setClicked] = useState(null)
+  const [time, setTime] = useState(null)
+
+
   useEffect(() => {
     handleGetAllTickets();
   }, []);
@@ -26,29 +30,18 @@ export default function Admin() {
     setTickets(response.data)
   }
 
-  const [teamMember, setTeamMember] = useState({})
-  console.log('teamMember in admin', teamMember)
-  const [clicked, setClicked] = useState(null)
-  // console.log('clicked', clicked)
-  const [time, setTime] = useState(null)
-  // const [ticket, setTicket] = useState([{
-  //   _id: '',
-  //   customerName: '',
-  //   orderNumber: '',
-  //   customerPO: '',
-  //   TimeStamp: '',
-  //   TeamMember: {}
-  // }])
 
+  //------------------- CREATING-TIME-FUNCTION -------------------//
   const timeFunction = () => {
     return setTime(Date.now());
   }
 
+  //------------------- IF-NO-TEAMMEMBER-SELECTED -------------------//
   const noTM = {
     name: 'Pending...',
     image: Logo
   }
-  console.log('noTM', noTM)
+
 
 
   //------------------- TICKET-CREATE-CRUD -------------------//
@@ -75,10 +68,6 @@ export default function Admin() {
     }
     const response = await axios(config)
     console.log('response', response)
-    // const response = await axios(config)
-    // const oldTickets = [...tickets];
-    // oldTickets.push(response.data);
-    // setTickets(oldTickets);
   }
 
   //------------------- TICKET-UPDATE-CRUD -------------------//
@@ -141,7 +130,7 @@ export default function Admin() {
       TimeStamp: time
     }
 
-    console.log('Adding to backend')
+    // console.log('Adding to backend')
     handleCreateTicket(newTicket)
     document.getElementById('ticketForm').reset();
     setClicked('')
@@ -180,15 +169,15 @@ export default function Admin() {
             <Box>
               <Box sx={AdminStyle.imgBox}>
 
+                {/*------------------- ADD-TEAM-MEMBER -------------------*/}
+
                 {TM.length > 0 ? TM.map((member, index) => (
-                  <Button sx={AdminStyle.carButton} onClick={() => handleTM(member, index)}>
+                  <Button sx={AdminStyle.carButton} onClick={() => handleTM(member, index)} key={member.id}>
                     <Card
                       sx={index === clicked ? AdminStyle.cardContainerClicked : AdminStyle.cardContainer}
-
                       key={member.id} >
-
                       {/* <CardActionArea> */}
-                      <CardMedia key={member.id} component="img" sx={AdminStyle.carImg} image={member.image} alt={member.name} />
+                      <CardMedia component="img" sx={AdminStyle.carImg} image={member.image} alt={member.name} />
                       <CardContent sx={AdminStyle.cardContent}>
                         <Typography sx={AdminStyle.carName} variant="h5">{member.name}</Typography>
                       </CardContent>
@@ -206,9 +195,11 @@ export default function Admin() {
           <Box sx={AdminStyle.displayBox}>
             <Box sx={AdminStyle.resultBox}>
 
+              {/*------------------- DISPLAY-TEAM-MEMBER-CARDS -------------------*/}
+
               {tickets.length && tickets.map((ticket) => (
 
-                <Box sx={AdminStyle.resultsMainBox}>
+                <Box sx={AdminStyle.resultsMainBox} >
                   {/* {console.log('ticket]]]]', ticket)} */}
                   <Card sx={AdminStyle.resultsContainer}
                     key={ticket.id}>
@@ -242,8 +233,7 @@ export default function Admin() {
                         <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket)}><DeleteForeverOutlinedIcon /></Button>
                       </Box>
                       <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-                        <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} setTeamMember={setTeamMember} time={time} />
-                        {/* <Button sx={AdminStyle.editButton} onClick={() => handleUpdateTicket(ticket._id)}><MoreHorizIcon /></Button> */}
+                        <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} />
                       </Box>
                     </Box>
                   </Box>

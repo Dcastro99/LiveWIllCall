@@ -17,7 +17,7 @@ const style = {
   p: 4,
 };
 
-export default function EditModal({ ticket, setTeamMember, handleUpdateTicket }) {
+export default function EditModal({ ticket, handleUpdateTicket }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -26,8 +26,7 @@ export default function EditModal({ ticket, setTeamMember, handleUpdateTicket })
   const [newOrderNumber, setNewOrderNumber] = useState('')
   const [newPO, setNewPO] = useState('')
   const [time, setTime] = useState(null)
-  console.log('newTM', newTM)
-  console.log('time in Edit', time)
+
 
   useEffect(() => {
     setTime(ticket.TimeStamp)
