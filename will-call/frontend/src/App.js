@@ -10,6 +10,7 @@ function App() {
 
     <Box sx={{
       width: '100%',
+
     }} >
       <Router>
         <Routes>

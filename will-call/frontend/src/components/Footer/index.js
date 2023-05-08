@@ -1,14 +1,13 @@
 import React from 'react'
 import { Box } from '@mui/material'
 
-export default function index() {
+export default function Index() {
   return (
     <Box sx={{
-
+      // border: '2px dotted pink',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      // marginTop: 10,
       fontFamily: 'Dancing Script',
       fontSize: 25,
       padding: 1,

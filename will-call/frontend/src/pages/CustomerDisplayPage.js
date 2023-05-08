@@ -4,9 +4,9 @@ import Display from '../components/Display/index2'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
-export default function CustomerDisplayPage({ tickets, handleGetAllTickets, Time }) {
+export default function CustomerDisplayPage() {
   return (
-    <Box sx={{ width: '100%' }} >
+    <Box sx={{ width: '100vw', }} >
       <Header />
       <Display />
       <Footer />
