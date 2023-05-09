@@ -22,8 +22,7 @@ export default function Time({ ticketTime }) {
     return () => {
       clearInterval(interval.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ticketTime]);
 
 
 
