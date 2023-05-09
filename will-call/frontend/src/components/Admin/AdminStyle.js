@@ -166,6 +166,18 @@ export const AdminStyle = {
   resultText: {
     fontWeight: 'bold',
   },
+  resultTexfeildContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '80%',
+    height: '100%',
+    margin: 2
+  },
+  resultTextfield: {
+    display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1
+  },
+
   deleteButton: {
     backgroundColor: 'salmon',
     color: 'WhiteSmoke',

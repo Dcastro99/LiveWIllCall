@@ -153,7 +153,7 @@ export default function Admin() {
         <Box sx={AdminStyle.adminHeader}>
           <img src={Logo} width="90" alt="Will Call Logo" />
           <Typography variant="h4">Manage Team Members</Typography>
-          <Box sx={{ width: '180px' }} />
+          <Box sx={{ width: '50px', height: '50px' }} />
         </Box>
         <Box sx={AdminStyle.adminContainer}>
           <Box sx={AdminStyle.inputBox}>
@@ -199,7 +199,7 @@ export default function Admin() {
 
               {tickets.length && tickets.map((ticket) => (
 
-                <Box sx={AdminStyle.resultsMainBox} >
+                <Box sx={AdminStyle.resultsMainBox} key={ticket._id} >
                   {/* {console.log('ticket]]]]', ticket)} */}
                   <Card sx={AdminStyle.resultsContainer}
                     key={ticket.id}>
@@ -209,21 +209,21 @@ export default function Admin() {
                       <Typography sx={AdminStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>
                     </CardContent>
                   </Card>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', height: '100%', margin: 2 }}>
-                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
+                  <Box sx={AdminStyle.resultTexfeildContainer}>
+                    <Box sx={AdminStyle.resultTextfield}>
                       <Typography sx={AdminStyle.resultText} variant='6'>Customer:</Typography>
                       <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerName}</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1 }}>
+                    <Box sx={AdminStyle.resultTextfield}>
                       <Typography sx={AdminStyle.resultText} variant='6'>Order Number :</Typography>
                       <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.orderNumber}</Typography>
                     </Box>
 
-                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
+                    <Box sx={AdminStyle.resultTextfield}>
                       <Typography sx={AdminStyle.resultText} variant='6'>Customer PO :</Typography>
                       <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerPO}</Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', padding: 1, marginBottom: 1 }}>
+                    <Box sx={AdminStyle.resultTextfield}>
                       <Typography sx={AdminStyle.resultText} variant='6'>Time:</Typography>
                       <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >
                         <Time ticketTime={ticket.TimeStamp}></Time></Typography>
