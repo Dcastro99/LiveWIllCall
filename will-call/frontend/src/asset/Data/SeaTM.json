@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Hugo",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
+    "id": 1
+  },
+  {
+    "name": "Spenser",
+    "image": "https://i.imgur.com/bLpNLis.jpg",
+    "id": 2
+  },
+  {
+    "name": "Jessica",
+    "image": "https://i.imgur.com/tMOWiAS.jpg",
+    "id": 3
+  },
+  {
+    "name": "Taco",
+    "image": "https://i.imgur.com/Zvudt5o.jpg",
+    "id": 4
+  },
+  {
+    "name": "Shane",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
+    "id": 5
+  },
+  {
+    "name": "Natazha",
+    "image": "https://i.imgur.com/pvUnWVm.jpg",
+    "id": 6
+  },
+  {
+    "name": "Tola",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
+    "id": 7
+  },
+  {
+    "name": "Bo",
+    "image": "https://i.imgur.com/d1sH77T.jpg",
+    "id": 8
+  },
+  {
+    "name": "Isaac",
+    "image": "https://i.imgur.com/PNsKd7Y.jpg",
+    "id": 9
+  },
+  {
+    "name": "Tui",
+    "image": "https://i.imgur.com/U6x7InR.jpg",
+    "id": 10
+  },
+  {
+    "name": "Jen",
+    "image": "https://i.imgur.com/pvUnWVm.jpg",
+    "id": 11
+  }
+]
