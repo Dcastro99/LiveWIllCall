@@ -6,7 +6,7 @@ const express = require('express');
 const cors = require('cors');
 
 //----------------CRUD----------------//
-const { getAllTickets, createTicket, deleteTicket, handleUpdateTicket } = require('./src/modules/ticket.js');
+const { getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage } = require('./src/modules/ticket.js');
 
 
 // -----------APP USING EXPRESS & JSON -------------//
@@ -23,6 +23,7 @@ app.get('/allTickets', getAllTickets);
 app.post('/ticket', createTicket);
 app.delete('/ticket/:id', deleteTicket);
 app.put('/ticket/:id', handleUpdateTicket);
+app.put('/data/:id', handleDataStorage);
 
 
 //------------- ERROR HANDLING -------------//

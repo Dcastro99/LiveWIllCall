@@ -3,7 +3,7 @@ import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divid
 import EditModal from '../Edit-Modal/EditModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { AdminStyle } from './AdminStyle';
-import TM from '../../asset/Data/SeaTM.json'
+import TM from '../../asset/Data/VanTM.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 import Time from '../Time/Time';
@@ -59,16 +59,16 @@ export default function Admin() {
   }
 
   //------------------- TICKET-DELETE-CRUD -------------------//
-  const handleDeleteTicket = async (id) => {
-    // console.log('delete in HERE', id)
-    const config = {
-      method: 'DELETE',
-      baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
-      url: `/ticket/${id}`,
-    }
-    const response = await axios(config)
-    console.log('response', response)
-  }
+  // const handleDeleteTicket = async (id) => {
+  //   // console.log('delete in HERE', id)
+  //   const config = {
+  //     method: 'DELETE',
+  //     baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
+  //     url: `/ticket/${id}`,
+  //   }
+  //   const response = await axios(config)
+  //   console.log('response', response)
+  // }
 
   //------------------- TICKET-UPDATE-CRUD -------------------//
   const handleUpdateTicket = async (ticket) => {
@@ -94,6 +94,21 @@ export default function Admin() {
 
   }
 
+  //------------------- TICKET-STORE_DATA-CRUD -------------------//
+
+  const handleDataStorage = async (ticket) => {
+    console.log('Are you sure you want to update this ticket?', ticket)
+    const config = {
+      method: 'PUT',
+      baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
+      url: `/data/${ticket._id}`,
+      data: { ticket }
+    }
+    const response = await axios(config)
+    console.log('response', response.data)
+    setTickets(tickets.filter(t => t._id !== response.data.ticket._id));
+  }
+
 
   //------------------- TEAM-MEMBER -------------------//
   const handleTM = (tm, index) => {
@@ -107,7 +122,8 @@ export default function Admin() {
   const handleDelete = (tm) => {
     console.log('delete ticket', tm)
     setTickets(tickets.filter((id) => id._id !== tm._id))
-    handleDeleteTicket(tm._id);
+    handleDataStorage(tm)
+    // handleDeleteTicket(tm._id);
   }
 
   //------------------- TICKET-ADD -------------------//
@@ -127,9 +143,10 @@ export default function Admin() {
       orderNumber: formData.order_number.value,
       customerPO: formData.customer_po.value,
       TeamMember: tm,
-      TimeStamp: time
+      TimeStamp: time,
+      storeData: false
     }
-
+    console.log('addLiveWillCall - newTicket', newTicket)
     // console.log('Adding to backend')
     handleCreateTicket(newTicket)
     document.getElementById('ticketForm').reset();
