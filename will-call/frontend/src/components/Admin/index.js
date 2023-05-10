@@ -3,7 +3,7 @@ import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divid
 import EditModal from '../Edit-Modal/EditModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { AdminStyle } from './AdminStyle';
-import TM from '../../asset/Data/TeamMembers.json'
+import TM from '../../asset/Data/SeaTM.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 import Time from '../Time/Time';
@@ -148,7 +148,7 @@ export default function Admin() {
 
 
   return (
-    <Box sx={{ height: '100%' }}>
+    <Box sx={{ width: '100%', border: '2px solid brown' }}>
       <form id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
         <Box sx={AdminStyle.adminHeader}>
           <img src={Logo} width="90" alt="Will Call Logo" />

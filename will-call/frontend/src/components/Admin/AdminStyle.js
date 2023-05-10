@@ -108,6 +108,7 @@ export const AdminStyle = {
     alignItems: 'center',
     width: '70%',
     position: 'relative',
+    minHeight: '920px'
     // border: '2px solid pink'
   },
   submitButton: {

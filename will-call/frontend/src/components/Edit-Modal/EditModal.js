@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, Modal, Grid, Paper, TextField, InputLabel, Select, MenuItem, } from '@mui/material';
-import TM from '../../asset/Data/TeamMembers.json'
+import TM from '../../asset/Data/VanTM.json'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { EditStyle } from '../Edit-Modal/EditStyle';
 import { AdminStyle } from '../Admin/AdminStyle';
