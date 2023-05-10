@@ -4,7 +4,7 @@ const TicketModel = require('../models/ticket');
 async function getAllTickets(req, res, next) {
   // console.log('getAllTickets', req);
   try {
-    const allTickets = await TicketModel.find({});
+    const allTickets = await TicketModel.find({ storeData: false });
 
     res.status(200).send(allTickets);
   } catch (err) {
@@ -22,7 +22,8 @@ async function createTicket(req, res, next) {
       orderNumber: req.body.ticket.orderNumber,
       customerPO: req.body.ticket.customerPO,
       TimeStamp: req.body.ticket.TimeStamp,
-      TeamMember: req.body.ticket.TeamMember
+      TeamMember: req.body.ticket.TeamMember,
+      storeData: req.body.ticket.storeData
     });
     res.status(200).send(newTicket);
     // }
@@ -52,7 +53,27 @@ async function handleUpdateTicket(req, res) {
   try {
     const result = await TicketModel.findOneAndUpdate(
       { _id: req.params.id },
-      req.body.ticket
+      req.body.ticket = {
+        addedTMTimeStamp: new Date().getTime()
+      }
+
+    );
+    res.status(200).send(result);
+  } catch (error) {
+    next(error.message);
+  }
+}
+
+async function handleDataStorage(req, res) {
+  console.log('Data Hit::', req.body.ticket)
+  console.log('UPDATED!!::', req.params)
+  try {
+    const result = await TicketModel.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body.ticket = {
+        storeData: true,
+        completedTimeStamp: new Date().getTime()
+      }
 
     );
     res.status(200).send(result);
@@ -62,4 +83,5 @@ async function handleUpdateTicket(req, res) {
 }
 
 
-module.exports = { getAllTickets, createTicket, deleteTicket, handleUpdateTicket };
+
+module.exports = { getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage };
