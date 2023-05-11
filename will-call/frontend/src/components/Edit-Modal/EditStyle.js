@@ -40,28 +40,26 @@ export const EditStyle = {
       boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     },
   },
-  modalButton: {
-    color: 'Tomato',
-    //  backgroundColor: '#B8B8B8',
-    backgroundColor: '#F5F5F5',
-    marginTop: 5,
-    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)', '&:hover': {
-      backgroundColor: 'DimGray',
-      color: 'WHiteSmoke',
-      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
-    },
-  },
-  editModalButton: {
-    // border: '1px solid Tomato',
-    // backgroundColor: '#B8B8B8',
-    backgroundColor: 'WhiteSmoke',
-    color: 'Tomato',
-    borderRadius: '10px',
-    boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+  threeDots: {
+
     '&:hover': {
       backgroundColor: 'white',
-      color: 'Tomato',
-      boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+      color: '#676767',
+
+      // boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    },
+  },
+
+  editModalButton: {
+    backgroundColor: 'white',
+    color: '#D3D3D3',
+    borderRadius: '10px',
+    marginTop: 3,
+    // boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
+    '&:hover': {
+      backgroundColor: 'transparent',
+
+
     },
   }
 }

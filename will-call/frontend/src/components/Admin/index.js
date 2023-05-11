@@ -165,7 +165,7 @@ export default function Admin() {
 
 
   return (
-    <Box sx={{ width: '100%', border: '2px solid brown' }}>
+    <Box sx={{ width: '100%' }}>
       <form id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
         <Box sx={AdminStyle.adminHeader}>
           <img src={Logo} width="90" alt="Will Call Logo" />
@@ -208,7 +208,8 @@ export default function Admin() {
             <Divider sx={{ width: '90%', margin: 1, bgcolor: 'GhostWhite' }} />
             <Button sx={AdminStyle.submitButton} type='submit' onClick={timeFunction}>Submit</Button>
           </Box>
-
+          {/* <Divider orientation='vertical' sx={{ width: 5, height: 1200, margin: 2, bgcolor: 'WhiteSmoke', marginBottom: 1, }} /> */}
+          <Box sx={{ width: 4, height: 920, backgroundColor: 'whitesmoke' }}></Box>
           <Box sx={AdminStyle.displayBox}>
             <Box sx={AdminStyle.resultBox}>
 

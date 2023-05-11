@@ -21,7 +21,7 @@ export const AdminStyle = {
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '30%',
-    border: '3px solid WhiteSmoke',
+    // border: '3px solid WhiteSmoke',
     paddingTop: 1,
     paddingBottom: 1,
     // backgroundColor: '#C8744F',
@@ -29,11 +29,13 @@ export const AdminStyle = {
     marginBottom: 1,
     // height: '80%',
     // backgroundColor: 'pink'
+    // border: '2px solid purple',
+
   },
   customerInfoBox: {
     // marginTop: 1,
     backgroundColor: 'white',
-    borderRadius: 5,
+    borderRadius: 3,
     padding: 1,
     display: 'flex',
     flexDirection: 'column',
@@ -41,7 +43,9 @@ export const AdminStyle = {
     width: '60%',
     // border: '3px solid pink',
     // height: '90%',
-    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+    boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+
+    // boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
   },
   customerTextField: {
     width: '60%',
@@ -62,8 +66,10 @@ export const AdminStyle = {
   },
   cardContainer: {
     margin: 1,
-    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
-    // backgroundColor: 'blue',
+    boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+    '&:hover': {
+      boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+    },
     // border: '2px solid pink',
 
     height: '115px',
@@ -114,6 +120,10 @@ export const AdminStyle = {
   submitButton: {
     color: '#C8744F',
     backgroundColor: 'black',
+    '&:hover': {
+      boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+
+    }
   },
   resultBox: {
     borderRadius: 5,
