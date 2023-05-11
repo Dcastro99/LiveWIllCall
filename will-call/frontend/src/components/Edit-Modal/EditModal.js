@@ -61,7 +61,7 @@ export default function EditModal({ ticket, handleUpdateTicket }) {
 
   return (
     <div>
-      <Button sx={AdminStyle.editButton} onClick={handleOpen}><MoreHorizIcon /></Button>
+      <Button sx={EditStyle.editModalButton} onClick={handleOpen}><MoreHorizIcon sx={EditStyle.threeDots} /></Button>
       <Modal
         open={open}
         onClose={handleClose}
