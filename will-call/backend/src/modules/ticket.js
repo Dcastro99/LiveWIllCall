@@ -53,9 +53,7 @@ async function handleUpdateTicket(req, res) {
   try {
     const result = await TicketModel.findOneAndUpdate(
       { _id: req.params.id },
-      req.body.ticket = {
-        addedTMTimeStamp: new Date().getTime()
-      }
+      req.body.ticket
 
     );
     res.status(200).send(result);
