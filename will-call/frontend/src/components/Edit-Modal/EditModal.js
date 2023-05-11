@@ -3,7 +3,6 @@ import { Box, Button, Typography, Modal, Grid, Paper, TextField, InputLabel, Sel
 import TM from '../../asset/Data/VanTM.json'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { EditStyle } from '../Edit-Modal/EditStyle';
-import { AdminStyle } from '../Admin/AdminStyle';
 
 const style = {
   position: 'absolute',
@@ -27,6 +26,7 @@ export default function EditModal({ ticket, handleUpdateTicket }) {
   const [newPO, setNewPO] = useState('')
   const [time, setTime] = useState(null)
 
+  console.log('ticket=====>', ticket)
 
   useEffect(() => {
     setTime(ticket.TimeStamp)
@@ -50,7 +50,8 @@ export default function EditModal({ ticket, handleUpdateTicket }) {
       orderNumber: newOrderNumber,
       customerPO: newPO,
       TimeStamp: time,
-      TeamMember: updatedTM
+      TeamMember: updatedTM,
+      storeData: ticket.storeData
     }
     console.log('updatedTicket', updatedTicket)
     handleUpdateTicket(updatedTicket)
