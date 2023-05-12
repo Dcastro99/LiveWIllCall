@@ -66,13 +66,14 @@ export const AdminStyle = {
   },
   cardContainer: {
     margin: 1,
+
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
     '&:hover': {
       boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
     },
     // border: '2px solid pink',
+    height: '100%',
 
-    height: '115px',
   },
   cardContainerClicked: {
     margin: 1,
@@ -80,6 +81,7 @@ export const AdminStyle = {
     backgroundColor: 'black',
     color: 'GhostWhite',
     border: '2px solid rgba(275, 192, 147)',
+    // border: '2px solid black',
 
     height: '115px',
   },
@@ -101,6 +103,7 @@ export const AdminStyle = {
     justifyContent: 'center',
     // alignItems: 'center',
     marginTop: 1,
+    // border: '2px solid black',
 
     fontSize: '18px',
   },
@@ -114,7 +117,7 @@ export const AdminStyle = {
     alignItems: 'center',
     width: '70%',
     position: 'relative',
-    minHeight: '920px'
+    minHeight: '920px',
     // border: '2px solid pink'
   },
   submitButton: {
