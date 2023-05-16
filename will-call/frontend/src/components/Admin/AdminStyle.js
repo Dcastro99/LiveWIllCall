@@ -91,7 +91,6 @@ export const AdminStyle = {
     // borderRadius: '4px'
   },
   cardContent: {
-    // backgroundColor: 'pink',
 
     padding: 0,
     '&: last-child': {
