@@ -58,17 +58,6 @@ export default function Admin() {
     setTickets(oldTickets);
   }
 
-  //------------------- TICKET-DELETE-CRUD -------------------//
-  // const handleDeleteTicket = async (id) => {
-  //   // console.log('delete in HERE', id)
-  //   const config = {
-  //     method: 'DELETE',
-  //     baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
-  //     url: `/ticket/${id}`,
-  //   }
-  //   const response = await axios(config)
-  //   console.log('response', response)
-  // }
 
   //------------------- TICKET-UPDATE-CRUD -------------------//
   const handleUpdateTicket = async (ticket) => {
@@ -88,8 +77,6 @@ export default function Admin() {
         return t;
       }
     })
-    console.log('oldTickets', oldTickets)
-    console.log('updatedTickets', updatedTickets)
     setTickets(updatedTickets);
 
   }
@@ -193,12 +180,10 @@ export default function Admin() {
                     <Card
                       sx={index === clicked ? AdminStyle.cardContainerClicked : AdminStyle.cardContainer}
                       key={member.id} >
-                      {/* <CardActionArea> */}
                       <CardMedia component="img" sx={AdminStyle.carImg} image={member.image} alt={member.name} />
                       <CardContent sx={AdminStyle.cardContent}>
                         <Typography sx={AdminStyle.carName} variant="h5">{member.name}</Typography>
                       </CardContent>
-                      {/* </CardActionArea> */}
                     </Card>
                   </Button>
                 )) : <Typography variant="h5">No Team Members</Typography>}
@@ -215,7 +200,7 @@ export default function Admin() {
 
               {/*------------------- DISPLAY-TEAM-MEMBER-CARDS -------------------*/}
 
-              {tickets.length && tickets.map((ticket) => (
+              {tickets.length > 0 ? tickets.length && tickets.map((ticket) => (
 
                 <Box sx={AdminStyle.resultsMainBox} key={ticket._id} >
                   {/* {console.log('ticket]]]]', ticket)} */}
@@ -257,12 +242,13 @@ export default function Admin() {
                   </Box>
 
                 </Box>
-              ))
+              )) :
+                <Typography sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} variant="h5">No Tickets</Typography>
               }
             </Box>
           </Box>
         </Box >
-      </form>
+      </form >
     </Box >
   )
 }

@@ -44,7 +44,7 @@ export default function Display() {
   return (
     <Box sx={DisplayStyle.displayBox}>
       <Carousel fade interval={4000} controls={false} >
-        {customers.map((ticket) => (
+        {customers.length > 0 ? customers.map((ticket) => (
           <Carousel.Item style={{ display: 'flex', justifyContent: 'center' }}>
             <Box sx={DisplayStyle.resultsMainBox}>
               <Card sx={DisplayStyle.resultsContainer}
@@ -66,9 +66,15 @@ export default function Display() {
               </Box>
             </Box>
           </Carousel.Item>
-        ))
+        )) :
+          <Carousel.Item style={{ display: 'flex', justifyContent: 'center' }}>
+            <Box sx={DisplayStyle.resultsMainBoxEmpty}>
+              <Typography variant='h2'>Welcome To Gensco</Typography>
+              <Typography variant='h2' sx={{ fontFamily: 'Dancing Script', fontWeight: 'bold' }}>Live Will Call</Typography>
+            </Box>
+          </Carousel.Item>
         }
-      </Carousel>
-    </Box>
+      </Carousel >
+    </Box >
   )
 }
