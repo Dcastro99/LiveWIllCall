@@ -5,6 +5,7 @@ export const DisplayStyle = {
     margin: 5,
     display: 'flex',
     flexDirection: 'row',
+
     alignItems: 'center',
     width: '100%',
     height: '100%',
@@ -46,6 +47,12 @@ export const DisplayStyle = {
   },
   reultText: {
     fontWeight: 'bold',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    minWidth: '400px',
+    // border: '1px solid black',
 
   },
   resultCustomerBoxBorder: {
@@ -63,15 +70,30 @@ export const DisplayStyle = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '80%',
-    height: '100%',
-    margin: 2
+    // width: '100%',
+    // height: '100%',
+    margin: 2,
+    marginLeft: 20,
   },
   resultCustomerInfoText: {
     marginLeft: 2,
     textShadow: '1px 2px 6px orange',
+    // display: 'flex',
+    // alignItems: 'center',
     display: 'flex',
-    alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    // border: '1px solid black',
+    overFlow: 'hidden',
+  },
+  resultCustomerInfoText2: {
+    marginLeft: 2,
+    textShadow: '1px 2px 6px orange',
+    display: 'flex',
+    alignItems: 'center',
+
+    overFlow: 'hidden',
   },
   deleteButton: {
     backgroundColor: 'salmon',

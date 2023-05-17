@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, Card, CardMedia, CardContent, } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent, Backdrop } from '@mui/material';
 import { DisplayStyle } from './DisplayStyle';
 import Carousel from 'react-bootstrap/Carousel';
 import axios from 'axios';
@@ -10,9 +10,11 @@ export default function Display() {
   const [tickets, setTickets] = useState([])
 
   useEffect(() => {
+
     setInterval(() => {
       handleGetAllTickets();
     }, 3000);
+
   }, []);
 
 
@@ -41,9 +43,10 @@ export default function Display() {
 
 
 
+
   return (
     <Box sx={DisplayStyle.displayBox}>
-      <Carousel fade interval={4000} controls={false} >
+      <Carousel fade interval={4000} controls={false} style={{ width: '100%' }} >
         {customers.length > 0 ? customers.map((ticket) => (
           <Carousel.Item style={{ display: 'flex', justifyContent: 'center' }}>
             <Box sx={DisplayStyle.resultsMainBox}>
@@ -61,7 +64,7 @@ export default function Display() {
                 </Box>
                 <Box sx={DisplayStyle.resultCustomerBoxBorder}>
                   <Typography sx={DisplayStyle.reultText} variant='h3'>Customer PO :</Typography>
-                  <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerPO}</Typography>
+                  <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText2} >{ticket.customerPO}</Typography>
                 </Box>
               </Box>
             </Box>
