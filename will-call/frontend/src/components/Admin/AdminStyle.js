@@ -27,13 +27,12 @@ export const AdminStyle = {
     // backgroundColor: '#C8744F',
     marginTop: 1,
     marginBottom: 1,
-    // height: '80%',
+
     // backgroundColor: 'pink'
     // border: '2px solid purple',
 
   },
   customerInfoBox: {
-    // marginTop: 1,
     backgroundColor: 'white',
     borderRadius: 3,
     padding: 1,
@@ -56,7 +55,8 @@ export const AdminStyle = {
     fontWeight: 'bold',
   },
   imgBox: {
-    // borderRadius: 5,
+    // marginTop: -4,
+    // marginBottom: -4,
     display: 'flex',
     flexWrap: 'wrap',
     // flexDirection: 'row',
@@ -107,7 +107,7 @@ export const AdminStyle = {
     fontSize: '18px',
   },
   carButton: {
-    padding: '0px',
+    padding: '0px'
   },
   displayBox: {
     display: 'flex',
