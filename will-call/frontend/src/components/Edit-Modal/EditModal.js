@@ -16,7 +16,7 @@ const style = {
   p: 4,
 };
 
-export default function EditModal({ ticket, handleUpdateTicket }) {
+export default function EditModal({ ticket, handleUpdateTicket, noTM }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,6 +43,10 @@ export default function EditModal({ ticket, handleUpdateTicket }) {
     e.stopPropagation()
 
     let updatedTM = TM.find(tm => tm.name === newTM)
+    console.log('updatedTM', updatedTM)
+    if (updatedTM === undefined) {
+      updatedTM = noTM
+    }
     console.log('updatedTM', updatedTM)
     const updatedTicket = {
       _id: ticket._id,
@@ -84,6 +88,7 @@ export default function EditModal({ ticket, handleUpdateTicket }) {
                   label="Pick Team Member"
                   onChange={(e) => setNewTM(e.target.value)}
                 >
+                  <MenuItem value={noTM.name}><Box sx={{ color: 'grey.500' }}>Pending...</Box></MenuItem>
 
                   {TM.map((tm) => (
                     // console.log('tm', tm),

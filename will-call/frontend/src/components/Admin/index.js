@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider } from '@mui/material';
+import {
+  Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider,
+  Dialog, DialogTitle, DialogActions
+} from '@mui/material';
 import EditModal from '../Edit-Modal/EditModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { AdminStyle } from './AdminStyle';
@@ -7,12 +10,14 @@ import TM from '../../asset/Data/VanTM.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 import Time from '../Time/Time';
+import { light } from '@mui/material/styles/createPalette';
 
 export default function Admin() {
   const [tickets, setTickets] = useState([])
   const [teamMember, setTeamMember] = useState({})
   const [clicked, setClicked] = useState(null)
   const [time, setTime] = useState(null)
+  const [open, setOpen] = useState(false);
 
 
   useEffect(() => {
@@ -105,6 +110,8 @@ export default function Admin() {
     setClicked(index === clicked ? null : index);
   }
 
+
+
   //------------------- TICKET-DELETE -------------------//
   const handleDelete = (tm) => {
     console.log('delete ticket', tm)
@@ -141,7 +148,18 @@ export default function Admin() {
     setTeamMember({})
   }
 
+  const handleOpenDialog = () => {
+    setOpen(true);
+  };
 
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = (ticket) => {
+    handleDelete(ticket)
+    handleCloseDialog();
+  };
 
 
 
@@ -169,31 +187,28 @@ export default function Admin() {
               <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
               <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
             </Box>
-            <Divider sx={{ width: '90%', margin: 2, bgcolor: 'GhostWhite', marginBottom: 1, }} />
-            <Box>
-              <Box sx={AdminStyle.imgBox}>
+            <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1 }} />
+            <Box sx={AdminStyle.imgBox}>
 
-                {/*------------------- ADD-TEAM-MEMBER -------------------*/}
+              {/*------------------- ADD-TEAM-MEMBER -------------------*/}
 
-                {TM.length > 0 ? TM.map((member, index) => (
-                  <Button sx={AdminStyle.carButton} onClick={() => handleTM(member, index)} key={member.id}>
-                    <Card
-                      sx={index === clicked ? AdminStyle.cardContainerClicked : AdminStyle.cardContainer}
-                      key={member.id} >
-                      <CardMedia component="img" sx={AdminStyle.carImg} image={member.image} alt={member.name} />
-                      <CardContent sx={AdminStyle.cardContent}>
-                        <Typography sx={AdminStyle.carName} variant="h5">{member.name}</Typography>
-                      </CardContent>
-                    </Card>
-                  </Button>
-                )) : <Typography variant="h5">No Team Members</Typography>}
-              </Box>
-
+              {TM.length > 0 ? TM.map((member, index) => (
+                <Button sx={AdminStyle.carButton} onClick={() => handleTM(member, index)} key={member.id}>
+                  <Card
+                    sx={index === clicked ? AdminStyle.cardContainerClicked : AdminStyle.cardContainer}
+                    key={member.id} >
+                    <CardMedia component="img" sx={AdminStyle.carImg} image={member.image} alt={member.name} />
+                    <CardContent sx={AdminStyle.cardContent}>
+                      <Typography sx={AdminStyle.carName} variant="h5">{member.name}</Typography>
+                    </CardContent>
+                  </Card>
+                </Button>
+              )) : <Typography variant="h5">No Team Members</Typography>}
             </Box>
-            <Divider sx={{ width: '90%', margin: 1, bgcolor: 'GhostWhite' }} />
+
+            <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1 }} />
             <Button sx={AdminStyle.submitButton} type='submit' onClick={timeFunction}>Submit</Button>
           </Box>
-          {/* <Divider orientation='vertical' sx={{ width: 5, height: 1200, margin: 2, bgcolor: 'WhiteSmoke', marginBottom: 1, }} /> */}
           <Box sx={{ width: 4, height: 920, backgroundColor: 'whitesmoke' }}></Box>
           <Box sx={AdminStyle.displayBox}>
             <Box sx={AdminStyle.resultBox}>
@@ -232,11 +247,29 @@ export default function Admin() {
                         <Time ticketTime={ticket.TimeStamp}></Time></Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                      <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-                        <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket)}><DeleteForeverOutlinedIcon /></Button>
+                      <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2 }}>
+
+                        <Button sx={AdminStyle.deleteButton} variant="contained" color="primary" onClick={handleOpenDialog}>
+                          <DeleteForeverOutlinedIcon />
+                        </Button>
+                        <Dialog open={open} onClose={handleCloseDialog}>
+                          <DialogTitle>Are you sure you want to DELETE?</DialogTitle>
+                          <DialogActions>
+                            <Button sx={{ color: 'grey' }} onClick={handleCloseDialog} color="primary">
+                              Cancel
+                            </Button>
+                            <Button sx={{ color: 'salmon' }} onClick={() => handleSubmit(ticket)} color="primary" autoFocus>
+                              Delete
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
+
+
+
+                        {/* <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket)}><DeleteForeverOutlinedIcon /></Button> */}
                       </Box>
                       <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-                        <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} />
+                        <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} noTM={noTM} />
                       </Box>
                     </Box>
                   </Box>
