@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider,
-  Dialog, DialogTitle, DialogActions
-} from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import EditModal from '../Edit-Modal/EditModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { AdminStyle } from './AdminStyle';
@@ -10,7 +7,6 @@ import TM from '../../asset/Data/VanTM.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 import Time from '../Time/Time';
-import { light } from '@mui/material/styles/createPalette';
 
 export default function Admin() {
   const [tickets, setTickets] = useState([])
@@ -48,7 +44,6 @@ export default function Admin() {
   }
 
 
-
   //------------------- TICKET-CREATE-CRUD -------------------//
   const handleCreateTicket = async (ticket) => {
     const config = {
@@ -83,7 +78,6 @@ export default function Admin() {
       }
     })
     setTickets(updatedTickets);
-
   }
 
   //------------------- TICKET-STORE_DATA-CRUD -------------------//
@@ -101,7 +95,6 @@ export default function Admin() {
     setTickets(tickets.filter(t => t._id !== response.data.ticket._id));
   }
 
-
   //------------------- TEAM-MEMBER -------------------//
   const handleTM = (tm, index) => {
     console.log('tm here', tm, index)
@@ -110,14 +103,12 @@ export default function Admin() {
     setClicked(index === clicked ? null : index);
   }
 
-
-
   //------------------- TICKET-DELETE -------------------//
   const handleDelete = (tm) => {
     console.log('delete ticket', tm)
     setTickets(tickets.filter((id) => id._id !== tm._id))
     handleDataStorage(tm)
-    // handleDeleteTicket(tm._id);
+    handleCloseDialog();
   }
 
   //------------------- TICKET-ADD -------------------//
@@ -148,26 +139,13 @@ export default function Admin() {
     setTeamMember({})
   }
 
+  //------------------- TICKET-DELETE-DIALOGBOX -------------------//
   const handleOpenDialog = () => {
     setOpen(true);
   };
-
   const handleCloseDialog = () => {
     setOpen(false);
   };
-
-  const handleSubmit = (ticket) => {
-    handleDelete(ticket)
-    handleCloseDialog();
-  };
-
-
-
-
-
-  // console.log('NEW ticket', ticket)
-
-
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -252,21 +230,19 @@ export default function Admin() {
                         <Button sx={AdminStyle.deleteButton} variant="contained" color="primary" onClick={handleOpenDialog}>
                           <DeleteForeverOutlinedIcon />
                         </Button>
+
                         <Dialog open={open} onClose={handleCloseDialog}>
                           <DialogTitle>Are you sure you want to DELETE?</DialogTitle>
                           <DialogActions>
                             <Button sx={{ color: 'grey' }} onClick={handleCloseDialog} color="primary">
                               Cancel
                             </Button>
-                            <Button sx={{ color: 'salmon' }} onClick={() => handleSubmit(ticket)} color="primary" autoFocus>
+                            <Button sx={{ color: 'salmon' }} onClick={() => handleDelete(ticket)} color="primary" autoFocus>
                               Delete
                             </Button>
                           </DialogActions>
                         </Dialog>
 
-
-
-                        {/* <Button sx={AdminStyle.deleteButton} onClick={() => handleDelete(ticket)}><DeleteForeverOutlinedIcon /></Button> */}
                       </Box>
                       <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
                         <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} noTM={noTM} />
