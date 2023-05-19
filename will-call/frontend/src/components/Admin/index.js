@@ -14,7 +14,7 @@ export default function Admin() {
   const [clicked, setClicked] = useState(null)
   const [time, setTime] = useState(null)
   const [open, setOpen] = useState(false);
-
+  const [deleteState, setDeleteState] = useState({})
 
   useEffect(() => {
     handleGetAllTickets();
@@ -83,7 +83,7 @@ export default function Admin() {
   //------------------- TICKET-STORE_DATA-CRUD -------------------//
 
   const handleDataStorage = async (ticket) => {
-    console.log('Are you sure you want to update this ticket?', ticket)
+    // console.log('Are you sure you want to update this ticket?', ticket)
     const config = {
       method: 'PUT',
       baseURL: `${process.env.REACT_APP_VERCEL_URL}`,
@@ -91,21 +91,23 @@ export default function Admin() {
       data: { ticket }
     }
     const response = await axios(config)
-    console.log('response', response.data)
+    // console.log('response', response.data)
     setTickets(tickets.filter(t => t._id !== response.data.ticket._id));
   }
 
   //------------------- TEAM-MEMBER -------------------//
   const handleTM = (tm, index) => {
-    console.log('tm here', tm, index)
+    // console.log('tm here', tm, index)
     // timeFunction()
     setTeamMember(tm);
     setClicked(index === clicked ? null : index);
   }
 
   //------------------- TICKET-DELETE -------------------//
-  const handleDelete = (tm) => {
-    console.log('delete ticket', tm)
+  const handleDelete = () => {
+    let tm = deleteState
+    // console.log('delete ticket', tm)
+
     setTickets(tickets.filter((id) => id._id !== tm._id))
     handleDataStorage(tm)
     handleCloseDialog();
@@ -113,7 +115,7 @@ export default function Admin() {
 
   //------------------- TICKET-ADD -------------------//
   const addLiveWillCall = (e) => {
-    console.log('addLiveWillCall - HIT')
+    // console.log('addLiveWillCall - HIT')
     e.preventDefault();
     let tm = '';
     if (teamMember.name === undefined) {
@@ -131,7 +133,7 @@ export default function Admin() {
       TimeStamp: time,
       storeData: false
     }
-    console.log('addLiveWillCall - newTicket', newTicket)
+    // console.log('addLiveWillCall - newTicket', newTicket)
     // console.log('Adding to backend')
     handleCreateTicket(newTicket)
     document.getElementById('ticketForm').reset();
@@ -140,7 +142,9 @@ export default function Admin() {
   }
 
   //------------------- TICKET-DELETE-DIALOGBOX -------------------//
-  const handleOpenDialog = () => {
+  const handleOpenDialog = (ticket) => {
+    // console.log('ticket=> in OPENHANDLE', ticket)
+    setDeleteState(ticket)
     setOpen(true);
   };
   const handleCloseDialog = () => {
@@ -227,17 +231,17 @@ export default function Admin() {
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                       <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2 }}>
 
-                        <Button sx={AdminStyle.deleteButton} variant="contained" color="primary" onClick={handleOpenDialog}>
+                        <Button sx={AdminStyle.deleteButton} variant="contained" color="primary" onClick={() => handleOpenDialog(ticket)} >
                           <DeleteForeverOutlinedIcon />
                         </Button>
 
-                        <Dialog open={open} onClose={handleCloseDialog}>
+                        <Dialog open={open} onClose={handleCloseDialog} >
                           <DialogTitle>Are you sure you want to DELETE?</DialogTitle>
                           <DialogActions>
                             <Button sx={{ color: 'grey' }} onClick={handleCloseDialog} color="primary">
                               Cancel
                             </Button>
-                            <Button sx={{ color: 'salmon' }} onClick={() => handleDelete(ticket)} color="primary" autoFocus>
+                            <Button sx={{ color: 'salmon' }} onClick={() => handleDelete()} color="primary" autoFocus>
                               Delete
                             </Button>
                           </DialogActions>
