@@ -26,7 +26,6 @@ export default function EditModal({ ticket, handleUpdateTicket, noTM }) {
   const [newPO, setNewPO] = useState('')
   const [time, setTime] = useState(null)
 
-  console.log('ticket=====>', ticket)
 
   useEffect(() => {
     setTime(ticket.TimeStamp)
@@ -43,11 +42,9 @@ export default function EditModal({ ticket, handleUpdateTicket, noTM }) {
     e.stopPropagation()
 
     let updatedTM = TM.find(tm => tm.name === newTM)
-    console.log('updatedTM', updatedTM)
     if (updatedTM === undefined) {
       updatedTM = noTM
     }
-    console.log('updatedTM', updatedTM)
     const updatedTicket = {
       _id: ticket._id,
       customerName: newName,
@@ -57,7 +54,6 @@ export default function EditModal({ ticket, handleUpdateTicket, noTM }) {
       TeamMember: updatedTM,
       storeData: ticket.storeData
     }
-    console.log('updatedTicket', updatedTicket)
     handleUpdateTicket(updatedTicket)
 
     setOpen(false);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, Card, CardMedia, CardContent, Backdrop } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent } from '@mui/material';
 import { DisplayStyle } from './DisplayStyle';
 import Carousel from 'react-bootstrap/Carousel';
 import axios from 'axios';
