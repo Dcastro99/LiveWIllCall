@@ -46,7 +46,7 @@ export default function Display() {
 
   return (
     <Box sx={DisplayStyle.displayBox}>
-      <Carousel fade interval={4000} controls={false} style={{ width: '100%' }} >
+      <Carousel fade interval={4000} controls={false} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }} >
         {customers.length > 0 ? customers.map((ticket) => (
           <Carousel.Item style={{ display: 'flex', justifyContent: 'center' }}>
             <Box sx={DisplayStyle.resultsMainBox}>
@@ -70,10 +70,11 @@ export default function Display() {
             </Box>
           </Carousel.Item>
         )) :
-          <Carousel.Item style={{ display: 'flex', justifyContent: 'center' }}>
+          <Carousel.Item style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <Box sx={DisplayStyle.resultsMainBoxEmpty}>
-              <Typography variant='h2'>Welcome To Gensco</Typography>
-              <Typography variant='h2' sx={{ fontFamily: 'Dancing Script', fontWeight: 'bold' }}>Live Will Call</Typography>
+              <Typography variant='h3'>Welcome To Gensco</Typography>
+
+              <Typography variant='h3' sx={{ fontFamily: 'Dancing Script', fontWeight: 'bold' }}>Live Will Call</Typography>
             </Box>
           </Carousel.Item>
         }
