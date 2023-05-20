@@ -20,7 +20,7 @@ export const AdminStyle = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '30%',
+    width: '100%',
     // border: '3px solid WhiteSmoke',
     paddingTop: 1,
     paddingBottom: 1,
