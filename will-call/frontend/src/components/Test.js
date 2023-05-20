@@ -1,36 +1,5 @@
-// {/* <Box sx={DisplayStyle.resultsMainBox}>
-// <Card sx={DisplayStyle.resultsContainer}
-//   key={ticket.id}>
-//   <CardMedia component="img" sx={DisplayStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
-//   <CardContent>
-//     <Typography sx={DisplayStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>
-//   </CardContent>
-// </Card>
-// <Box sx={DisplayStyle.resultCustomerInfoBox}>
-//   {/* <Typography variant='h5' sx={{ display: 'flex', justifyContent: 'center' }}>Currently Helping</Typography> */}
-//   <Box sx={DisplayStyle.resultCustomerBoxBorder}>
-//     <Typography sx={DisplayStyle.reultText} variant='h3'>Currently Helping :</Typography>
-//     <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerName}</Typography>
-//   </Box>
-
-
-//   <Box sx={DisplayStyle.resultCustomerBoxBorder}>
-//     <Typography sx={DisplayStyle.reultText} variant='h3'>Customer PO :</Typography>
-//     <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerPO}</Typography>
-//   </Box>
-
-
-
-// </Box>
-// </Box> */}
-{/* <Box sx={AdminStyle.adminHeader}>
-        <img src={Logo} width="90" alt="Will Call Logo" />
-        <Typography variant="h4">Manage Team Members</Typography>
-        <Box sx={{ width: '50px', height: '50px' }} />
-      </Box>
-      <Box sx={{ width: '30%' }}>
-        <form style={{ border: '4px solid purple' }} id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
-          <Box sx={AdminStyle.adminContainer}>
+{/* <Box sx={{ width: '30%', minHeight: '120%' }}>
+          <form style={{ height: "100%" }} id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
             <Box sx={AdminStyle.inputBox}>
               <Box sx={AdminStyle.customerInfoBox}>
                 <Typography sx={AdminStyle.customerText} variant="h6">Customer Name</Typography>
@@ -40,7 +9,7 @@
                 <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
                 <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
               </Box>
-              <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1 }} />
+              <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 5, marginBottom: 5 }} />
               <Box sx={AdminStyle.imgBox}>
 
                 {/*------------------- ADD-TEAM-MEMBER -------------------*/}
@@ -61,9 +30,8 @@
 }
               </Box >
 
-              <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1 }} />
+              <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 5, marginBottom: 5 }} />
               <Button sx={AdminStyle.submitButton} type='submit' onClick={timeFunction}>Submit</Button>
             </Box >
-          </Box >
-        </form >
-      </Box > * /}
+          </form >
+        </Box > * /}
