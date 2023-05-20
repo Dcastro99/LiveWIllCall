@@ -10,13 +10,12 @@ export default function Display() {
   const [tickets, setTickets] = useState([])
 
   useEffect(() => {
-
     setInterval(() => {
       handleGetAllTickets();
     }, 3000);
-
   }, []);
 
+  //--------------------GET ALL TICKETS--------------------//
 
   const handleGetAllTickets = async () => {
     const config = {
@@ -28,6 +27,7 @@ export default function Display() {
     setTickets(response.data)
   }
 
+  //-----------------ALL CUSTOMERS-----------------//
 
   const customers = tickets.map((ticket) => {
     return {
@@ -46,9 +46,9 @@ export default function Display() {
 
   return (
     <Box sx={DisplayStyle.displayBox}>
-      <Carousel fade interval={4000} controls={false} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }} >
+      <Carousel fade interval={4000} controls={false} style={DisplayStyle.carouselContainer} >
         {customers.length > 0 ? customers.map((ticket) => (
-          <Carousel.Item style={{ display: 'flex', justifyContent: 'center' }}>
+          <Carousel.Item style={DisplayStyle.carouselItemContainer}>
             <Box sx={DisplayStyle.resultsMainBox}>
               <Card sx={DisplayStyle.resultsContainer}
                 key={ticket.id}>
@@ -70,11 +70,10 @@ export default function Display() {
             </Box>
           </Carousel.Item>
         )) :
-          <Carousel.Item style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <Carousel.Item style={DisplayStyle.carouselWelcomeItemContainer}>
             <Box sx={DisplayStyle.resultsMainBoxEmpty}>
               <Typography variant='h3'>Welcome To Gensco</Typography>
-
-              <Typography variant='h3' sx={{ fontFamily: 'Dancing Script', fontWeight: 'bold' }}>Live Will Call</Typography>
+              <Typography variant='h3' sx={DisplayStyle.carouselTypography}>Live Will Call</Typography>
             </Box>
           </Carousel.Item>
         }

@@ -122,5 +122,20 @@ export const DisplayStyle = {
     // height: '100%',
     height: '85vh',
   },
+  //---------------CAROUSEL-STYLE----------------//
 
+  carouselContainer: {
+    display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'
+  },
+  carouselItemContainer: {
+    display: 'flex', justifyContent: 'center'
+  },
+  carouselWelcomeItemContainer: {
+    display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'
+  },
+
+  carouselTypography: {
+    fontFamily: 'Dancing Script',
+    marginTop: 5,
+  },
 }

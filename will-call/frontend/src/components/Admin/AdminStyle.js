@@ -7,12 +7,28 @@ export const AdminStyle = {
     padding: 2,
     backgroundColor: 'WhiteSmoke',
   },
+  adminHeaderRightImgBox: {
+    width: '50px', height: '50px'
+  },
   adminContainer: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
     height: '100%',
     // border: '2px solid purple',
+  },
+
+  dividerContainer: {
+    width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 5, marginBottom: 5
+  },
+
+  //------------FROM_STYLES------------//
+
+  custometInputContainer: {
+    width: '30%', minHeight: '120%'
+  },
+  formStyle: {
+    height: "100%"
   },
   inputBox: {
     borderRadius: 5,
@@ -109,15 +125,8 @@ export const AdminStyle = {
   carButton: {
     padding: '0px'
   },
-  displayBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '70%',
-    position: 'relative',
-    minHeight: '920px',
-    // border: '2px solid pink'
+  dividerBox: {
+    width: 4, height: 920, backgroundColor: 'whitesmoke'
   },
   submitButton: {
     color: '#C8744F',
@@ -127,6 +136,20 @@ export const AdminStyle = {
 
     }
   },
+
+  //------------RESULTS_STYLES------------//
+
+  resultDisplayBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '70%',
+    position: 'relative',
+    minHeight: '920px',
+    // border: '2px solid pink'
+  },
+
   resultBox: {
     borderRadius: 5,
     display: 'flex',
@@ -179,7 +202,10 @@ export const AdminStyle = {
   resultText: {
     fontWeight: 'bold',
   },
-  resultTexfeildContainer: {
+  resultFeilds: {
+    marginLeft: 2, display: 'flex', alignItems: 'center'
+  },
+  resultTextFeildContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -189,6 +215,9 @@ export const AdminStyle = {
   },
   resultTextfield: {
     display: 'flex', flexDirection: "row", marginLeft: 2, border: '2px solid WhiteSmoke', borderRadius: 3, padding: 1, marginBottom: 1
+  },
+  resultEditContainer: {
+    display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
   },
 
   deleteButton: {
@@ -217,7 +246,27 @@ export const AdminStyle = {
 
     },
   },
+  noTicketContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontFamily: 'Dancing Script',
+    fontSize: '50px',
 
+  },
+  noTmBox: {
 
+    borderRadius: 2,
+    padding: 20,
+    margin: 5,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '50%',
+    height: '30%',
+    boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
+
+  }
 
 }
