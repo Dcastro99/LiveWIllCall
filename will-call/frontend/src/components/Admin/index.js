@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider, Dialog, DialogTitle, DialogActions } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import EditModal from '../Edit-Modal/EditModal';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { AdminStyle } from './AdminStyle';
-import TM from '../../asset/Data/VanTM.json'
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
 import Time from '../Time/Time';
+import InputForm from './inputForm';
+import SubmitDiaologBox from './SubmitDiaologBox';
 
 export default function Admin() {
   const [tickets, setTickets] = useState([])
-  const [teamMember, setTeamMember] = useState({})
-  const [clicked, setClicked] = useState(null)
-  const [time, setTime] = useState(null)
   const [open, setOpen] = useState(false);
   const [deleteState, setDeleteState] = useState({})
 
@@ -32,10 +30,6 @@ export default function Admin() {
   }
 
 
-  //------------------- CREATING-TIME-FUNCTION -------------------//
-  const timeFunction = () => {
-    return setTime(Date.now());
-  }
 
   //------------------- IF-NO-TEAMMEMBER-SELECTED -------------------//
   const noTM = {
@@ -95,13 +89,6 @@ export default function Admin() {
     setTickets(tickets.filter(t => t._id !== response.data.ticket._id));
   }
 
-  //------------------- TEAM-MEMBER -------------------//
-  const handleTM = (tm, index) => {
-    // console.log('tm here', tm, index)
-    // timeFunction()
-    setTeamMember(tm);
-    setClicked(index === clicked ? null : index);
-  }
 
   //------------------- TICKET-DELETE -------------------//
   const handleDelete = () => {
@@ -112,33 +99,6 @@ export default function Admin() {
     handleCloseDialog();
   }
 
-  //------------------- TICKET-ADD -------------------//
-  const addLiveWillCall = (e) => {
-    // console.log('addLiveWillCall - HIT')
-    e.preventDefault();
-    let tm = '';
-    if (teamMember.name === undefined) {
-      tm = noTM
-    } else {
-      tm = teamMember
-    }
-
-    const formData = e.target;
-    let newTicket = {
-      customerName: formData.customer_name.value,
-      orderNumber: formData.order_number.value,
-      customerPO: formData.customer_po.value,
-      TeamMember: tm,
-      TimeStamp: time,
-      storeData: false
-    }
-    // console.log('addLiveWillCall - newTicket', newTicket)
-    // console.log('Adding to backend')
-    handleCreateTicket(newTicket)
-    document.getElementById('ticketForm').reset();
-    setClicked('')
-    setTeamMember({})
-  }
 
   //------------------- TICKET-DELETE-DIALOGBOX -------------------//
   const handleOpenDialog = (ticket) => {
@@ -158,41 +118,11 @@ export default function Admin() {
         <Box sx={{ width: '50px', height: '50px' }} />
       </Box>
       <Box sx={AdminStyle.adminContainer}>
-        <Box sx={{ width: '30%', minHeight: '120%' }}>
-          <form style={{ height: "100%" }} id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
-            <Box sx={AdminStyle.inputBox}>
-              <Box sx={AdminStyle.customerInfoBox}>
-                <Typography sx={AdminStyle.customerText} variant="h6">Customer Name</Typography>
-                <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer Name" variant="outlined" name='customer_name' />
-                <Typography sx={AdminStyle.customerText} variant="h6">Order Number</Typography>
-                <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Order Number" variant="outlined" name='order_number' />
-                <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
-                <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
-              </Box>
-              <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 5, marginBottom: 5 }} />
-              <Box sx={AdminStyle.imgBox}>
 
-                {/*------------------- ADD-TEAM-MEMBER -------------------*/}
+        {/*------------------- INPUT-FORM -------------------*/}
 
-                {TM.length > 0 ? TM.map((member, index) => (
-                  <Button sx={AdminStyle.carButton} onClick={() => handleTM(member, index)} key={member.id}>
-                    <Card
-                      sx={index === clicked ? AdminStyle.cardContainerClicked : AdminStyle.cardContainer}
-                      key={member.id} >
-                      <CardMedia component="img" sx={AdminStyle.carImg} image={member.image} alt={member.name} />
-                      <CardContent sx={AdminStyle.cardContent}>
-                        <Typography sx={AdminStyle.carName} variant="h5">{member.name}</Typography>
-                      </CardContent>
-                    </Card>
-                  </Button>
-                )) : <Typography variant="h5">No Team Members</Typography>}
-              </Box>
+        <InputForm handleCreateTicket={handleCreateTicket} />
 
-              <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 5, marginBottom: 5 }} />
-              <Button sx={AdminStyle.submitButton} type='submit' onClick={timeFunction}>Submit</Button>
-            </Box>
-          </form >
-        </Box >
         <Box sx={{ width: 4, height: 920, backgroundColor: 'whitesmoke' }}></Box>
         <Box sx={AdminStyle.displayBox}>
           <Box sx={AdminStyle.resultBox}>
@@ -236,18 +166,7 @@ export default function Admin() {
                       <Button sx={AdminStyle.deleteButton} variant="contained" color="primary" onClick={() => handleOpenDialog(ticket)} >
                         <DeleteForeverOutlinedIcon />
                       </Button>
-
-                      <Dialog open={open} onClose={handleCloseDialog} >
-                        <DialogTitle>Are you sure you want to DELETE?</DialogTitle>
-                        <DialogActions>
-                          <Button sx={{ color: 'grey' }} onClick={handleCloseDialog} color="primary">
-                            Cancel
-                          </Button>
-                          <Button sx={{ color: 'salmon' }} onClick={() => handleDelete()} color="primary" autoFocus>
-                            Delete
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
+                      < SubmitDiaologBox handleDelete={handleDelete} handleCloseDialog={handleCloseDialog} open={open} />
 
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
