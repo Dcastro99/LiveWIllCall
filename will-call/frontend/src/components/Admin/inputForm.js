@@ -3,6 +3,7 @@ import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divid
 import { AdminStyle } from './AdminStyle';
 import TM from '../../asset/Data/VanTM.json'
 import Logo from '../../asset/images/GLogo.png'
+import Admin from '.';
 
 
 
@@ -27,18 +28,13 @@ export default function InputForm({ handleCreateTicket }) {
 
   //------------------- TEAM-MEMBER -------------------//
   const handleTM = (tm, index) => {
-    // console.log('tm here', tm, index)
-    // timeFunction()
     setTeamMember(tm);
     setClicked(index === clicked ? null : index);
   }
 
-  //------------------- TICKET-CREATE-CRUD -------------------//
-
 
   //------------------- TICKET-ADD -------------------//
   const addLiveWillCall = (e) => {
-    // console.log('addLiveWillCall - HIT')
     e.preventDefault();
     let tm = '';
     if (teamMember.name === undefined) {
@@ -56,8 +52,6 @@ export default function InputForm({ handleCreateTicket }) {
       TimeStamp: time,
       storeData: false
     }
-    // console.log('addLiveWillCall - newTicket', newTicket)
-    // console.log('Adding to backend')
     handleCreateTicket(newTicket)
     document.getElementById('ticketForm').reset();
     setClicked('')
@@ -68,8 +62,8 @@ export default function InputForm({ handleCreateTicket }) {
 
   return (
 
-    <Box sx={{ width: '30%', minHeight: '120%' }}>
-      <form style={{ height: "100%" }} id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
+    <Box sx={AdminStyle.custometInputContainer}>
+      <form style={AdminStyle.formStyle} id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
         <Box sx={AdminStyle.inputBox}>
           <Box sx={AdminStyle.customerInfoBox}>
             <Typography sx={AdminStyle.customerText} variant="h6">Customer Name</Typography>
@@ -79,7 +73,7 @@ export default function InputForm({ handleCreateTicket }) {
             <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
             <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
           </Box>
-          <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 5, marginBottom: 5 }} />
+          <Divider sx={AdminStyle.dividerContainer} />
           <Box sx={AdminStyle.imgBox}>
 
             {/*------------------- ADD-TEAM-MEMBER -------------------*/}
@@ -95,10 +89,12 @@ export default function InputForm({ handleCreateTicket }) {
                   </CardContent>
                 </Card>
               </Button>
-            )) : <Typography variant="h5">No Team Members</Typography>}
+            )) :
+              <Typography variant="h5">No Team Members</Typography>
+            }
           </Box>
 
-          <Divider sx={{ width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 5, marginBottom: 5 }} />
+          <Divider sx={AdminStyle.dividerContainer} />
           <Button sx={AdminStyle.submitButton} type='submit' onClick={timeFunction}>Submit</Button>
         </Box>
       </form >

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, Card, CardMedia, CardContent, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
+import { Box, Typography, Card, CardMedia, CardContent } from '@mui/material';
 import EditModal from '../Edit-Modal/EditModal';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { AdminStyle } from './AdminStyle';
 import Logo from '../../asset/images/GLogo.png'
 import axios from 'axios';
@@ -86,7 +85,7 @@ export default function Admin() {
     }
     const response = await axios(config)
     // console.log('response', response.data)
-    setTickets(tickets.filter(t => t._id !== response.data.ticket._id));
+    setTickets(tickets.filter(t => t._id !== response.data._id));
   }
 
 
@@ -112,10 +111,12 @@ export default function Admin() {
 
   return (
     <>
+      {/*------------------- HEADER -------------------*/}
+
       <Box sx={AdminStyle.adminHeader}>
         <img src={Logo} width="90" alt="Will Call Logo" />
         <Typography variant="h4">Manage Team Members</Typography>
-        <Box sx={{ width: '50px', height: '50px' }} />
+        <Box sx={AdminStyle.adminHeaderRightImgBox} />
       </Box>
       <Box sx={AdminStyle.adminContainer}>
 
@@ -123,8 +124,8 @@ export default function Admin() {
 
         <InputForm handleCreateTicket={handleCreateTicket} />
 
-        <Box sx={{ width: 4, height: 920, backgroundColor: 'whitesmoke' }}></Box>
-        <Box sx={AdminStyle.displayBox}>
+        <Box sx={AdminStyle.dividerBox} />
+        <Box sx={AdminStyle.resultDisplayBox}>
           <Box sx={AdminStyle.resultBox}>
 
             {/*------------------- DISPLAY-TEAM-MEMBER-CARDS -------------------*/}
@@ -132,52 +133,51 @@ export default function Admin() {
             {tickets.length > 0 ? tickets.length && tickets.map((ticket) => (
 
               <Box sx={AdminStyle.resultsMainBox} key={ticket._id} >
-                {/* {console.log('ticket]]]]', ticket)} */}
                 <Card sx={AdminStyle.resultsContainer}
                   key={ticket.id}>
-                  {/* {console.log('Map ticket', ticket)} */}
                   <CardMedia component="img" sx={AdminStyle.resultImg} image={ticket.TeamMember.image} alt={ticket.TeamMember.name} />
                   <CardContent>
                     <Typography sx={AdminStyle.resultsTMName} variant="h5">{ticket.TeamMember.name}</Typography>
                   </CardContent>
                 </Card>
-                <Box sx={AdminStyle.resultTexfeildContainer}>
+                <Box sx={AdminStyle.resultTextFeildContainer}>
                   <Box sx={AdminStyle.resultTextfield}>
                     <Typography sx={AdminStyle.resultText} variant='6'>Customer:</Typography>
-                    <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerName}</Typography>
+                    <Typography variant='6' sx={AdminStyle.resultFeilds} >{ticket.customerName}</Typography>
                   </Box>
                   <Box sx={AdminStyle.resultTextfield}>
                     <Typography sx={AdminStyle.resultText} variant='6'>Order Number :</Typography>
-                    <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.orderNumber}</Typography>
+                    <Typography variant='6' sx={AdminStyle.resultFeilds} >{ticket.orderNumber}</Typography>
                   </Box>
 
                   <Box sx={AdminStyle.resultTextfield}>
                     <Typography sx={AdminStyle.resultText} variant='6'>Customer PO :</Typography>
-                    <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >{ticket.customerPO}</Typography>
+                    <Typography variant='6' sx={AdminStyle.resultFeilds} >{ticket.customerPO}</Typography>
                   </Box>
                   <Box sx={AdminStyle.resultTextfield}>
                     <Typography sx={AdminStyle.resultText} variant='6'>Time:</Typography>
-                    <Typography variant='6' sx={{ marginLeft: 2, display: 'flex', alignItems: 'center' }} >
+                    <Typography variant='6' sx={AdminStyle.resultFeilds} >
                       <Time ticketTime={ticket.TimeStamp}></Time></Typography>
                   </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2 }}>
+                  <Box sx={AdminStyle.resultEditContainer}>
 
-                      <Button sx={AdminStyle.deleteButton} variant="contained" color="primary" onClick={() => handleOpenDialog(ticket)} >
-                        <DeleteForeverOutlinedIcon />
-                      </Button>
-                      < SubmitDiaologBox handleDelete={handleDelete} handleCloseDialog={handleCloseDialog} open={open} />
+                    {/* ------------------- TICKET-DELETE-BUTTON ------------------- */}
 
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
-                      <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} noTM={noTM} />
-                    </Box>
+                    < SubmitDiaologBox handleDelete={handleDelete} handleCloseDialog={handleCloseDialog} handleOpenDialog={handleOpenDialog} ticket={ticket} open={open} onClick={() => handleOpenDialog(ticket)} />
+
+                    {/* ------------------- TICKET-EDIT-BUTTON ------------------- */}
+
+                    <EditModal handleUpdateTicket={handleUpdateTicket} ticket={ticket} noTM={noTM} />
+
                   </Box>
                 </Box>
 
               </Box>
             )) :
-              <Typography sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} variant="h5">No Tickets</Typography>
+              <Box sx={AdminStyle.noTmBox}>
+
+                <Typography sx={AdminStyle.noTicketContainer} variant="h5">No Live Tickets</Typography>
+              </Box>
             }
           </Box>
         </Box>

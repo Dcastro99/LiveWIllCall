@@ -61,7 +61,7 @@ export default function EditModal({ ticket, handleUpdateTicket, noTM }) {
 
 
   return (
-    <div>
+    <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2, }}>
       <Button sx={EditStyle.editModalButton} onClick={handleOpen}><MoreHorizIcon sx={EditStyle.threeDots} /></Button>
       <Modal
         open={open}
@@ -110,6 +110,6 @@ export default function EditModal({ ticket, handleUpdateTicket, noTM }) {
 
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }
