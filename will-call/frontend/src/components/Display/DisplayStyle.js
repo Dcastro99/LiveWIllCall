@@ -32,7 +32,7 @@ export const DisplayStyle = {
     // justifyContent: 'center',
     alignItems: 'center',
     width: '30%',
-    marginLeft: 2
+    marginLeft: 2,
   },
 
   resultsTMName: {
@@ -54,18 +54,47 @@ export const DisplayStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    minWidth: '400px',
-    // border: '1px solid black',
+    // minWidth: '400px',
+
+
+  },
+  reultTextPO: {
+    fontWeight: 'bold',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '40%',
+    // minWidth: '400px',
+
+
+  },
+  reultText2: {
+    // marginBottom: 8,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 80,
+    fontFamily: 'Dancing Script',
 
   },
   resultCustomerBoxBorder: {
     display: 'flex',
     flexDirection: "row",
+
     marginLeft: 2,
     border: '2px solid WhiteSmoke',
     borderRadius: 3,
     padding: 1,
-    marginBottom: 1
+    marginBottom: 1,
+    width: '100%',
+  },
+  resultCustomerBoxBorder2: {
+    display: 'flex',
+    flexDirection: "row",
+    marginLeft: 2,
+    borderRadius: 3,
+    padding: 1,
+    marginBottom: 1,
   },
   resultCustomerInfoBox: {
     // border: '1px solid black',
@@ -73,29 +102,32 @@ export const DisplayStyle = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    // width: '100%',
+    // width: '40%',
+    // minWidth: '400px',
     // height: '100%',
     margin: 2,
-    marginLeft: 20,
+    marginLeft: 15,
   },
   resultCustomerInfoText: {
-    marginLeft: 2,
+    // marginLeft: 2,
     textShadow: '1px 2px 6px orange',
-    // display: 'flex',
-    // alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    // minWidth: '0px',
     // border: '1px solid black',
-    overFlow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'clip',
+
   },
   resultCustomerInfoText2: {
-    marginLeft: 2,
+    // marginLeft: 2,
     textShadow: '1px 2px 6px orange',
     display: 'flex',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-
+    width: '60%',
     overFlow: 'hidden',
   },
   deleteButton: {
@@ -120,7 +152,7 @@ export const DisplayStyle = {
     alignItems: 'center',
     width: '100%',
     // height: '100%',
-    height: '85vh',
+    height: '100vh',
   },
   //---------------CAROUSEL-STYLE----------------//
 
@@ -131,7 +163,7 @@ export const DisplayStyle = {
     display: 'flex', justifyContent: 'center'
   },
   carouselWelcomeItemContainer: {
-    display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'
+    display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%'
   },
 
   carouselTypography: {

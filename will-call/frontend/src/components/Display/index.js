@@ -58,12 +58,16 @@ export default function Display() {
                 </CardContent>
               </Card>
               <Box sx={DisplayStyle.resultCustomerInfoBox}>
+                <Box sx={DisplayStyle.resultCustomerBoxBorder2}>
+                  <Typography sx={DisplayStyle.reultText2} variant='h2'>Is currently helping:</Typography>
+                </Box>
+                <Box sx={{ width: '100%', height: 3, backgroundColor: 'whiteSmoke', marginBottom: 6, maxWidth: 580 }} />
                 <Box sx={DisplayStyle.resultCustomerBoxBorder}>
                   <Typography sx={DisplayStyle.reultText} variant='h3'>Customer Name :</Typography>
                   <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerName}</Typography>
                 </Box>
                 <Box sx={DisplayStyle.resultCustomerBoxBorder}>
-                  <Typography sx={DisplayStyle.reultText} variant='h3'>Customer PO :</Typography>
+                  <Typography sx={DisplayStyle.reultTextPO} variant='h3'>Customer PO :</Typography>
                   <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText2} >{ticket.customerPO}</Typography>
                 </Box>
               </Box>
