@@ -141,6 +141,7 @@ export default function Admin() {
                   </CardContent>
                 </Card>
                 <Box sx={AdminStyle.resultTextFeildContainer}>
+
                   <Box sx={AdminStyle.resultTextfield}>
                     <Typography sx={AdminStyle.resultText} variant='6'>Customer:</Typography>
                     <Typography variant='6' sx={AdminStyle.resultFeilds} >{ticket.customerName}</Typography>
