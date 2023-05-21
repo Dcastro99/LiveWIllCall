@@ -54,7 +54,9 @@ export const DisplayStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '40%',
-    // minWidth: '400px',
+
+
+    minWidth: '400px',
 
 
   },
@@ -64,7 +66,7 @@ export const DisplayStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '40%',
-    // minWidth: '400px',
+    minWidth: '400px',
 
 
   },
