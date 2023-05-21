@@ -63,7 +63,7 @@ export default function Display() {
                 </Box>
                 <Box sx={{ width: '100%', height: 3, backgroundColor: 'whiteSmoke', marginBottom: 6, maxWidth: 580 }} />
                 <Box sx={DisplayStyle.resultCustomerBoxBorder}>
-                  <Typography sx={DisplayStyle.reultText} variant='h3'>Customer Name :</Typography>
+                  <Typography sx={DisplayStyle.reultTextName} variant='h3'>Customer Name :</Typography>
                   <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerName}</Typography>
                 </Box>
                 <Box sx={DisplayStyle.resultCustomerBoxBorder}>

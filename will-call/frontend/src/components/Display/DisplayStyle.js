@@ -48,12 +48,12 @@ export const DisplayStyle = {
     height: '100%',
     width: '100%',
   },
-  reultText: {
+  reultTextName: {
     fontWeight: 'bold',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
+    width: '40%',
     // minWidth: '400px',
 
 
@@ -112,13 +112,13 @@ export const DisplayStyle = {
     // marginLeft: 2,
     textShadow: '1px 2px 6px orange',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '100%',
+    width: '60%',
     // minWidth: '0px',
     // border: '1px solid black',
     whiteSpace: 'nowrap',
-    textOverflow: 'clip',
+    overflow: 'hidden',
 
   },
   resultCustomerInfoText2: {
@@ -128,7 +128,8 @@ export const DisplayStyle = {
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '60%',
-    overFlow: 'hidden',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
   deleteButton: {
     backgroundColor: 'salmon',
