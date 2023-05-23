@@ -71,13 +71,18 @@ export const DisplayStyle = {
 
   },
   reultText2: {
-    // marginBottom: 8,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 80,
     fontFamily: 'Dancing Script',
-
+  },
+  reultText3: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 60,
+    // fontFamily: 'Dancing Script',
   },
   resultCustomerBoxBorder: {
     display: 'flex',
@@ -93,6 +98,14 @@ export const DisplayStyle = {
   resultCustomerBoxBorder2: {
     display: 'flex',
     flexDirection: "row",
+    marginLeft: 2,
+    borderRadius: 3,
+    padding: 1,
+    marginBottom: 1,
+  },
+  resultCustomerBoxBorder3: {
+    display: 'flex',
+    flexDirection: "column",
     marginLeft: 2,
     borderRadius: 3,
     padding: 1,
@@ -154,8 +167,9 @@ export const DisplayStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    // height: '100%',
-    height: '100vh',
+    height: '100%',
+    minHeight: '885px',
+    // height: '100vh',
   },
   //---------------CAROUSEL-STYLE----------------//
 

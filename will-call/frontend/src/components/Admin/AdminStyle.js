@@ -14,12 +14,12 @@ export const AdminStyle = {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    height: '100%',
+    // height: '100%',
     // border: '2px solid purple',
   },
 
   dividerContainer: {
-    width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 5, marginBottom: 5
+    width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 3, marginBottom: 3
   },
 
   //------------FROM_STYLES------------//
@@ -78,6 +78,9 @@ export const AdminStyle = {
     // flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    // border: '1px solid black',
+    marginTop: -1,
+    marginBottom: -1,
     // backgroundColor: 'lightGray',
   },
   cardContainer: {
@@ -126,7 +129,7 @@ export const AdminStyle = {
     padding: '0px'
   },
   dividerBox: {
-    width: 4, height: 920, backgroundColor: 'whitesmoke'
+    width: 4, height: 840, backgroundColor: 'whitesmoke'
   },
   submitButton: {
     color: '#C8744F',
@@ -145,8 +148,10 @@ export const AdminStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '70%',
+    height: '100%',
     position: 'relative',
-    minHeight: '920px',
+    minHeight: '840px',
+
     // border: '2px solid pink'
   },
 

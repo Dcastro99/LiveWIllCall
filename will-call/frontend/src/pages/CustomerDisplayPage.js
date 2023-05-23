@@ -6,7 +6,7 @@ import Header from '../components/Header'
 
 export default function CustomerDisplayPage() {
   return (
-    <Box sx={{ width: '100vw', }} >
+    <Box >
       <Header />
       <Display />
       <Footer />
