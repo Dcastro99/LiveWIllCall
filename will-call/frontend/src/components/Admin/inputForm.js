@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import { AdminStyle } from './AdminStyle';
 import TM from '../../asset/Data/VanTM.json'
 import Logo from '../../asset/images/GLogo.png'
@@ -57,6 +58,12 @@ export default function InputForm({ handleCreateTicket }) {
     setTeamMember({})
   }
 
+  const clearFields = () => {
+    document.getElementById('ticketForm').reset();
+    setClicked('')
+    setTeamMember({})
+  }
+
 
 
   return (
@@ -71,6 +78,7 @@ export default function InputForm({ handleCreateTicket }) {
             <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Order Number" variant="outlined" name='order_number' />
             <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
             <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
+            <Button sx={AdminStyle.clearButton} onClick={clearFields}><ClearIcon /></Button>
           </Box>
           <Divider sx={AdminStyle.dividerContainer} />
           <Box sx={AdminStyle.imgBox}>

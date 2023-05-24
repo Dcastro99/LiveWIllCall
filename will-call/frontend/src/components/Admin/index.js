@@ -110,7 +110,7 @@ export default function Admin() {
   };
 
   return (
-    <>
+    <Box sx={AdminStyle.mainAdminCintainer}>
       {/*------------------- HEADER -------------------*/}
 
       <Box sx={AdminStyle.adminHeader}>
@@ -184,6 +184,6 @@ export default function Admin() {
         </Box>
 
       </Box>
-    </>
+    </Box>
   )
 }
