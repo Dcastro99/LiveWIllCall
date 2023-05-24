@@ -10,6 +10,16 @@ export const AdminStyle = {
   adminHeaderRightImgBox: {
     width: '50px', height: '50px'
   },
+
+  mainAdminCintainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    width: '100%',
+    // height: '80%',
+  },
+
+
   adminContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -25,7 +35,7 @@ export const AdminStyle = {
   //------------FROM_STYLES------------//
 
   custometInputContainer: {
-    width: '30%', minHeight: '120%'
+    width: '30%', minHeight: '100%'
   },
   formStyle: {
     height: "100%"
@@ -129,14 +139,22 @@ export const AdminStyle = {
     padding: '0px'
   },
   dividerBox: {
-    width: 4, height: 840, backgroundColor: 'whitesmoke'
+    width: 4, height: 860, backgroundColor: 'whitesmoke'
   },
   submitButton: {
     color: '#C8744F',
     backgroundColor: 'black',
     '&:hover': {
       boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
-
+    }
+  },
+  clearButton: {
+    marginTop: 1,
+    padding: .5,
+    color: '#C8744F',
+    backgroundColor: 'black',
+    '&:hover': {
+      boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
     }
   },
 
@@ -148,9 +166,11 @@ export const AdminStyle = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '70%',
-    height: '100%',
+    // height: '100%',
     position: 'relative',
-    minHeight: '840px',
+
+    // minHeight: '840px',
+    // minHeight: '100%',
 
     // border: '2px solid pink'
   },
@@ -161,13 +181,14 @@ export const AdminStyle = {
     flexWrap: 'wrap',
     justifyContent: 'center',
     width: '100%',
-    height: '100%',
+    // height: '100%',
     // border: '2px solid blue',
     position: 'absolute',
     overflowY: 'scroll',
     scrollbarWidth: 'none', /* Firefox */
     msOverflowStyle: 'none',
-    // maxHeight: '100%',
+    minHeight: '100%',
+    maxHeight: '100%',
     // maxWidth: '100%',
     '&::-webkit-scrollbar': {
       width: '0',
