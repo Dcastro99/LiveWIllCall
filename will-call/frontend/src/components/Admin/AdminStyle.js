@@ -149,11 +149,20 @@ export const AdminStyle = {
     }
   },
   clearButton: {
-    marginTop: 1,
-    padding: .5,
+    // marginTop: 1,
+    borderRadius: 1,
+    cursor: 'pointer',
+    fontSize: '11px',
+    width: '12%',
+    padding: .3,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     color: '#C8744F',
     backgroundColor: 'black',
     '&:hover': {
+      backgroundColor: 'white',
       boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
     }
   },
@@ -289,7 +298,7 @@ export const AdminStyle = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '50%',
+    // width: '100%',
     height: '30%',
     boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
 
