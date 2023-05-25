@@ -72,13 +72,16 @@ export default function InputForm({ handleCreateTicket }) {
       <form style={AdminStyle.formStyle} id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
         <Box sx={AdminStyle.inputBox}>
           <Box sx={AdminStyle.customerInfoBox}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+              <Box sx={AdminStyle.clearButton} onClick={clearFields}>Clear</Box>
+
+            </Box>
             <Typography sx={AdminStyle.customerText} variant="h6">Customer Name</Typography>
             <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer Name" variant="outlined" name='customer_name' />
             <Typography sx={AdminStyle.customerText} variant="h6">Order Number</Typography>
             <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Order Number" variant="outlined" name='order_number' />
             <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
             <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
-            <Button sx={AdminStyle.clearButton} onClick={clearFields}><ClearIcon /></Button>
           </Box>
           <Divider sx={AdminStyle.dividerContainer} />
           <Box sx={AdminStyle.imgBox}>
