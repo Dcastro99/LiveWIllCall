@@ -139,7 +139,8 @@ export const AdminStyle = {
     padding: '0px'
   },
   dividerBox: {
-    width: 4, height: 860, backgroundColor: 'whitesmoke'
+    width: 4,
+    backgroundColor: 'whitesmoke',
   },
   submitButton: {
     color: '#C8744F',

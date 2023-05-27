@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Box, Typography, Card, CardMedia, CardContent, TextField, Button, Divider } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
 import { AdminStyle } from './AdminStyle';
 import TM from '../../asset/Data/VanTM.json'
 import Logo from '../../asset/images/GLogo.png'
@@ -63,6 +62,9 @@ export default function InputForm({ handleCreateTicket }) {
     setClicked('')
     setTeamMember({})
   }
+
+  TM.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
 
 
 
