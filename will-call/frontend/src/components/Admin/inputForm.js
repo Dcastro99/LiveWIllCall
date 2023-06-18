@@ -43,41 +43,88 @@ export default function InputForm({ handleCreateTicket }) {
       customerPO: formData.customer_po.value,
       TeamMember: tm,
       TimeStamp: time,
-      storeData: false
-    }
-    handleCreateTicket(newTicket)
-    document.getElementById('ticketForm').reset();
-    setClicked('')
-    setTeamMember({})
-  }
+      storeData: false,
+    };
+    handleCreateTicket(newTicket);
+    document.getElementById("ticketForm").reset();
+    setClicked("");
+    setTeamMember({});
+  };
 
   const clearFields = () => {
-    document.getElementById('ticketForm').reset();
-    setClicked('')
-    setTeamMember({})
-  }
+    document.getElementById("ticketForm").reset();
+    setClicked("");
+    setTeamMember({});
+  };
 
-  TM.sort((a, b) => (a.name > b.name) ? 1 : -1)
-
-
-
+  TM.sort((a, b) => ((a.name > b.name) ? 1 : -1));
 
   return (
 
-    <Box sx={AdminStyle.custometInputContainer}>
-      <form style={AdminStyle.formStyle} id='ticketForm' onSubmit={(e) => { addLiveWillCall(e) }}>
-        <Box sx={AdminStyle.inputBox}>
-          <Box sx={AdminStyle.customerInfoBox}>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-              <Box sx={AdminStyle.clearButton} onClick={clearFields}>Clear</Box>
+    <Box
+      sx={ AdminStyle.custometInputContainer }
+    >
+      <form
+        style={ AdminStyle.formStyle }
+        id="ticketForm"
+        onSubmit={ (e) => { addLiveWillCall(e); } }
+      >
+        <Box
+          sx={ AdminStyle.inputBox }
+        >
+          <Box
+            sx={ AdminStyle.customerInfoBox }
+          >
+            <Box
+              sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+            >
+              <Box
+                sx={ AdminStyle.clearButton }
+                onClick={ clearFields }
+              >
+                Clear
+              </Box>
 
             </Box>
-            <Typography sx={AdminStyle.customerText} variant="h6">Customer Name</Typography>
-            <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer Name" variant="outlined" name='customer_name' />
-            <Typography sx={AdminStyle.customerText} variant="h6">Order Number</Typography>
-            <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Order Number" variant="outlined" name='order_number' />
-            <Typography sx={AdminStyle.customerText} variant="h6">Customer PO</Typography>
-            <TextField sx={AdminStyle.customerTextField} id="outlined-basic" label="Customer PO" variant="outlined" name='customer_po' />
+            <Typography
+              sx={ AdminStyle.customerText }
+              variant="h6"
+            >
+              Customer Name
+            </Typography>
+            <TextField
+              sx={ AdminStyle.customerTextField }
+              id="outlined-basic"
+              label="Customer Name"
+              variant="outlined"
+              name="customer_name"
+            />
+            <Typography
+              sx={ AdminStyle.customerText }
+              variant="h6"
+            >
+              Order Number
+            </Typography>
+            <TextField
+              sx={ AdminStyle.customerTextField }
+              id="outlined-basic"
+              label="Order Number"
+              variant="outlined"
+              name="order_number"
+            />
+            <Typography
+              sx={ AdminStyle.customerText }
+              variant="h6"
+            >
+              Customer PO
+            </Typography>
+            <TextField
+              sx={ AdminStyle.customerTextField }
+              id="outlined-basic"
+              label="Customer PO"
+              variant="outlined"
+              name="customer_po"
+            />
           </Box>
           <Divider
             sx={ AdminStyle.dividerContainer }

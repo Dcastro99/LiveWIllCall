@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 export default function AdminDisplayPage() {
   return (
-    <Box >
+    <Box>
       <Admin />
       <Footer />
     </Box>

@@ -6,7 +6,7 @@ import Header from "../components/Header";
 
 export default function CustomerDisplayPage() {
   return (
-    <Box >
+    <Box>
       <Header />
       <Display />
       <Footer />

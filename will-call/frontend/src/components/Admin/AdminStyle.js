@@ -11,31 +11,27 @@ export default {
     width: "50px", height: "50px",
   },
 
-  mainAdminCintainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '100%',
-    // height: '80%',
+  mainAdminContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    width: "100%",
   },
 
-
   adminContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    // height: '100%',
-    // border: '2px solid purple',
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
   },
 
   dividerContainer: {
-    width: '90%', bgcolor: 'GhostWhite', opacity: 1, marginTop: 3, marginBottom: 3
+    width: "90%", bgcolor: "GhostWhite", opacity: 1, marginTop: 3, marginBottom: 3,
   },
 
-  //------------FROM_STYLES------------//
+  // ------------FROM_STYLES------------//
 
-  custometInputContainer: {
-    width: '30%', minHeight: '100%'
+  customerInputContainer: {
+    width: "30%", minHeight: "100%",
   },
 
   formStyle: {
@@ -77,17 +73,12 @@ export default {
   },
 
   imgBox: {
-    // marginTop: -4,
-    // marginBottom: -4,
-    display: 'flex',
-    flexWrap: 'wrap',
-    // flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    // border: '1px solid black',
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: -1,
     marginBottom: -1,
-    // backgroundColor: 'lightGray',
   },
 
   cardContainer: {
@@ -135,69 +126,59 @@ export default {
 
   dividerBox: {
     width: 4,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: "whitesmoke",
   },
 
   submitButton: {
-    color: '#C8744F',
-    backgroundColor: 'black',
-    '&:hover': {
-      boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
-    }
+    color: "#C8744F",
+    backgroundColor: "black",
+    "&:hover": {
+      boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
+    },
   },
+
   clearButton: {
-    // marginTop: 1,
     borderRadius: 1,
-    cursor: 'pointer',
-    fontSize: '11px',
-    width: '12%',
-    padding: .3,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: '#C8744F',
-    backgroundColor: 'black',
-    '&:hover': {
-      backgroundColor: 'white',
-      boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
-    }
+    cursor: "pointer",
+    fontSize: "11px",
+    width: "12%",
+    padding: 0.3,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#C8744F",
+    backgroundColor: "black",
+    "&:hover": {
+      backgroundColor: "white",
+      boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
+    },
   },
 
   // ------------RESULTS_STYLES------------//
   resultDisplayBox: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '70%',
-    // height: '100%',
-    position: 'relative',
-
-    // minHeight: '840px',
-    // minHeight: '100%',
-
-    // border: '2px solid pink'
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "70%",
+    position: "relative",
   },
 
   resultBox: {
     borderRadius: 5,
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    width: '100%',
-    // height: '100%',
-    // border: '2px solid blue',
-    position: 'absolute',
-    overflowY: 'scroll',
-    scrollbarWidth: 'none', /* Firefox */
-    msOverflowStyle: 'none',
-    minHeight: '100%',
-    maxHeight: '100%',
-    // maxWidth: '100%',
-    '&::-webkit-scrollbar': {
-      width: '0',
-      height: '0',
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    width: "100%",
+    position: "absolute",
+    overflowY: "scroll",
+    msOverflowStyle: "none",
+    minHeight: "100%",
+    maxHeight: "100%",
+    "&::-webkit-scrollbar": {
+      width: "0",
+      height: "0",
     },
   },
 
@@ -305,14 +286,13 @@ export default {
     borderRadius: 2,
     padding: 20,
     margin: 5,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    // width: '100%',
-    height: '30%',
-    boxShadow: 'rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset'
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "30%",
+    boxShadow: "rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1)"
+    + "0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset",
+  },
 
-  }
-
-}
+};

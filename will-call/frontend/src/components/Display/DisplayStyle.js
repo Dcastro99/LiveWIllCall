@@ -70,19 +70,20 @@ export default {
     width: "40%",
     minWidth: "400px",
   },
-  reultText2: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+
+  resultText2: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     fontSize: 80,
-    fontFamily: 'Dancing Script',
+    fontFamily: "Dancing Script",
   },
-  reultText3: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+
+  resultText3: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     fontSize: 60,
-    // fontFamily: 'Dancing Script',
   },
 
   resultCustomerBoxBorder: {
@@ -104,14 +105,16 @@ export default {
     padding: 1,
     marginBottom: 1,
   },
+
   resultCustomerBoxBorder3: {
-    display: 'flex',
+    display: "flex",
     flexDirection: "column",
     marginLeft: 2,
     borderRadius: 3,
     padding: 1,
     marginBottom: 1,
   },
+
   resultCustomerInfoBox: {
     display: "flex",
     flexDirection: "column",
@@ -132,7 +135,6 @@ export default {
   },
 
   resultCustomerInfoText2: {
-
     textShadow: "1px 2px 6px orange",
     display: "flex",
     justifyContent: "flex-start",
@@ -156,20 +158,13 @@ export default {
   },
 
   displayBox: {
-    // border: '2px solid purple',
-    // paddingBottom: 2,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    minHeight: '885px',
-    // height: '100vh',
-  },
-  //---------------CAROUSEL-STYLE----------------//
-
-    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    minHeight: "885px",
   },
 
   // ---------------CAROUSEL-STYLE----------------//
