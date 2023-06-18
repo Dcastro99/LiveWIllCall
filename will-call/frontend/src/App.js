@@ -6,9 +6,11 @@ import AdminDisplayPage from "./pages/AdminDisplayPage";
 
 function App() {
   return (
-    <Box
-      sx={{ width: "100vw" }}
-    >
+
+    <Box sx={{
+      width: '100vw',
+      height: '100vh',
+    }} >
       <Router>
         <Routes>
           <>

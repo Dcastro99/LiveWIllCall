@@ -5,9 +5,7 @@ import Footer from "../components/Footer";
 
 export default function AdminDisplayPage() {
   return (
-    <Box
-      sx={{ width: "100%", height: "100%" }}
-    >
+    <Box >
       <Admin />
       <Footer />
     </Box>

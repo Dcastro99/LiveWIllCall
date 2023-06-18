@@ -70,13 +70,19 @@ export default {
     width: "40%",
     minWidth: "400px",
   },
-
-  resultText2: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+  reultText2: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     fontSize: 80,
-    fontFamily: "Dancing Script",
+    fontFamily: 'Dancing Script',
+  },
+  reultText3: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 60,
+    // fontFamily: 'Dancing Script',
   },
 
   resultCustomerBoxBorder: {
@@ -98,7 +104,14 @@ export default {
     padding: 1,
     marginBottom: 1,
   },
-
+  resultCustomerBoxBorder3: {
+    display: 'flex',
+    flexDirection: "column",
+    marginLeft: 2,
+    borderRadius: 3,
+    padding: 1,
+    marginBottom: 1,
+  },
   resultCustomerInfoBox: {
     display: "flex",
     flexDirection: "column",
@@ -143,11 +156,18 @@ export default {
   },
 
   displayBox: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
+    // border: '2px solid purple',
+    // paddingBottom: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    minHeight: '885px',
+    // height: '100vh',
+  },
+  //---------------CAROUSEL-STYLE----------------//
 
     height: "100vh",
   },
