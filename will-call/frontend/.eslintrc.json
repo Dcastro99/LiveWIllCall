@@ -19,9 +19,14 @@
         "etc"
     ],
     "rules": {
+        "no-console": "error",
+        "quotes": ["error", "double"],
+        "max-len": ["error", { "code": 100 }],
+        "etc/no-commented-out-code": "error",
+        "no-inline-comments": "error",
+        "no-underscore-dangle": 0,
         "react/prop-types": 0,
         "react/jsx-filename-extension": 0,
-        "no-console": "error",
         "react/jsx-curly-spacing": 
             [
                 2,
@@ -31,11 +36,6 @@
                     "spacing": { "objectLiterals": "never" }
                 }
             ],
-        "quotes": ["error", "double"],
-        "no-inline-comments": "error",
-        "etc/no-commented-out-code": "error",
-        "max-len": ["error", { "code": 100 }],
-        "react/jsx-first-prop-new-line": [2, "always"],
-        "no-underscore-dangle": 0
+        "react/jsx-first-prop-new-line": [2, "always"]
     }
 }

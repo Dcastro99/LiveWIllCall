@@ -1,53 +1,55 @@
-'use strict';
+/* eslint-disable no-console */
+// ----------------DOTENV Config----------------//
 
-//----------------DOTENV Config----------------//
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
+import dotenv from "dotenv";
+import express, { json } from "express";
+import cors from "cors";
 
-//----------------CRUD----------------//
-const { getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage } = require('./src/modules/ticket.js');
+// ----------------CRUD----------------//
+import pkg from "mongoose";
+import {
+  getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage,
+} from "./src/modules/ticket.js";
 
+// ------------- ERROR HANDLING -------------//
+
+import notFoundHandler from "./src/handlers/error404.js";
+import errorHandler from "./src/handlers/error500.js";
+
+// ------------ MONG-DB -------------//
+
+dotenv.config();
 
 // -----------APP USING EXPRESS & JSON -------------//
 const PORT = process.env.PORT || 3002;
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
-//------------- ROUTES -------------//
+// ------------- ROUTES -------------//
 
-//------------- PRODUCT CRUD -------------//
+// ------------- PRODUCT CRUD -------------//
 
-app.get('/allTickets', getAllTickets);
-app.post('/ticket', createTicket);
-app.delete('/ticket/:id', deleteTicket);
-app.put('/ticket/:id', handleUpdateTicket);
-app.put('/data/:id', handleDataStorage);
+app.get("/allTickets", getAllTickets);
+app.post("/ticket", createTicket);
+app.delete("/ticket/:id", deleteTicket);
+app.put("/ticket/:id", handleUpdateTicket);
+app.put("/data/:id", handleDataStorage);
 
-
-//------------- ERROR HANDLING -------------//
-
-const notFoundHandler = require('./src/handlers/error404.js');
-const errorHandler = require('./src/handlers/error500.js');
-
-//------------ MONG-DB -------------//
-
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', true);
-mongoose.connect(process.env.DATABASE_URL);
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  console.log('Mongoose is connected');
+const { set, connect, connection } = pkg;
+set("strictQuery", true);
+connect(process.env.DATABASE_URL);
+const db = connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+  console.log("Mongoose is connected");
 });
 
-app.get('/', (request, response) => {
-  response.send('TESTING Will Call APP!');
+app.get("/", (request, response) => {
+  response.send("TESTING Will Call APP!");
 });
 
-app.get('*', notFoundHandler);
+app.get("*", notFoundHandler);
 app.use(errorHandler);
-
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
