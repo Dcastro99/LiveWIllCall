@@ -248,9 +248,9 @@ export default {
   },
 
   deleteButton: {
-    backgroundColor: '#90EE90',
-    color: 'WhiteSmoke',
-    borderRadius: '10px',
+    backgroundColor: "#90EE90",
+    color: "WhiteSmoke",
+    borderRadius: "10px",
     marginTop: 3,
     boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.3)",
     "&:hover": {
