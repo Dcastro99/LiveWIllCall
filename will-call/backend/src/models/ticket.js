@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
@@ -10,10 +10,10 @@ const ticketSchema = new Schema({
   TeamMember: Object,
   storeData: Boolean,
   completedTimeStamp: Number,
-  addedTMTimeStamp: Number
+  addedTMTimeStamp: Number,
 
 });
 
-const TICKET = mongoose.model('ticket', ticketSchema);
+const TicketModel = mongoose.model("ticket", ticketSchema);
 
-module.exports = TICKET;
+export default TicketModel;

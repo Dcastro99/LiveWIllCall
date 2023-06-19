@@ -1,7 +1,4 @@
-'use strict';
-
-// eslint-disable-next-line no-unused-vars
-module.exports = function (err, req, res, next) {
+export default (err, req, res) => {
   const error = err.message ? err.message : err;
   const errorObject = {
     status: 500,
@@ -9,4 +6,3 @@ module.exports = function (err, req, res, next) {
   };
   res.status(500).json(errorObject);
 };
-
