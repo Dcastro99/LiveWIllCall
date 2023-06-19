@@ -257,7 +257,7 @@ export const AdminStyle = {
   },
 
   deleteButton: {
-    backgroundColor: 'salmon',
+    backgroundColor: '#90EE90',
     color: 'WhiteSmoke',
     borderRadius: '10px',
     marginTop: 3,

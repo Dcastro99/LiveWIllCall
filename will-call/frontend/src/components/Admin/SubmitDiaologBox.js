@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import { AdminStyle } from './AdminStyle';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import DoneIcon from '@mui/icons-material/Done';
 
 
 export default function SubmitDiaologBox({ open, handleCloseDialog, handleDelete, handleOpenDialog, ticket }) {
@@ -9,7 +10,7 @@ export default function SubmitDiaologBox({ open, handleCloseDialog, handleDelete
     <Box sx={{ display: 'flex', flexDirection: "row", marginLeft: 2 }}>
 
       <Button sx={AdminStyle.deleteButton} variant="contained" color="primary" onClick={() => handleOpenDialog(ticket)} >
-        <DeleteForeverOutlinedIcon />
+        <DoneIcon />
       </Button>
       <Dialog open={open} onClose={handleCloseDialog} >
         <DialogTitle>Are you sure you want to DELETE?</DialogTitle>
