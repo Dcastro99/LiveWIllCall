@@ -39,76 +39,76 @@ export default function Display() {
 
   return (
     <Box
-      sx={ DisplayStyle.displayBox }
+      sx={DisplayStyle.displayBox}
     >
       <Carousel
         fade
-        interval={ 4000 }
-        controls={ false }
-        style={ DisplayStyle.carouselContainer }
+        interval={4000}
+        controls={false}
+        style={DisplayStyle.carouselContainer}
       >
-        { customers.length > 0 ? customers.map((ticket) => (
+        {customers.length > 0 ? customers.map((ticket) => (
           <Carousel.Item
-            style={ DisplayStyle.carouselItemContainer }
-            key={ ticket._id }
+            style={DisplayStyle.carouselItemContainer}
+            key={ticket._id}
           >
             <Box
-              sx={ DisplayStyle.resultsMainBox }
-              key={ ticket._id }
+              sx={DisplayStyle.resultsMainBox}
+              key={ticket._id}
             >
               <Card
-                sx={ DisplayStyle.resultsContainer }
-                key={ ticket._id }
+                sx={DisplayStyle.resultsContainer}
+                key={ticket._id}
               >
                 <CardMedia
                   component="img"
-                  sx={ DisplayStyle.resultImg }
-                  image={ ticket.TeamMember.image }
-                  alt={ ticket.TeamMember.name }
+                  sx={DisplayStyle.resultImg}
+                  image={ticket.TeamMember.image}
+                  alt={ticket.TeamMember.name}
                 />
                 <CardContent>
                   <Typography
-                    sx={ DisplayStyle.resultsTMName }
+                    sx={DisplayStyle.resultsTMName}
                     variant="h5"
                   >
-                    { ticket.TeamMember.name }
+                    {ticket.TeamMember.name}
                   </Typography>
                 </CardContent>
               </Card>
               <Box
-                sx={ DisplayStyle.resultCustomerInfoBox }
+                sx={DisplayStyle.resultCustomerInfoBox}
               >
-                { ticket.TeamMember.name === "Pending..." ? (
+                {ticket.TeamMember.name === "Pending..." ? (
                   <Box
-                    sx={ DisplayStyle.resultCustomerBoxBorder3 }
+                    sx={DisplayStyle.resultCustomerBoxBorder3}
                   >
                     <Typography
-                      sx={ DisplayStyle.reultText3 }
+                      sx={DisplayStyle.reultText3}
                       variant="h2"
                     >
                       Waiting on next
                     </Typography>
                     <Typography
-                      sx={ DisplayStyle.reultText3 }
+                      sx={DisplayStyle.reultText3}
                       variant="h2"
                     >
-                      { " " }
+                      {" "}
                       available Team Member
                     </Typography>
                   </Box>
                 ) : (
                   <Box
-                    sx={ DisplayStyle.resultCustomerBoxBorder2 }
+                    sx={DisplayStyle.resultCustomerBoxBorder2}
                   >
 
                     <Typography
-                      sx={ DisplayStyle.reultText2 }
+                      sx={DisplayStyle.reultText2}
                       variant="h2"
                     >
                       Is currently helping:
                     </Typography>
                   </Box>
-                ) }
+                )}
                 <Box
                   sx={{
                     width: "100%",
@@ -119,35 +119,35 @@ export default function Display() {
                   }}
                 />
                 <Box
-                  sx={ DisplayStyle.resultCustomerBoxBorder }
+                  sx={DisplayStyle.resultCustomerBoxBorder}
                 >
                   <Typography
-                    sx={ DisplayStyle.reultTextName }
+                    sx={DisplayStyle.reultTextName}
                     variant="h3"
                   >
                     Customer Name :
                   </Typography>
                   <Typography
                     variant="h3"
-                    sx={ DisplayStyle.resultCustomerInfoText }
+                    sx={DisplayStyle.resultCustomerInfoText}
                   >
-                    { ticket.customerName }
+                    {ticket.customerName}
                   </Typography>
                 </Box>
                 <Box
-                  sx={ DisplayStyle.resultCustomerBoxBorder }
+                  sx={DisplayStyle.resultCustomerBoxBorder}
                 >
                   <Typography
-                    sx={ DisplayStyle.resultTextPO }
+                    sx={DisplayStyle.resultTextPO}
                     variant="h3"
                   >
                     Customer PO :
                   </Typography>
                   <Typography
                     variant="h3"
-                    sx={ DisplayStyle.resultCustomerInfoText2 }
+                    sx={DisplayStyle.resultCustomerInfoText2}
                   >
-                    { ticket.customerPO }
+                    {ticket.customerPO}
                   </Typography>
                 </Box>
               </Box>
@@ -156,11 +156,11 @@ export default function Display() {
         ))
           : (
             <Carousel.Item
-              style={ DisplayStyle.carouselWelcomeItemContainer }
+              style={DisplayStyle.carouselWelcomeItemContainer}
             >
 
               <Box
-                sx={ DisplayStyle.resultsMainBoxEmpty }
+                sx={DisplayStyle.resultsMainBoxEmpty}
               >
                 <Typography
                   variant="h3"
@@ -169,13 +169,13 @@ export default function Display() {
                 </Typography>
                 <Typography
                   variant="h3"
-                  sx={ DisplayStyle.carouselTypography }
+                  sx={DisplayStyle.carouselTypography}
                 >
                   Live Will Call
                 </Typography>
               </Box>
             </Carousel.Item>
-          ) }
+          )}
       </Carousel>
     </Box>
   );

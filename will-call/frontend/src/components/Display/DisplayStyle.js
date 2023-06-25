@@ -184,4 +184,15 @@ export default {
     fontFamily: "Dancing Script",
     marginTop: 5,
   },
+<<<<<<< HEAD
+  LineDeivider: {
+    width: '100%',
+    height: 3,
+    backgroundColor: 'whiteSmoke',
+    marginBottom: 6,
+    maxWidth: 580
+  }
+}
+=======
 };
+>>>>>>> 207be13a0228665eb152028e62b2bb0a50f61b93
