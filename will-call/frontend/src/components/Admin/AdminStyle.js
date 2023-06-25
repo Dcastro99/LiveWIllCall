@@ -199,7 +199,7 @@ export const AdminStyle = {
     msOverflowStyle: 'none',
     minHeight: '100%',
     maxHeight: '100%',
-    // maxWidth: '100%',
+
     '&::-webkit-scrollbar': {
       width: '0',
       height: '0',

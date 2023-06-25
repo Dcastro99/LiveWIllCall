@@ -1,9 +1,7 @@
 import React from 'react'
 import { Box, Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import { AdminStyle } from './AdminStyle';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import DoneIcon from '@mui/icons-material/Done';
-
 
 export default function SubmitDiaologBox({ open, handleCloseDialog, handleDelete, handleOpenDialog, ticket }) {
   return (

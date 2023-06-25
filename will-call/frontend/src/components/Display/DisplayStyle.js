@@ -187,4 +187,11 @@ export const DisplayStyle = {
     fontFamily: 'Dancing Script',
     marginTop: 5,
   },
+  LineDeivider: {
+    width: '100%',
+    height: 3,
+    backgroundColor: 'whiteSmoke',
+    marginBottom: 6,
+    maxWidth: 580
+  }
 }

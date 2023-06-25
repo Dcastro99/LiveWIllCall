@@ -69,7 +69,7 @@ export default function Display() {
 
                     <Typography sx={DisplayStyle.reultText2} variant='h2'>Is currently helping:</Typography>
                   </Box>)}
-                <Box sx={{ width: '100%', height: 3, backgroundColor: 'whiteSmoke', marginBottom: 6, maxWidth: 580 }} />
+                <Box sx={DisplayStyle.LineDeivider} />
                 <Box sx={DisplayStyle.resultCustomerBoxBorder}>
                   <Typography sx={DisplayStyle.reultTextName} variant='h3'>Customer Name :</Typography>
                   <Typography variant='h3' sx={DisplayStyle.resultCustomerInfoText} >{ticket.customerName}</Typography>
