@@ -4,8 +4,8 @@
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+        "plugin:react/recommended"
+        
     ],
     "overrides": [
     ],
@@ -18,24 +18,23 @@
         "react",
         "etc"
     ],
+  
     "rules": {
         "no-console": "error",
-        "quotes": ["error", "double"],
         "max-len": ["error", { "code": 100 }],
-        "etc/no-commented-out-code": "error",
-        "no-inline-comments": "error",
+      
         "no-underscore-dangle": 0,
         "react/prop-types": 0,
         "react/jsx-filename-extension": 0,
-        "react/jsx-curly-spacing": 
-            [
-                2,
-                { 
-                    "when": "always", 
-                    "children": true, 
-                    "spacing": { "objectLiterals": "never" }
-                }
-            ],
+        // "react/jsx-curly-spacing": 
+        //     [
+        //         2,
+        //         { 
+        //             "when": "always", 
+        //             "children": true, 
+        //             "spacing": { "objectLiterals": "never" }
+        //         }
+        //     ],
         "react/jsx-first-prop-new-line": [2, "always"]
     }
 }

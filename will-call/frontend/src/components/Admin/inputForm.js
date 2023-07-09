@@ -62,64 +62,64 @@ export default function InputForm({ handleCreateTicket }) {
   return (
 
     <Box
-      sx={ AdminStyle.custometInputContainer }
+      sx={AdminStyle.customerInputContainer}
     >
       <form
-        style={ AdminStyle.formStyle }
+        style={AdminStyle.formStyle}
         id="ticketForm"
-        onSubmit={ (e) => { addLiveWillCall(e); } }
+        onSubmit={(e) => { addLiveWillCall(e); }}
       >
         <Box
-          sx={ AdminStyle.inputBox }
+          sx={AdminStyle.inputBox}
         >
           <Box
-            sx={ AdminStyle.customerInfoBox }
+            sx={AdminStyle.customerInfoBox}
           >
             <Box
               sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
             >
               <Box
-                sx={ AdminStyle.clearButton }
-                onClick={ clearFields }
+                sx={AdminStyle.clearButton}
+                onClick={clearFields}
               >
                 Clear
               </Box>
 
             </Box>
             <Typography
-              sx={ AdminStyle.customerText }
+              sx={AdminStyle.customerText}
               variant="h6"
             >
               Customer Name
             </Typography>
             <TextField
-              sx={ AdminStyle.customerTextField }
+              sx={AdminStyle.customerTextField}
               id="outlined-basic"
               label="Customer Name"
               variant="outlined"
               name="customer_name"
             />
             <Typography
-              sx={ AdminStyle.customerText }
+              sx={AdminStyle.customerText}
               variant="h6"
             >
               Order Number
             </Typography>
             <TextField
-              sx={ AdminStyle.customerTextField }
+              sx={AdminStyle.customerTextField}
               id="outlined-basic"
               label="Order Number"
               variant="outlined"
               name="order_number"
             />
             <Typography
-              sx={ AdminStyle.customerText }
+              sx={AdminStyle.customerText}
               variant="h6"
             >
               Customer PO
             </Typography>
             <TextField
-              sx={ AdminStyle.customerTextField }
+              sx={AdminStyle.customerTextField}
               id="outlined-basic"
               label="Customer PO"
               variant="outlined"
@@ -127,19 +127,19 @@ export default function InputForm({ handleCreateTicket }) {
             />
           </Box>
           <Divider
-            sx={ AdminStyle.dividerContainer }
+            sx={AdminStyle.dividerContainer}
           />
           <Box
-            sx={ AdminStyle.imgBox }
+            sx={AdminStyle.imgBox}
           >
 
-            { /* ------------------- ADD-TEAM-MEMBER -------------------*/ }
+            { /* ------------------- ADD-TEAM-MEMBER -------------------*/}
 
-            { TM.length > 0 ? TM.map((member, index) => (
+            {TM.length > 0 ? TM.map((member, index) => (
               <Button
-                sx={ AdminStyle.carButton }
-                onClick={ () => handleTM(member, index) }
-                key={ member.id }
+                sx={AdminStyle.carButton}
+                onClick={() => handleTM(member, index)}
+                key={member.id}
               >
                 <Card
                   sx={
@@ -147,22 +147,22 @@ export default function InputForm({ handleCreateTicket }) {
                       ? AdminStyle.cardContainerClicked
                       : AdminStyle.cardContainer
                   }
-                  key={ member.id }
+                  key={member.id}
                 >
                   <CardMedia
                     component="img"
-                    sx={ AdminStyle.carImg }
-                    image={ member.image }
-                    alt={ member.name }
+                    sx={AdminStyle.carImg}
+                    image={member.image}
+                    alt={member.name}
                   />
                   <CardContent
-                    sx={ AdminStyle.cardContent }
+                    sx={AdminStyle.cardContent}
                   >
                     <Typography
-                      sx={ AdminStyle.carName }
+                      sx={AdminStyle.carName}
                       variant="h5"
                     >
-                      { member.name }
+                      {member.name}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -174,16 +174,16 @@ export default function InputForm({ handleCreateTicket }) {
                 >
                   No Team Members
                 </Typography>
-              ) }
+              )}
           </Box>
 
           <Divider
-            sx={ AdminStyle.dividerContainer }
+            sx={AdminStyle.dividerContainer}
           />
           <Button
-            sx={ AdminStyle.submitButton }
+            sx={AdminStyle.submitButton}
             type="submit"
-            onClick={ timeFunction }
+            onClick={timeFunction}
           >
             Submit
           </Button>
