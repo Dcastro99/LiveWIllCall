@@ -22,16 +22,20 @@ export default {
     display: "flex",
     flexDirection: "row",
     width: "100%",
+    // border: "2px solid purple",
   },
 
   dividerContainer: {
     width: "90%", bgcolor: "GhostWhite", opacity: 1, marginTop: 3, marginBottom: 3,
+
   },
 
   // ------------FROM_STYLES------------//
 
   customerInputContainer: {
     width: "30%", minHeight: "100%",
+    // border: "3px solid black",
+
   },
 
   formStyle: {
@@ -59,7 +63,7 @@ export default {
     flexDirection: "column",
     alignItems: "center",
     width: "60%",
-    boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
+    boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
   },
 
   customerTextField: {
