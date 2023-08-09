@@ -11,6 +11,7 @@ async function getAllTickets(req, res, next) {
 }
 
 async function createTicket(req, res, next) {
+  console.log('this is the BODY:',req.body);
   try {
     const newTicket = await TicketModel.create({
       customerName: req.body.ticket.customerName,
@@ -27,6 +28,7 @@ async function createTicket(req, res, next) {
 }
 
 async function deleteTicket(req, res, next) {
+  console.log('deleted ticket!');
   try {
     await TicketModel.deleteOne({
       _id: req.params.id,
