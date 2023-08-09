@@ -9,7 +9,7 @@ import Logo from "../../asset/images/GLogo.png";
 import Time from "../Time/Time";
 import InputForm from "./inputForm";
 import SubmitDialogBox from "./SubmitDialogBox";
-
+//changin things on bit of code at a time
 export default function Admin() {
   const [tickets, setTickets] = useState([]);
   const [open, setOpen] = useState(false);
