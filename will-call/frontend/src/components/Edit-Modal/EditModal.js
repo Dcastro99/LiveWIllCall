@@ -29,8 +29,8 @@ export default function EditModal({ ticket, handleUpdateTicket, noTM }) {
   const [time, setTime] = useState(null);
 
   useEffect(() => {
-    setTime(ticket.TimeStamp);
-    setNewTM(ticket.TeamMember.name);
+    setTime(ticket.timeStamp);
+    setNewTM(ticket.teamMember.name);
     setNewName(ticket.customerName);
     setNewOrderNumber(ticket.orderNumber);
     setNewPO(ticket.customerPO);
@@ -49,8 +49,8 @@ export default function EditModal({ ticket, handleUpdateTicket, noTM }) {
       customerName: newName,
       orderNumber: newOrderNumber,
       customerPO: newPO,
-      TimeStamp: time,
-      TeamMember: updatedTM,
+      timeStamp: time,
+      teamMember: updatedTM,
       storeData: ticket.storeData,
     };
     handleUpdateTicket(updatedTicket);

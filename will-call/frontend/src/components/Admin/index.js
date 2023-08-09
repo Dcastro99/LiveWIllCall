@@ -15,6 +15,8 @@ export default function Admin() {
   const [open, setOpen] = useState(false);
   const [deleteState, setDeleteState] = useState({});
 
+  console.log("tickets>>>>>>>>>", tickets);
+
   const handleGetAllTickets = async () => {
     const config = {
       method: "GET",
@@ -102,7 +104,7 @@ export default function Admin() {
 
   return (
     <Box
-      sx={ AdminStyle.mainAdminCintainer }
+      sx={ AdminStyle.mainAdminContainer }
     >
       { /* ------------------- HEADER -------------------*/ }
 
@@ -157,15 +159,15 @@ export default function Admin() {
                   <CardMedia
                     component="img"
                     sx={ AdminStyle.resultImg }
-                    image={ ticket.TeamMember.image }
-                    alt={ ticket.TeamMember.name }
+                    image={ ticket.teamMember.image }
+                    alt={ ticket.teamMember.name }
                   />
                   <CardContent>
                     <Typography
                       sx={ AdminStyle.resultsTMName }
                       variant="h5"
                     >
-                      { ticket.TeamMember.name }
+                      { ticket.teamMember.name }
                     </Typography>
                   </CardContent>
                 </Card>
@@ -234,7 +236,7 @@ export default function Admin() {
                       sx={ AdminStyle.resultFields }
                     >
                       <Time
-                        ticketTime={ ticket.TimeStamp }
+                        ticketTime={ ticket.timeStamp }
                       />
                     </Typography>
                   </Box>

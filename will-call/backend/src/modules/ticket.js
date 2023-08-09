@@ -17,8 +17,8 @@ async function createTicket(req, res, next) {
       customerName: req.body.ticket.customerName,
       orderNumber: req.body.ticket.orderNumber,
       customerPO: req.body.ticket.customerPO,
-      TimeStamp: req.body.ticket.TimeStamp,
-      TeamMember: req.body.ticket.TeamMember,
+      timeStamp: req.body.ticket.timeStamp,
+      teamMember: req.body.ticket.teamMember,
       storeData: req.body.ticket.storeData,
     });
     res.status(200).send(newTicket);

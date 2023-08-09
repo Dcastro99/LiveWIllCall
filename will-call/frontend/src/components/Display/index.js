@@ -32,8 +32,8 @@ export default function Display() {
     customerName: ticket.customerName,
     customerPO: ticket.customerPO,
     order_number: ticket.orderNumber,
-    TimeStamp: ticket.TimeStamp,
-    TeamMember: ticket.TeamMember,
+    timeStamp: ticket.timeStamp,
+    teamMember: ticket.teamMember,
     _id: ticket._id,
   }));
 
@@ -63,22 +63,22 @@ export default function Display() {
                 <CardMedia
                   component="img"
                   sx={DisplayStyle.resultImg}
-                  image={ticket.TeamMember.image}
-                  alt={ticket.TeamMember.name}
+                  image={ticket.teamMember.image}
+                  alt={ticket.teamMember.name}
                 />
                 <CardContent>
                   <Typography
                     sx={DisplayStyle.resultsTMName}
                     variant="h5"
                   >
-                    {ticket.TeamMember.name}
+                    {ticket.teamMember.name}
                   </Typography>
                 </CardContent>
               </Card>
               <Box
                 sx={DisplayStyle.resultCustomerInfoBox}
               >
-                {ticket.TeamMember.name === "Pending..." ? (
+                {ticket.teamMember.name === "Pending..." ? (
                   <Box
                     sx={DisplayStyle.resultCustomerBoxBorder3}
                   >

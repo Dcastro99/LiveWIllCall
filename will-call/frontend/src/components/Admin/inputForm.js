@@ -41,8 +41,8 @@ export default function InputForm({ handleCreateTicket }) {
       customerName: formData.customer_name.value,
       orderNumber: formData.order_number.value,
       customerPO: formData.customer_po.value,
-      TeamMember: tm,
-      TimeStamp: time,
+      teamMember: tm,
+      timeStamp: time,
       storeData: false,
     };
     handleCreateTicket(newTicket);
