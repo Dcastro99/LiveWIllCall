@@ -15,7 +15,7 @@ export default function Admin() {
   const [open, setOpen] = useState(false);
   const [deleteState, setDeleteState] = useState({});
 
-  console.log("tickets>>>>>>>>>", tickets);
+ 
 
   const handleGetAllTickets = async () => {
     const config = {
