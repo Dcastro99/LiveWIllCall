@@ -238,6 +238,7 @@ export default function Admin() {
                       />
                     </Typography>
                   </Box>
+                 
                   <Box
                     sx={ AdminStyle.resultEditContainer }
                   >
