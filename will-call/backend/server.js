@@ -8,7 +8,7 @@ import cors from "cors";
 // ----------------CRUD----------------//
 import pkg from "mongoose";
 import {
-  getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage,
+  getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage,handleGetDataStorage
 } from "./src/modules/ticket.js";
 
 // ------------- ERROR HANDLING -------------//
@@ -35,6 +35,7 @@ app.post("/ticket", createTicket);
 app.delete("/ticket/:id", deleteTicket);
 app.put("/ticket/:id", handleUpdateTicket);
 app.put("/data/:id", handleDataStorage);
+app.get('/storeData',handleGetDataStorage);
 
 const { set, connect, connection } = pkg;
 set("strictQuery", true);
@@ -48,6 +49,14 @@ db.once("open", () => {
 app.get("/", (request, response) => {
   response.send("TESTING Will Call APP!");
 });
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  
+  // Set the response status code for the error
+  res.status(500).send('Internal Server Error');
+});
+
 
 app.get("*", notFoundHandler);
 app.use(errorHandler);

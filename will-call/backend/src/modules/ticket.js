@@ -40,6 +40,8 @@ async function deleteTicket(req, res, next) {
 }
 
 async function handleUpdateTicket(req, res, next) {
+  console.log('this is the PARAMS:',req.params.id)
+  console.log('this is the BODY:',req.body);
   try {
     const result = await TicketModel.findOneAndUpdate(
       { _id: req.params.id },
@@ -68,6 +70,17 @@ async function handleDataStorage(req, res, next) {
   }
 }
 
+
+async function handleGetDataStorage(req, res, next) {
+  try {
+      const allTickets = await TicketModel.find({ storeData: true });
+
+    res.status(200).send(result);
+  } catch (error) {
+    next(error.message);
+  }
+}
+
 export {
-  getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage,
+  getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage,handleGetDataStorage
 };
