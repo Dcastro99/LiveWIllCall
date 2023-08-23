@@ -8,7 +8,13 @@ import cors from "cors";
 // ----------------CRUD----------------//
 import pkg from "mongoose";
 import {
-  getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage,handleGetDataStorage
+  getAllTickets, 
+  createTicket, 
+  deleteTicket, 
+  handleUpdateTicket, 
+  handleDataStorage,
+  handleGetDataStorage,
+  handleGetHistoryData
 } from "./src/modules/ticket.js";
 
 // ------------- ERROR HANDLING -------------//
@@ -36,6 +42,7 @@ app.delete("/ticket/:id", deleteTicket);
 app.put("/ticket/:id", handleUpdateTicket);
 app.put("/data/:id", handleDataStorage);
 app.get('/storeData',handleGetDataStorage);
+app.post('/history',handleGetHistoryData);
 
 const { set, connect, connection } = pkg;
 set("strictQuery", true);

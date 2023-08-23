@@ -55,6 +55,7 @@ async function handleUpdateTicket(req, res, next) {
 }
 
 async function handleDataStorage(req, res, next) {
+  console.log('this is the BODY in DATA STORAGE:',req.body);
   try {
     const result = await TicketModel.findOneAndUpdate(
       { _id: req.params.id },
@@ -75,12 +76,45 @@ async function handleGetDataStorage(req, res, next) {
   try {
       const allTickets = await TicketModel.find({ storeData: true });
 
-    res.status(200).send(result);
+    res.status(200).send(allTickets);
+  } catch (error) {
+    next(error.message);
+  }
+}
+
+async function handleGetHistoryData(req, res, next) {
+  console.log('specified data::',req.body.teamMember)
+  const foundTickets = [];
+  try {
+    const dataObj = {
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
+      customerName: req.body.customerName.toLowerCase(),
+      teamMember: req.body.teamMember.name.toLowerCase(),
+    };
+
+    const allTickets = await TicketModel.find({ storeData: true });
+
+allTickets.forEach((ticket) => {
+  if (dataObj.customerName=== ticket.customerName) {
+   foundTickets.push(ticket);
+  }
+}
+)
+console.log('all tickets::',foundTickets)
+
+    res.status(200).send(foundTickets);
   } catch (error) {
     next(error.message);
   }
 }
 
 export {
-  getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage,handleGetDataStorage
+  getAllTickets, 
+  createTicket,
+  deleteTicket,
+  handleUpdateTicket,
+  handleDataStorage,
+  handleGetDataStorage,
+  handleGetHistoryData
 };
