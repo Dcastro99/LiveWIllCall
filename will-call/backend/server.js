@@ -7,15 +7,10 @@ import cors from "cors";
 
 // ----------------CRUD----------------//
 import pkg from "mongoose";
-import {
-  getAllTickets, 
-  createTicket, 
-  deleteTicket, 
-  handleUpdateTicket, 
-  handleDataStorage,
-  handleGetDataStorage,
-  handleGetHistoryData
-} from "./src/modules/ticket.js";
+import registerRoute from "./src/routes/register.js";
+import ticketRoute from "./src/routes/ticket.js";
+import loginRoute from "./src/routes/login.js";
+
 
 // ------------- ERROR HANDLING -------------//
 
@@ -32,17 +27,23 @@ const app = express();
 app.use(cors());
 app.use(json());
 
-// ------------- ROUTES -------------//
+// ------------------- ROUTES --------------------//
 
-// ------------- PRODUCT CRUD -------------//
+// ------------- REGISTER ROUTE -------------//
+app.use('/register',registerRoute);
 
-app.get("/allTickets", getAllTickets);
-app.post("/ticket", createTicket);
-app.delete("/ticket/:id", deleteTicket);
-app.put("/ticket/:id", handleUpdateTicket);
-app.put("/data/:id", handleDataStorage);
-app.get('/storeData',handleGetDataStorage);
-app.post('/history',handleGetHistoryData);
+// ------------- TICKET ROUTE -------------//
+app.use("/allTickets", ticketRoute);
+app.use("/ticket", ticketRoute);
+app.use("/ticket/:id", ticketRoute);
+app.use("/data/:id", ticketRoute);
+app.use("/storeData", ticketRoute);
+app.use("/history", ticketRoute);
+
+//------------------ USER ROUTE ------------------//
+app.use("/login", loginRoute);
+
+
 
 const { set, connect, connection } = pkg;
 set("strictQuery", true);
