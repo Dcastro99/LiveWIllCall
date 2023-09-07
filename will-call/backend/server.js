@@ -35,7 +35,7 @@ app.use(json());
 
 // ------------------- COOKIE PARSER --------------------//
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 // ------------------- ROUTES --------------------//
 

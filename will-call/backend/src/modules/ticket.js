@@ -1,6 +1,7 @@
 import TicketModel from "../models/ticket.js";
 
 async function getAllTickets(req, res, next) {
+  console.log('getting all tickets!');
   try {
     const allTickets = await TicketModel.find({ storeData: false });
 
