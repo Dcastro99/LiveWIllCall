@@ -10,12 +10,12 @@ import cookieParser from "cookie-parser";
 
 // ----------------CRUD----------------//
 import pkg from "mongoose";
-import registerRoute from "./src/routes/register.js";
 import ticketRoute from "./src/routes/ticket.js";
-import loginRoute from "./src/routes/login.js";
-import teamMemberRoute from "./src/routes/teamMembers.js";
-import refreshRoute from "./src/routes/refresh.js";
-import logoutRoute from "./src/routes/logout.js";
+// import registerRoute from "./src/routes/register.js";
+// import loginRoute from "./src/routes/login.js";
+// import teamMemberRoute from "./src/routes/teamMembers.js";
+// import refreshRoute from "./src/routes/refresh.js";
+// import logoutRoute from "./src/routes/logout.js";
 
 
 // ------------- ERROR HANDLING -------------//
@@ -40,12 +40,12 @@ app.use(json());
 // ------------------- ROUTES --------------------//
 
 // ------------- REGISTER ROUTE -------------//
-app.use('/register',registerRoute);
+// app.use('/register',registerRoute);
 
 //------------------ USER ROUTE ------------------//
-app.use("/login", loginRoute);
-app.use("/refresh", refreshRoute);
-app.use("/logout", logoutRoute);
+// app.use("/login", loginRoute);
+// app.use("/refresh", refreshRoute);
+// app.use("/logout", logoutRoute);
 
 
 app.use("/allTickets", ticketRoute);
@@ -61,8 +61,8 @@ app.use("/history", ticketRoute);
 
 
 // ------------- TEAM MEMBER ROUTE -------------//
-app.use("/allTMs", teamMemberRoute);
-app.use("/user", teamMemberRoute);
+// app.use("/allTMs", teamMemberRoute);
+// app.use("/user", teamMemberRoute);
 
 
 

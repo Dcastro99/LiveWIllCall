@@ -1,8 +1,8 @@
-import express from 'express';
-const registerRoute = express.Router();
+// import express from 'express';
+// const registerRoute = express.Router();
 
-import { handleNewUser } from '../modules/user.js';
+// import { handleNewUser } from '../modules/user.js';
 
-registerRoute.post('/', handleNewUser);
+// registerRoute.post('/', handleNewUser);
 
-export default registerRoute;
+// export default registerRoute;

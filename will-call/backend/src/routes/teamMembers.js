@@ -1,12 +1,12 @@
-import express from 'express';
-const tmRoute = express.Router();
+// import express from 'express';
+// const tmRoute = express.Router();
 
 
-import { getAllTeamMembers, getUser } from '../modules/teamMembers.js';
+// import { getAllTeamMembers, getUser } from '../modules/teamMembers.js';
 
-tmRoute.route('/')
-.get( getAllTeamMembers)
-.get( getUser)
-;
+// tmRoute.route('/')
+// .get( getAllTeamMembers)
+// .get( getUser)
+// ;
 
-export default tmRoute;
+// export default tmRoute;

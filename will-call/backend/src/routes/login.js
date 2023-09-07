@@ -1,8 +1,8 @@
-import express from 'express';
-const loginRoute = express.Router();
+// import express from 'express';
+// const loginRoute = express.Router();
 
-import { handleLogin } from '../modules/user.js';
+// import { handleLogin } from '../modules/user.js';
 
-loginRoute.post('/', handleLogin);
+// loginRoute.post('/', handleLogin);
 
-export default loginRoute;
+// export default loginRoute;

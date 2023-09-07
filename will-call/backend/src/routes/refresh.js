@@ -1,8 +1,8 @@
-import express from 'express';
-const refreshRoute = express.Router();
+// import express from 'express';
+// const refreshRoute = express.Router();
 
-import { handleRefreshToken } from '../modules/refreshToken.js';
+// import { handleRefreshToken } from '../modules/refreshToken.js';
 
-refreshRoute.get('/', handleRefreshToken);
+// refreshRoute.get('/', handleRefreshToken);
 
-export default refreshRoute;
+// export default refreshRoute;
