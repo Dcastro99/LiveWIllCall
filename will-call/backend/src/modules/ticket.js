@@ -11,7 +11,7 @@ async function getAllTickets(req, res, next) {
 }
 
 async function createTicket(req, res, next) {
-  console.log('this is the BODY:',req.body);
+  console.log('ticket created!:',req.body);
   try {
     const newTicket = await TicketModel.create({
       customerName: req.body.ticket.customerName,

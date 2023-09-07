@@ -8,7 +8,8 @@ const teamMember = new Schema({
     branch_id: Array,
     image: String,
     email: String,
-    permissions: Object
+    permissions: Object,
+    refreshToken: String,
 
 });
 
