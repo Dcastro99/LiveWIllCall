@@ -50,13 +50,13 @@ app.use(json());
 
 
 // ------------- TICKET ROUTE -------------//
-app.use("/ticket", createTicket);
-app.use("/allTickets", getAllTickets);
-app.use("/ticket/:id", deleteTicket);
-app.use("/ticket/:id", handleUpdateTicket);
-app.use("/data/:id", handleDataStorage);
-app.use("/storeData", handleGetDataStorage);
-app.use("/history", handleGetHistoryData);
+app.post("/ticket", createTicket);
+app.get("/allTickets", getAllTickets);
+app.delete("/ticket/:id", deleteTicket);
+app.put("/ticket/:id", handleUpdateTicket);
+app.put("/data/:id", handleDataStorage);
+app.get("/storeData", handleGetDataStorage);
+app.post("/history", handleGetHistoryData);
 
 
 
