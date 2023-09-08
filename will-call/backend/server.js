@@ -10,7 +10,8 @@ import cookieParser from "cookie-parser";
 
 // ----------------CRUD----------------//
 import pkg from "mongoose";
-import ticketRoute from "./src/routes/ticket.js";
+// import ticketRoute from "./src/routes/ticket.js";
+import {getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage, handleGetDataStorage, handleGetHistoryData} from "./src/modules/ticket.js";
 // import registerRoute from "./src/routes/register.js";
 // import loginRoute from "./src/routes/login.js";
 // import teamMemberRoute from "./src/routes/teamMembers.js";
@@ -48,16 +49,26 @@ app.use(json());
 // app.use("/logout", logoutRoute);
 
 
-app.use("/allTickets", ticketRoute);
+// ------------- TICKET ROUTE -------------//
+app.use("/ticket", createTicket);
+app.use("/allTickets", getAllTickets);
+app.use("/ticket/:id", deleteTicket);
+app.use("/ticket/:id", handleUpdateTicket);
+app.use("/data/:id", handleDataStorage);
+app.use("/storeData", handleGetDataStorage);
+app.use("/history", handleGetHistoryData);
+
+
 
 // app.use(verifyJWT);
 
 // ------------- TICKET ROUTE -------------//
-app.use("/ticket", ticketRoute);
-app.use("/ticket/:id", ticketRoute);
-app.use("/data/:id", ticketRoute);
-app.use("/storeData", ticketRoute);
-app.use("/history", ticketRoute);
+// app.use("/allTickets", ticketRoute);  
+// app.use("/ticket", ticketRoute);
+// app.use("/ticket/:id", ticketRoute);
+// app.use("/data/:id", ticketRoute);
+// app.use("/storeData", ticketRoute);
+// app.use("/history", ticketRoute);
 
 
 // ------------- TEAM MEMBER ROUTE -------------//

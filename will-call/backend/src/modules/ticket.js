@@ -74,6 +74,7 @@ async function handleDataStorage(req, res, next) {
 
 
 async function handleGetDataStorage(req, res, next) {
+  console.log('getting all ticket stored: true!');
   try {
       const allTickets = await TicketModel.find({ storeData: true });
 

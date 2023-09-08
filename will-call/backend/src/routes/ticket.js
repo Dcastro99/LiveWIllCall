@@ -11,15 +11,24 @@ import {
     handleGetHistoryData
   } from "../modules/ticket.js";
 
-  ticketRoute.route('/')
+  ticketRoute.get('/', getAllTickets);
+  ticketRoute.post('/', createTicket);
+  ticketRoute.delete('/', deleteTicket);
+  ticketRoute.put('/', handleUpdateTicket);
+  ticketRoute.put('/', handleDataStorage);
+  ticketRoute.get('/', handleGetDataStorage);
+  ticketRoute.post('/', handleGetHistoryData);
+
+  // ticketRoute.route('/')
+
   
-  .get(getAllTickets)
-  .post(createTicket)
-  .delete(deleteTicket)
-  .put(handleUpdateTicket)
-  .put(handleDataStorage)
-  .get(handleGetDataStorage)
-  .post(handleGetHistoryData);
+  // .get(getAllTickets)
+  // .post(createTicket)
+  // .delete(deleteTicket)
+  // .put(handleUpdateTicket)
+  // .put(handleDataStorage)
+  // .get(handleGetDataStorage)
+  // .post(handleGetHistoryData);
 
 
 export default ticketRoute;
