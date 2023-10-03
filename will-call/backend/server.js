@@ -4,20 +4,27 @@
 import dotenv from "dotenv";
 import express, { json } from "express";
 import cors from "cors";
-import verifyJWT from "./src/middleware/verifyJWT.js";
-import cookieParser from "cookie-parser";
+import mysql from "mysql2";
+import util from "util";
+import { checkUser } from "./src/middleware/validate.js";
 
+import cookieParser from "cookie-parser";
+import pkg from "mongoose";
 
 // ----------------CRUD----------------//
-import pkg from "mongoose";
-// import ticketRoute from "./src/routes/ticket.js";
-import {getAllTickets, createTicket, deleteTicket, handleUpdateTicket, handleDataStorage, handleGetDataStorage, handleGetHistoryData} from "./src/modules/ticket.js";
-// import registerRoute from "./src/routes/register.js";
-// import loginRoute from "./src/routes/login.js";
-// import teamMemberRoute from "./src/routes/teamMembers.js";
-// import refreshRoute from "./src/routes/refresh.js";
-// import logoutRoute from "./src/routes/logout.js";
+import {
+    getAllTickets,
+    createTicket,
+    deleteTicket,
+    handleUpdateTicket,
+    handleDataStorage,
+    handleGetDataStorage,
+    handleGetHistoryData,
+} from "./src/modules/MDBticket.js";
 
+import authRouter from "./src/routes/authRoutes.js";
+import userRouter from "./src/routes/userRoutes.js";
+import ticketRouter from "./src/routes/ticketRoutes.js";
 
 // ------------- ERROR HANDLING -------------//
 
@@ -33,21 +40,15 @@ const PORT = process.env.PORT || 3002;
 const app = express();
 app.use(cors());
 app.use(json());
+app.get("*", checkUser);
 
 // ------------------- COOKIE PARSER --------------------//
 
-// app.use(cookieParser());
-
+app.use(cookieParser());
 // ------------------- ROUTES --------------------//
-
-// ------------- REGISTER ROUTE -------------//
-// app.use('/register',registerRoute);
-
-//------------------ USER ROUTE ------------------//
-// app.use("/login", loginRoute);
-// app.use("/refresh", refreshRoute);
-// app.use("/logout", logoutRoute);
-
+app.use(authRouter);
+app.use(userRouter);
+app.use(ticketRouter);
 
 // ------------- TICKET ROUTE -------------//
 app.post("/ticket", createTicket);
@@ -58,47 +59,44 @@ app.put("/data/:id", handleDataStorage);
 app.get("/storeData", handleGetDataStorage);
 app.post("/history", handleGetHistoryData);
 
+const mysqlconnection = mysql.createConnection({
+    host: process.env.HOST,
+    user: "root",
+    password: process.env.PASSWORD,
+    database: "TeamMembers",
+});
 
+mysqlconnection.connect((err) => {
+    if (err) {
+        console.error("Error connecting to MySQL:", err);
+        return;
+    }
+    console.log("Connected to MySQL");
+});
 
-// app.use(verifyJWT);
-
-// ------------- TICKET ROUTE -------------//
-// app.use("/allTickets", ticketRoute);  
-// app.use("/ticket", ticketRoute);
-// app.use("/ticket/:id", ticketRoute);
-// app.use("/data/:id", ticketRoute);
-// app.use("/storeData", ticketRoute);
-// app.use("/history", ticketRoute);
-
-
-// ------------- TEAM MEMBER ROUTE -------------//
-// app.use("/allTMs", teamMemberRoute);
-// app.use("/user", teamMemberRoute);
-
-
-
+// ------------- MONGOOSE -------------//
 const { set, connect, connection } = pkg;
 set("strictQuery", true);
 connect(process.env.DATABASE_URL);
 const db = connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-  console.log("Mongoose is connected");
+    console.log("Mongoose is connected");
 });
 
 app.get("/", (request, response) => {
-  response.send("TESTING Will Call APP!");
+    response.send("TESTING Will Call APP!");
 });
 
 app.use((err, req, res, next) => {
-  console.error(err);
-  
-  // Set the response status code for the error
-  res.status(500).send('Internal Server Error');
-});
+    console.error(err);
 
+    res.status(500).send("Internal Server Error");
+});
 
 app.get("*", notFoundHandler);
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
+
+export { mysqlconnection };
