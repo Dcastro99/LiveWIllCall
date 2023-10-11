@@ -297,9 +297,11 @@ const forgotPassword = async (req, res) => {
                     [hashedToken, resetExpires, email]
                 );
 
-            const resetURL = `${req.protocol}://${req.get(
-                "host"
-            )}/resetPassword/${resetToken}`;
+            const resetURL = `http://localhost:3000/?token=${resetToken}`;
+
+            // const resetURL = `${req.protocol}://${req.get(
+            //     "host"
+            // )}/resetPassword/${resetToken}`;
 
             const messege =
                 "We have received a request to reset your password. Please click on the link below to reset your password. \n\n" +
@@ -336,6 +338,7 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
     console.log("reset password", req.params);
+    console.log("reset password", req.body);
     const token = crypto
         .createHash("sha256")
         .update(req.params.token)
@@ -353,7 +356,7 @@ const resetPassword = async (req, res) => {
             );
         console.log("myuser- getOne", user[0].user_id);
         const id = user[0].user_id;
-        if (id) {
+        if (id !== undefined) {
             if (req.body.password === req.body.passwordConfirm) {
                 const hashedPassword = await bcrypt.hash(req.body.password, 10);
                 await connection

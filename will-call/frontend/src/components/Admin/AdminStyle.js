@@ -37,6 +37,11 @@ export default {
     // border: "3px solid black",
 
   },
+  customerInputContainer2: {
+    width: "100%", minHeight: "100%",
+    // border: "3px solid black",
+
+  },
 
   formStyle: {
     height: "100%",
@@ -54,6 +59,19 @@ export default {
     marginTop: 1,
     marginBottom: 1,
   },
+  inputBox2: {
+    borderRadius: 5,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "78vh",
+    paddingTop: 1,
+    paddingBottom: 1,
+    marginTop: 1,
+    marginBottom: 1,
+  },
 
   customerInfoBox: {
     backgroundColor: "white",
@@ -62,7 +80,18 @@ export default {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    width: "60%",
+    width: "20%",
+    boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
+  },
+  customerInfoBox2: {
+    backgroundColor: "white",
+    borderRadius: 3,
+    paddingTop: 2,
+    paddingBottom: 3,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "30%",
     boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
   },
 

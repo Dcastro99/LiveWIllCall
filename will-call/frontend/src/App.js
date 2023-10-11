@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box } from "@mui/material";
 import DisplayPage from "./pages/CustomerDisplayPage";
+import ForgotPassword from "./pages/forgotPasswordPage";
 import AdminDisplayPage from "./pages/AdminDisplayPage";
 
 function App() {
@@ -16,14 +17,18 @@ function App() {
       <Router>
         <Routes>
           <>
-            <Route
+          <Route
+              path="/"
+              element={ <ForgotPassword /> }
+            />
+            {/* <Route
               path="/admin"
               element={ <AdminDisplayPage /> }
             />
             <Route
               path="/"
               element={ <DisplayPage /> }
-            />
+            /> */}
           </>
         </Routes>
       </Router>

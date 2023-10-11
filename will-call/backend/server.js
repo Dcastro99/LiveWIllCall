@@ -10,7 +10,6 @@ import { checkUser } from "./src/middleware/validate.js";
 import cookieParser from "cookie-parser";
 import pkg from "mongoose";
 
-
 // ----------------CRUD----------------//
 import {
     getAllTickets,
@@ -31,8 +30,6 @@ import ticketRouter from "./src/routes/ticketRoutes.js";
 import notFoundHandler from "./src/handlers/error404.js";
 import errorHandler from "./src/handlers/error500.js";
 
-
-
 // ------------ MONG-DB -------------//
 
 dotenv.config();
@@ -42,12 +39,15 @@ const PORT = process.env.PORT || 3002;
 const app = express();
 app.use(cors());
 app.use(json());
-app.get("*", checkUser);
 
 // ------------------- COOKIE PARSER --------------------//
 
 app.use(cookieParser());
 // ------------------- ROUTES --------------------//
+
+
+
+app.get("*", checkUser);
 app.use(authRouter);
 app.use(userRouter);
 app.use(ticketRouter);
