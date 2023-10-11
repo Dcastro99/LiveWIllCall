@@ -1,10 +1,11 @@
 import { loginErrors } from "../errorHandlers/loginErrors.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { mysqlconnection } from "../../server.js";
+import { establishConnection } from "../../server.js";
 import util from "util";
 import pkg from "validator";
 import { v4 as uuidv4 } from "uuid";
+import { cloudinary } from "../cloudinary.js";
 
 const { isEmail } = pkg;
 
@@ -19,11 +20,14 @@ const createToken = (id) => {
 };
 
 const Mysignup_post = async (req, res) => {
-    console.log("user signing up", req.body);
+    // console.log("user signing up", req.body);
     const uniqueId = uuidv4();
+    let connection;
+    const { email, password, name, empNum, branch_id, image } = req.body;
 
-    const { email, password, name, empNum, branch_id } = req.body;
     try {
+        connection = await establishConnection();
+
         if (!isEmail(email)) {
             return res.status(400).send({ email: "Email is not valid" });
         }
@@ -41,16 +45,16 @@ const Mysignup_post = async (req, res) => {
             password: hashedPassword,
             empNum,
             branch_id,
-            image: "https://i.imgur.com/VkCiPWX.png",
+            image: image ? image : "https://i.imgur.com/VkCiPWX.png",
         };
 
         const userResults = await util
-            .promisify(mysqlconnection.query)
-            .bind(mysqlconnection)("INSERT INTO users SET ?", userData);
+            .promisify(connection.query)
+            .bind(connection)("INSERT INTO users SET ?", userData);
 
         console.log("Results ID:", userResults);
 
-        const [user] = await mysqlconnection
+        const [user] = await connection
             .promise()
             .query("SELECT * FROM users WHERE email = ?", [email]);
 
@@ -60,18 +64,13 @@ const Mysignup_post = async (req, res) => {
             role: 3,
         };
 
-        // console.log("permissionsData:", permissionsData);
-
         const permissionResults = await util
-            .promisify(mysqlconnection.query)
-            .bind(mysqlconnection)(
-            "INSERT INTO permissions SET ?",
-            permissionsData
-        );
+            .promisify(connection.query)
+            .bind(connection)("INSERT INTO permissions SET ?", permissionsData);
 
         console.log("Permission ID:", permissionResults.insertId);
 
-        await util.promisify(mysqlconnection.query).bind(mysqlconnection)(
+        await util.promisify(connection.query).bind(connection)(
             "UPDATE users SET permissions_id = ? WHERE user_id = ?",
             [permissionResults.insertId, user[0].user_id]
         );
@@ -82,14 +81,19 @@ const Mysignup_post = async (req, res) => {
         const errors = loginErrors(error);
         // console.log("errors:", errors);
         res.status(500).send(errors);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
 const mylogin_post = async (req, res) => {
-    console.log("user logging in", req.body);
     const { email, password } = req.body;
+    let connection;
 
     try {
+        connection = await establishConnection();
         if (!isEmail(email)) {
             return res.status(400).send({ email: "Email is not valid" });
         }
@@ -99,21 +103,29 @@ const mylogin_post = async (req, res) => {
                 .send({ password: "Password must be at least 6 characters" });
         }
 
-        const [user] = await mysqlconnection
+        const [user] = await connection
             .promise()
             .query("SELECT * FROM users WHERE email = ?", [email]);
-        console.log("user Login:", user);
+        const id = user[0].user_id;
 
         if (user) {
             const auth = await bcrypt.compare(password, user[0].password);
-            console.log("auth:", auth);
             if (auth) {
-                const token = createToken(user[0].user_id);
+                const token = createToken(id);
                 res.cookie("jwt", token, {
                     httpOnly: true,
                     maxAge: maxAge * 1000,
                 });
-                res.status(200).send({ user: user[0].user_id });
+
+                const [userData] = await connection
+                    .promise()
+                    .query(
+                        "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE p.user_id = ?",
+                        [id]
+                    );
+                console.log("myuser- DATA TO SEND IN LOGIN", userData[0]);
+
+                res.status(200).send(userData[0]);
             } else {
                 res.status(400).send({ password: "Incorrect password!!" });
             }
@@ -123,6 +135,10 @@ const mylogin_post = async (req, res) => {
     } catch (err) {
         const errors = loginErrors(err);
         res.status(400).send(errors);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 

@@ -1,65 +1,96 @@
-import { mysqlconnection } from "../../server.js";
+import { establishConnection } from "../../server.js";
+import crypto from "crypto";
+import bcrypt from "bcrypt";
+import { sendEmail } from "../handlers/email.js";
 
 //-------------------GET ALL USERS-------------------//
 
 const mygetAllUsers = async (req, res, next) => {
     const myUser = res.locals.user;
-    // console.log("myUser- getAll", myUser);
-    
+    console.log("branch id get all users", req.body.branch_id);
+    const id = req.body.branch_id;
+    const idArray = [id];
+    let connection;
 
     try {
-        const [users] = await mysqlconnection
-            .promise()
-            .query("SELECT u.user_id, u.name, u.branch_id,u.email,u.empNum, u.image FROM users u WHERE branch_id = ?", [
-                myUser.branch_id,
-            ]);
+        connection = await establishConnection();
 
-        // console.log("users", users);
-        res.status(200).send(users);
+        const [userData] = await connection
+            .promise()
+            .query(
+                "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE JSON_CONTAINS(CAST(p.branch_ids AS JSON), ?)",
+                [JSON.stringify(idArray)]
+            );
+
+        console.log("userData", userData);
+        res.status(200).send(userData);
     } catch (err) {
         next(err);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
 //-------------------GET ONE USER-------------------//
 
 const mygetUser = async (req, res, next) => {
-    // console.log("req.body", req.body);
-    // const id = req.body._id;
+    console.log("Do i ever get used??????????");
     const myUser = res.locals.user;
-    // console.log("myUser- getAOne", myUser);
-    const id = myUser.user_id;
+    console.log("myuser", myUser);
+
+    let connection;
 
     try {
-        const [user] = await mysqlconnection
-            .promise()
-            .query("SELECT * FROM users WHERE user_id = ?", [id]);
-        // console.log("myuser- getOne", user);
-
-        if (user.length > 0) {
-            const userObj = {
-                name: user[0].name,
-                image: user[0].image,
-                email: user[0].email,
-                empNum: user[0].empNum,
-                branch_id: user[0].branch_id,
-                user_id: user[0].user_id,
-            };
-            console.log("user", userObj);
-            res.status(200).send(userObj);
-        } else {
+        if (myUser === null) {
             res.status(404).send("User not found");
+            return;
+        } else {
+            const id = myUser.user_id;
+            connection = await establishConnection();
+
+            const [user] = await connection
+                .promise()
+                .query(
+                    "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE p.user_id = ?",
+                    [id]
+                );
+            console.log("myuser- getOne", user);
+
+            if (user.length > 0) {
+                const userObj = {
+                    name: user[0].name,
+                    image: user[0].image,
+                    email: user[0].email,
+                    empNum: user[0].empNum,
+                    role: user[0].role,
+                    branch_ids: user[0].branch_ids,
+                    user_id: user[0].user_id,
+                };
+                console.log("user", userObj);
+                res.status(200).send(userObj);
+            } else {
+                res.status(404).send("User not found");
+            }
         }
     } catch (err) {
         next(err);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
 //-------------------ADD PERMISSIONS FUNCTION-------------------//
 
 const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
+    let connection;
     try {
-        const [row] = await mysqlconnection
+        connection = await establishConnection();
+
+        const [row] = await connection
             .promise()
             .query(
                 "SELECT branch_ids, role FROM permissions WHERE user_id = ?",
@@ -85,7 +116,7 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
             ...new Set([...currentBranchIds, newBranchId]),
         ];
         console.log("updatedBranchIds", updatedBranchIds);
-        await mysqlconnection
+        await connection
             .promise()
             .query(
                 "UPDATE permissions SET branch_ids = ?, role = ? WHERE user_id = ?",
@@ -95,6 +126,10 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
         console.log(`Added new branch IDs and role for user ${userId}`);
     } catch (err) {
         console.error(err);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
@@ -102,11 +137,13 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
 
 const add_permissions = async (req, res) => {
     console.log("user adding permissions", req.body);
-
+    let connection;
     const { email, branch_ids, role } = req.body;
 
     try {
-        const [user] = await mysqlconnection
+        connection = await establishConnection();
+
+        const [user] = await connection
             .promise()
             .query("SELECT * FROM users WHERE email = ?", [email]);
         console.log("myuser- getOne", user[0].user_id);
@@ -119,6 +156,10 @@ const add_permissions = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
@@ -126,13 +167,15 @@ const add_permissions = async (req, res) => {
 
 const get_permissions = async (req, res) => {
     console.log("user getting permissions", req.body);
-
+    let connection;
     const { email } = req.body;
     try {
-        const [user] = await mysqlconnection
+        connection = await establishConnection();
+
+        const [user] = await connection
             .promise()
             .query(
-                "SELECT u.user_id,u.email, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE u.email = ?",
+                "SELECT u.user_id,u.email,u.name, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE u.email = ?",
                 [email]
             );
         console.log("user", user[0]);
@@ -146,16 +189,23 @@ const get_permissions = async (req, res) => {
         console.log("User with Permissions:", user[0]);
     } catch (err) {
         console.error(err);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
 //-------------------REMOVE BRANCH ID FUNCTION-------------------//
 
 const removeUserIdBranchId = async (userId, branchId) => {
+    let connection;
     console.log("userId", userId);
     console.log("branchId", branchId);
     try {
-        const [row] = await mysqlconnection
+        connection = await establishConnection();
+
+        const [row] = await connection
             .promise()
             .query("SELECT branch_ids FROM permissions WHERE user_id = ?", [
                 userId,
@@ -169,7 +219,7 @@ const removeUserIdBranchId = async (userId, branchId) => {
             (id) => id !== branchId
         );
 
-        await mysqlconnection
+        await connection
             .promise()
             .query("UPDATE permissions SET branch_ids = ? WHERE user_id = ?", [
                 JSON.stringify(updatedBranchIds),
@@ -179,6 +229,10 @@ const removeUserIdBranchId = async (userId, branchId) => {
         console.log(`Removed branch ID ${branchId} for user ${userId}`);
     } catch (err) {
         console.error(err);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
@@ -186,11 +240,13 @@ const removeUserIdBranchId = async (userId, branchId) => {
 
 const removeBranchId = async (req, res) => {
     console.log("branchId being removed", req.body);
-
+    let connection;
     const { email, branch_ids } = req.body;
 
     try {
-        const [user] = await mysqlconnection
+        connection = await establishConnection();
+
+        const [user] = await connection
             .promise()
             .query("SELECT * FROM users WHERE email = ?", [email]);
         console.log("myuser- getOne", user[0].user_id);
@@ -203,14 +259,127 @@ const removeBranchId = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+};
+
+//-------------------PASSWORD RESET TOKEN-------------------//
+
+const forgotPassword = async (req, res) => {
+    console.log("email", req.body);
+    let connection;
+    const { email } = req.body;
+
+    const resetToken = crypto.randomBytes(20).toString("hex");
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
+
+    const resetExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+    try {
+        connection = await establishConnection();
+
+        const [user] = await connection
+            .promise()
+            .query("SELECT * FROM users WHERE email = ?", [email]);
+        console.log("myuser- getOne", user[0].user_id);
+        const id = user[0].user_id;
+        if (id) {
+            await connection
+                .promise()
+                .query(
+                    "UPDATE users SET password_reset_token = ?, password_reset_exp = ? WHERE email = ?",
+                    [hashedToken, resetExpires, email]
+                );
+
+            const resetURL = `${req.protocol}://${req.get(
+                "host"
+            )}/resetPassword/${resetToken}`;
+
+            const messege =
+                "We have received a request to reset your password. Please click on the link below to reset your password. \n\n" +
+                resetURL +
+                "\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n";
+
+            try {
+                await sendEmail({
+                    email: email,
+                    subject: "Password reset request received",
+                    messege: messege,
+                });
+                res.status(200).send("Email sent successfully");
+            } catch (err) {
+                await connection
+                    .promise()
+                    .query(
+                        "UPDATE users SET password_reset_token = ?, password_reset_exp = ? WHERE email = ?",
+                        [null, null, email]
+                    );
+                res.status(400).send(
+                    "There was an error sending the email. Try again later!"
+                );
+            }
+        } else {
+            res.status(404).send("User not found");
+        }
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+//--------------------PASSWORD RESET-------------------//
+
+const resetPassword = async (req, res) => {
+    console.log("reset password", req.params);
+    const token = crypto
+        .createHash("sha256")
+        .update(req.params.token)
+        .digest("hex");
+    let connection;
+
+    try {
+        connection = await establishConnection();
+
+        const [user] = await connection
+            .promise()
+            .query(
+                "SELECT * FROM users WHERE password_reset_token = ? AND password_reset_exp > ?",
+                [token, Date.now()]
+            );
+        console.log("myuser- getOne", user[0].user_id);
+        const id = user[0].user_id;
+        if (id) {
+            if (req.body.password === req.body.passwordConfirm) {
+                const hashedPassword = await bcrypt.hash(req.body.password, 10);
+                await connection
+                    .promise()
+                    .query(
+                        "UPDATE users SET password = ?, password_reset_token = ?, password_reset_exp = ? WHERE user_id = ?",
+                        [hashedPassword, null, null, id]
+                    );
+                res.status(200).send("Password reset successfully");
+            } else {
+                res.status(400).send("Passwords do not match");
+            }
+        } else {
+            res.status(404).send("User not found");
+        }
+    } catch (err) {
+        console.error(err);
     }
 };
 
 export {
-
     mygetAllUsers,
     mygetUser,
     add_permissions,
     get_permissions,
     removeBranchId,
+    forgotPassword,
+    resetPassword,
 };

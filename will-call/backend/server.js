@@ -7,9 +7,9 @@ import cors from "cors";
 import mysql from "mysql2";
 import util from "util";
 import { checkUser } from "./src/middleware/validate.js";
-
 import cookieParser from "cookie-parser";
 import pkg from "mongoose";
+
 
 // ----------------CRUD----------------//
 import {
@@ -30,6 +30,8 @@ import ticketRouter from "./src/routes/ticketRoutes.js";
 
 import notFoundHandler from "./src/handlers/error404.js";
 import errorHandler from "./src/handlers/error500.js";
+
+
 
 // ------------ MONG-DB -------------//
 
@@ -59,20 +61,45 @@ app.put("/data/:id", handleDataStorage);
 app.get("/storeData", handleGetDataStorage);
 app.post("/history", handleGetHistoryData);
 
-const mysqlconnection = mysql.createConnection({
-    host: process.env.HOST,
-    user: "root",
-    password: process.env.PASSWORD,
-    database: "TeamMembers",
-});
+const establishConnection = () => {
+    return new Promise((resolve, reject) => {
+        let attempts = 0;
+        const maxAttempts = 3;
 
-mysqlconnection.connect((err) => {
-    if (err) {
-        console.error("Error connecting to MySQL:", err);
-        return;
-    }
-    console.log("Connected to MySQL");
-});
+        function tryConnect() {
+            const mysqlconnection = mysql.createConnection({
+                host: process.env.HOST,
+                user: "root",
+                password: process.env.PASSWORD,
+                database: "TeamMembers",
+            });
+
+            mysqlconnection.connect((err) => {
+                if (err) {
+                    console.error("Error connecting to MySQL:", err);
+                    attempts++;
+                    if (attempts < maxAttempts) {
+                        console.log(
+                            `Retrying connection (attempt ${attempts})...`
+                        );
+                        setTimeout(tryConnect, 2000);
+                    } else {
+                        reject(
+                            new Error(
+                                `Unable to establish a connection after ${maxAttempts} attempts`
+                            )
+                        );
+                    }
+                } else {
+                    console.log("Connected to MySQL");
+                    resolve(mysqlconnection);
+                }
+            });
+        }
+
+        tryConnect();
+    });
+};
 
 // ------------- MONGOOSE -------------//
 const { set, connect, connection } = pkg;
@@ -99,4 +126,4 @@ app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
-export { mysqlconnection };
+export { establishConnection };

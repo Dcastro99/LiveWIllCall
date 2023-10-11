@@ -1,11 +1,11 @@
-import { mysqlconnection } from "../../server.js";
+import { establishConnection } from "../../server.js";
 import util from "util";
 import { ticketErrors } from "../errorHandlers/ticketErrors.js";
 import { error } from "console";
 
 const createTicket = async (req, res) => {
     console.log("user creating ticket", req.body);
-
+    let connection;
     const {
         customerName,
         orderNumber,
@@ -29,6 +29,8 @@ const createTicket = async (req, res) => {
     console.log("teamMember_id 2", tmId);
 
     try {
+        connection = await establishConnection();
+
         const ticketData = {
             customerName,
             orderNumber,
@@ -40,8 +42,8 @@ const createTicket = async (req, res) => {
         };
 
         const ticketResults = await util
-            .promisify(mysqlconnection.query)
-            .bind(mysqlconnection)("INSERT INTO tickets SET ?", ticketData);
+            .promisify(connection.query)
+            .bind(connection)("INSERT INTO tickets SET ?", ticketData);
         console.log("ticketData", ticketData);
         console.log("ticketResults ID:", ticketResults);
         const updateUserData = {
@@ -51,8 +53,8 @@ const createTicket = async (req, res) => {
             console.log("teamMember_id is 0!!!!");
             user_id = "0";
             const updateUserResult = await util
-                .promisify(mysqlconnection.query)
-                .bind(mysqlconnection)("UPDATE users SET ? WHERE user_id = ?", [
+                .promisify(connection.query)
+                .bind(connection)("UPDATE users SET ? WHERE user_id = ?", [
                 updateUserData,
                 teamMember_id,
             ]);
@@ -62,45 +64,64 @@ const createTicket = async (req, res) => {
         res.status(201).send(ticketResults);
     } catch (e) {
         console.log("err>>>", e);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
 const getBranchTickets = async (req, res) => {
-    const myUser = res.locals.user;
-
-    // console.log("getting tickets");
+    // const myUser = res.locals.user;
+    const id = req.body.branch_id;
+    console.log("getting tickets");
+    console.log("req.body", req.body);
+    let connection;
     try {
-        const [tickets] = await mysqlconnection
+        connection = await establishConnection();
+
+        const [tickets] = await connection
             .promise()
             .query(
                 "SELECT t.id,u.user_id,  u.image, u.name,t.branch_id,t.customerPO,t.timeStamp, t.customerName, t.orderNumber, t.timeStamp FROM tickets t JOIN users u ON t.teamMember_id = u.user_id WHERE t.branch_id = ? AND t.storeData = 0",
-                [myUser.branch_id]
+                [id]
             );
 
         // console.log("tickets", tickets);
         res.status(200).send(tickets);
     } catch (e) {
         console.log("err>>>", e);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
 const updateTickets = async (req, res) => {
     const { ticketId, ticket, user_id } = req.body;
-    console.log("getting user_id in upDate", user_id);
-    console.log("getting ticketId in upDate", ticketId);
-    console.log("getting tickets in upDate", ticket);
+    const timeConvert = parseInt(ticket.timeStamp, 10);
+    const time = new Date(timeConvert);
+    let connection;
+
+    const updatedTicket = {
+        customerName: ticket.customerName,
+        orderNumber: ticket.orderNumber,
+        customerPO: ticket.customerPO,
+        timeStamp: time,
+        storeData: 0,
+    };
+
     try {
-        console.log("if user_id1", user_id);
+        connection = await establishConnection();
 
         if (user_id !== null) {
-            console.log("if user_id2", user_id);
-
-            await util.promisify(mysqlconnection.query).bind(mysqlconnection)(
+            await util.promisify(connection.query).bind(connection)(
                 "UPDATE tickets SET teamMember_id = ? WHERE id = ?",
                 [user_id, ticketId]
             );
 
-            const [tickets] = await mysqlconnection
+            const [tickets] = await connection
                 .promise()
                 .query(
                     "SELECT u.user_id, u.branch_id, u.image, u.name, t.customerName, t.orderNumber, t.timeStamp From tickets t JOIN users u ON t.teamMember_id = u.user_id WHERE u.user_id = ?",
@@ -111,24 +132,33 @@ const updateTickets = async (req, res) => {
 
             res.status(200).send(tickets[0]);
         } else {
-            const [updatedTickets] = await mysqlconnection
+            const [updatedTickets] = await connection
                 .promise()
-                .query("UPDATE tickets SET ? WHERE id = ?", [ticket, ticketId]);
-            console.log("updatedTickets", updatedTickets);
+                .query("UPDATE tickets SET ? WHERE id = ?", [
+                    updatedTicket,
+                    ticketId,
+                ]);
             res.status(200).send(updatedTickets);
         }
     } catch (e) {
         console.log("err>>>", e);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
 const handleDataStorage = async (req, res) => {
+    let connection;
     console.log("handleDataStorage req.body", req.body);
     console.log("handleDataStorage req.body.id", req.params.id);
     try {
+        connection = await establishConnection();
+
         const ticketId = req.params.id;
 
-        const [currticketDataStatus] = await mysqlconnection
+        const [currticketDataStatus] = await connection
             .promise()
             .query("SELECT t.storeData FROM tickets t WHERE id = ?", [
                 ticketId,
@@ -142,7 +172,7 @@ const handleDataStorage = async (req, res) => {
             completedTimeStamp: new Date(),
         };
         console.log("updateData", updateData);
-        const [result] = await mysqlconnection
+        const [result] = await connection
             .promise()
             .query(
                 "UPDATE tickets SET storeData = ?, completedTimeStamp = FROM_UNIXTIME(?) WHERE id = ?",
@@ -163,17 +193,24 @@ const handleDataStorage = async (req, res) => {
         // console.log("Error updating ticket:", ticketErrors(e));
         const error = ticketErrors(e);
         res.status(500).send(error);
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 
 const handleGetStoredData = async (req, res) => {
+    let connection;
     console.log("handleGetDataStored req.body", req.body);
     const myUser = res.locals.user;
     console.log("myUser- getAOne", myUser);
 
     try {
+        connection = await establishConnection();
+
         const branchId = myUser.branch_id;
-        const [result] = await mysqlconnection
+        const [result] = await connection
             .promise()
             .query(
                 "SELECT t.id, u.user_id, u.image, u.name, t.branch_id, t.customerPO,t.completedTimeStamp ,t.timeStamp, t.customerName, t.orderNumber, t.timeStamp " +
@@ -195,6 +232,10 @@ const handleGetStoredData = async (req, res) => {
         console.log("Error getting ticket:", e);
 
         res.status(500).send("Internal Server Error");
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
 };
 

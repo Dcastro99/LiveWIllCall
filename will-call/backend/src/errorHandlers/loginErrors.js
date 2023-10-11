@@ -37,10 +37,10 @@ const loginErrors = (err) => {
         return errors;
     }
 
-    if (err.message.includes("myuser validation failed")) {
-        const error = Object.values(err.errors);
-        console.log("error", error);
-    }
+    // if (err.message.includes("myuser validation failed")) {
+    //     const error = Object.values(err.errors);
+    //     console.log("error", error);
+    // }
 
     return errors;
 };

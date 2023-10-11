@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+
 import {
     createTicket,
     updateTickets,
@@ -12,7 +13,7 @@ const ticketRouter = Router();
 
 ticketRouter.post("/createTicket", createTicket);
 ticketRouter.post("/updateTicket", updateTickets);
-ticketRouter.get("/getBranchTickets", getBranchTickets);
+ticketRouter.post("/getBranchTickets", getBranchTickets);
 ticketRouter.post("/storeData/:id", handleDataStorage);
 ticketRouter.get("/getStoredData", handleGetStoredData);
 

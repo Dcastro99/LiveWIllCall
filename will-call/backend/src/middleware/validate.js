@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { mysqlconnection } from "../../server.js";
+import {establishConnection } from "../../server.js";
 
 dotenv.config();
 import jwt from "jsonwebtoken";
@@ -22,8 +22,9 @@ const requireAuth = (req, res, next) => {
 const checkUser = (req, res, next) => {
     console.log("checking user!");
     const authHeader = req.headers["authorization"];
-    if (!authHeader) return res.status(401).send("Access Denied");
+    if (!authHeader) return res.status(401).send("Access Denied Not Authorized");
     const token = authHeader.split(" ")[1];
+    let connection;
     if (token) {
         jwt.verify(
             token,
@@ -35,7 +36,8 @@ const checkUser = (req, res, next) => {
                     next();
                 } else {
                     try {
-                        const [user] = await mysqlconnection
+                        connection = await establishConnection();
+                        const [user] = await connection
                             .promise()
                             .query("SELECT * FROM users WHERE user_id = ?", [
                                 decodedToken.id,
