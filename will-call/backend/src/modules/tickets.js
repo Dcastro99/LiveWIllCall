@@ -4,7 +4,7 @@ import { ticketErrors } from "../errorHandlers/ticketErrors.js";
 import { error } from "console";
 
 const createTicket = async (req, res) => {
-    console.log("user creating ticket", req.body);
+    // console.log("user creating ticket", req.body);
     let connection;
     const {
         customerName,
@@ -19,14 +19,14 @@ const createTicket = async (req, res) => {
     const timeConvert = parseInt(timeStamp, 10);
     const time = new Date(timeConvert);
 
-    console.log("teamMember_id 1", teamMember_id);
+    // console.log("teamMember_id 1", teamMember_id);
     let tmId = teamMember_id;
     if (tmId === null) {
         console.log("teamMember_id is null");
         tmId = 0;
     }
 
-    console.log("teamMember_id 2", tmId);
+    // console.log("teamMember_id 2", tmId);
 
     try {
         connection = await establishConnection();
@@ -44,13 +44,13 @@ const createTicket = async (req, res) => {
         const ticketResults = await util
             .promisify(connection.query)
             .bind(connection)("INSERT INTO tickets SET ?", ticketData);
-        console.log("ticketData", ticketData);
-        console.log("ticketResults ID:", ticketResults);
+        // console.log("ticketData", ticketData);
+        // console.log("ticketResults ID:", ticketResults);
         const updateUserData = {
             branch_id,
         };
         if (teamMember_id === 0) {
-            console.log("teamMember_id is 0!!!!");
+            // console.log("teamMember_id is 0!!!!");
             user_id = "0";
             const updateUserResult = await util
                 .promisify(connection.query)
@@ -74,8 +74,8 @@ const createTicket = async (req, res) => {
 const getBranchTickets = async (req, res) => {
     // const myUser = res.locals.user;
     const id = req.body.branch_id;
-    console.log("getting tickets");
-    console.log("req.body", req.body);
+    // console.log("getting tickets");
+    // console.log("req.body", req.body);
     let connection;
     try {
         connection = await establishConnection();
@@ -128,7 +128,7 @@ const updateTickets = async (req, res) => {
                     [user_id]
                 );
 
-            console.log("tickets", tickets[0]);
+            // console.log("tickets", tickets[0]);
 
             res.status(200).send(tickets[0]);
         } else {
@@ -151,8 +151,8 @@ const updateTickets = async (req, res) => {
 
 const handleDataStorage = async (req, res) => {
     let connection;
-    console.log("handleDataStorage req.body", req.body);
-    console.log("handleDataStorage req.body.id", req.params.id);
+    // console.log("handleDataStorage req.body", req.body);
+    // console.log("handleDataStorage req.body.id", req.params.id);
     try {
         connection = await establishConnection();
 
@@ -163,7 +163,7 @@ const handleDataStorage = async (req, res) => {
             .query("SELECT t.storeData FROM tickets t WHERE id = ?", [
                 ticketId,
             ]);
-        console.log("currticket", currticketDataStatus[0].storeData);
+        // console.log("currticket", currticketDataStatus[0].storeData);
         if (currticketDataStatus[0].storeData === 1) {
             throw new Error("ticket already completed");
         }
@@ -202,14 +202,14 @@ const handleDataStorage = async (req, res) => {
 
 const handleGetStoredData = async (req, res) => {
     let connection;
-    console.log("handleGetDataStored req.body", req.body);
-    const myUser = res.locals.user;
-    console.log("myUser- getAOne", myUser);
+    // console.log("handleGetDataStored req.body", req.body);
+    // const myUser = res.locals.user;
+    // console.log("myUser- getAOne", myUser);
 
     try {
         connection = await establishConnection();
 
-        const branchId = myUser.branch_id;
+        const branchId = req.body.branch_id;
         const [result] = await connection
             .promise()
             .query(
@@ -226,6 +226,64 @@ const handleGetStoredData = async (req, res) => {
         //         "SELECT *  FROM tickets WHERE branch_id = ? AND storeData = 1",
         //         [branchId]
         //     );
+        // console.log("result", result);
+        res.status(200).send(result);
+    } catch (e) {
+        // console.log("Error getting ticket:", e);
+
+        res.status(500).send("Internal Server Error");
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+};
+
+const timeConvert = (timeStamp) => {
+    const isoTime = timeStamp;
+    const dateTime = new Date(isoTime);
+    const formattedDate = dateTime.toISOString().slice(0, 19).replace("T", " ");
+    return formattedDate;
+};
+
+const handleGetHistoryData = async (req, res) => {
+    let connection;
+    // console.log("handleGetHistory>>> req.body", req.body);
+    const { branch_id, from, to, customerName, name } = req.body;
+
+    // console.log("newFrom", convertedFrom);
+
+    try {
+        connection = await establishConnection();
+
+        let sql =
+            "SELECT t.id, u.user_id, u.image, u.name, t.branch_id, t.customerPO,t.completedTimeStamp , t.customerName, t.orderNumber, t.timeStamp " +
+            "FROM tickets t " +
+            "JOIN users u ON t.teamMember_id = u.user_id " +
+            "WHERE t.branch_id = ? AND t.storeData = 1";
+
+        const params = [branch_id];
+
+        if (from && to) {
+            const convertedFrom = timeConvert(from);
+            const convertedTo = timeConvert(to);
+            sql += " AND t.completedTimeStamp BETWEEN ? AND ?";
+            params.push(convertedFrom, convertedTo);
+        }
+
+        if (customerName) {
+            sql += " AND t.customerName = ?";
+            params.push(customerName);
+        }
+
+        if (name) {
+            sql += " AND (u.name = ? OR t.customerName = ?)";
+            params.push(name, name);
+        }
+        console.log("sql", sql);
+
+        const [result] = await connection.promise().query(sql, params);
+
         console.log("result", result);
         res.status(200).send(result);
     } catch (e) {
@@ -245,4 +303,5 @@ export {
     getBranchTickets,
     handleDataStorage,
     handleGetStoredData,
+    handleGetHistoryData,
 };

@@ -5,9 +5,9 @@ import { sendEmail } from "../handlers/email.js";
 
 //-------------------GET ALL USERS-------------------//
 
-const mygetAllUsers = async (req, res, next) => {
-    const myUser = res.locals.user;
-    console.log("branch id get all users", req.body.branch_id);
+const getAllUsers = async (req, res, next) => {
+    // const myUser = res.locals.user;
+    // console.log("branch id get all users", req.body.branch_id);
     const id = req.body.branch_id;
     const idArray = [id];
     let connection;
@@ -18,7 +18,7 @@ const mygetAllUsers = async (req, res, next) => {
         const [userData] = await connection
             .promise()
             .query(
-                "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE JSON_CONTAINS(CAST(p.branch_ids AS JSON), ?)",
+                "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE JSON_CONTAINS(CAST(p.branch_ids AS JSON), ? )AND u.emp_status = 1",
                 [JSON.stringify(idArray)]
             );
 
@@ -35,10 +35,10 @@ const mygetAllUsers = async (req, res, next) => {
 
 //-------------------GET ONE USER-------------------//
 
-const mygetUser = async (req, res, next) => {
-    console.log("Do i ever get used??????????");
+const getUser = async (req, res, next) => {
+    // console.log("Do i ever get used??????????");
     const myUser = res.locals.user;
-    console.log("myuser", myUser);
+    // console.log("myuser", myUser);
 
     let connection;
 
@@ -56,7 +56,7 @@ const mygetUser = async (req, res, next) => {
                     "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE p.user_id = ?",
                     [id]
                 );
-            console.log("myuser- getOne", user);
+            // console.log("myuser- getOne", user);
 
             if (user.length > 0) {
                 const userObj = {
@@ -68,7 +68,7 @@ const mygetUser = async (req, res, next) => {
                     branch_ids: user[0].branch_ids,
                     user_id: user[0].user_id,
                 };
-                console.log("user", userObj);
+                // console.log("user", userObj);
                 res.status(200).send(userObj);
             } else {
                 res.status(404).send("User not found");
@@ -80,6 +80,25 @@ const mygetUser = async (req, res, next) => {
         if (connection) {
             connection.end();
         }
+    }
+};
+
+//-------------------DELETE USER-------------------//
+
+const deleteUser = async (req, res) => {
+    console.log("user deleting", req.body);
+    let connection;
+    const { user_id } = req.body;
+    try {
+        connection = await establishConnection();
+        await connection
+            .promise()
+            .query("UPDATE users SET emp_status= 0  WHERE user_id = ?", [
+                user_id,
+            ]);
+        res.status(200).send("User deleted successfully");
+    } catch (err) {
+        console.error(err);
     }
 };
 
@@ -115,7 +134,7 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
         const updatedBranchIds = [
             ...new Set([...currentBranchIds, newBranchId]),
         ];
-        console.log("updatedBranchIds", updatedBranchIds);
+        // console.log("updatedBranchIds", updatedBranchIds);
         await connection
             .promise()
             .query(
@@ -123,7 +142,7 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
                 [JSON.stringify(updatedBranchIds), updatedRole, userId]
             );
 
-        console.log(`Added new branch IDs and role for user ${userId}`);
+        // console.log(`Added new branch IDs and role for user ${userId}`);
     } catch (err) {
         console.error(err);
     } finally {
@@ -136,7 +155,7 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
 //-------------------ADD PERMISSIONS-------------------//
 
 const add_permissions = async (req, res) => {
-    console.log("user adding permissions", req.body);
+    // console.log("user adding permissions", req.body);
     let connection;
     const { email, branch_ids, role } = req.body;
 
@@ -146,7 +165,7 @@ const add_permissions = async (req, res) => {
         const [user] = await connection
             .promise()
             .query("SELECT * FROM users WHERE email = ?", [email]);
-        console.log("myuser- getOne", user[0].user_id);
+        // console.log("myuser- getOne", user[0].user_id);
 
         if (user[0].user_id) {
             await addBranchIdsAndRole(user[0].user_id, branch_ids, role);
@@ -166,7 +185,7 @@ const add_permissions = async (req, res) => {
 //-------------------GET PERMISSIONS-------------------//
 
 const get_permissions = async (req, res) => {
-    console.log("user getting permissions", req.body);
+    // console.log("user getting permissions", req.body);
     let connection;
     const { email } = req.body;
     try {
@@ -178,7 +197,7 @@ const get_permissions = async (req, res) => {
                 "SELECT u.user_id,u.email,u.name, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE u.email = ?",
                 [email]
             );
-        console.log("user", user[0]);
+        // console.log("user", user[0]);
         if (user[0] === undefined) {
             console.log("User not found");
             res.status(404).send("User not found");
@@ -186,7 +205,7 @@ const get_permissions = async (req, res) => {
             res.status(200).send(user[0]);
         }
 
-        console.log("User with Permissions:", user[0]);
+        // console.log("User with Permissions:", user[0]);
     } catch (err) {
         console.error(err);
     } finally {
@@ -296,10 +315,10 @@ const forgotPassword = async (req, res) => {
                     "UPDATE users SET password_reset_token = ?, password_reset_exp = ? WHERE email = ?",
                     [hashedToken, resetExpires, email]
                 );
-
-            const resetURL = `${req.protocol}://${req.get(
-                "host"
-            )}/resetPassword/${resetToken}`;
+                const resetURL = `http://localhost:3000/?token=${resetToken}`;
+            // const resetURL = `${req.protocol}://${req.get(
+            //     "host"
+            // )}/resetPassword/${resetToken}`;
 
             const messege =
                 "We have received a request to reset your password. Please click on the link below to reset your password. \n\n" +
@@ -375,11 +394,12 @@ const resetPassword = async (req, res) => {
 };
 
 export {
-    mygetAllUsers,
-    mygetUser,
+    getAllUsers,
+    getUser,
     add_permissions,
     get_permissions,
     removeBranchId,
     forgotPassword,
     resetPassword,
+    deleteUser,
 };

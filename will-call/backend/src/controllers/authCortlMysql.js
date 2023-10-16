@@ -19,7 +19,7 @@ const createToken = (id) => {
     });
 };
 
-const Mysignup_post = async (req, res) => {
+const signup_post = async (req, res) => {
     // console.log("user signing up", req.body);
     const uniqueId = uuidv4();
     let connection;
@@ -46,36 +46,52 @@ const Mysignup_post = async (req, res) => {
             empNum,
             branch_id,
             image: image ? image : "https://i.imgur.com/VkCiPWX.png",
+            emp_status: 1,
         };
 
-        const userResults = await util
-            .promisify(connection.query)
-            .bind(connection)("INSERT INTO users SET ?", userData);
-
-        console.log("Results ID:", userResults);
-
-        const [user] = await connection
+        const [userEmpNums] = await connection
             .promise()
-            .query("SELECT * FROM users WHERE email = ?", [email]);
+            .query("SELECT empNum FROM users");
+            
+        const empNums = userEmpNums.map((row) => row.empNum);
+        const isEmpNumValid = empNums.includes(empNum);
+        if (isEmpNumValid) {
+            return res
+                .status(400)
+                .send({ email: "Employee number already exists" });
+        } else {
+            const userResults = await util
+                .promisify(connection.query)
+                .bind(connection)("INSERT INTO users SET ?", userData);
 
-        const permissionsData = {
-            user_id: user[0].user_id,
-            branch_ids: JSON.stringify([branch_id]),
-            role: 3,
-        };
+            console.log("Results ID:", userResults);
 
-        const permissionResults = await util
-            .promisify(connection.query)
-            .bind(connection)("INSERT INTO permissions SET ?", permissionsData);
+            const [user] = await connection
+                .promise()
+                .query("SELECT * FROM users WHERE email = ?", [email]);
 
-        console.log("Permission ID:", permissionResults.insertId);
+            const permissionsData = {
+                user_id: user[0].user_id,
+                branch_ids: JSON.stringify([branch_id]),
+                role: 3,
+            };
 
-        await util.promisify(connection.query).bind(connection)(
-            "UPDATE users SET permissions_id = ? WHERE user_id = ?",
-            [permissionResults.insertId, user[0].user_id]
-        );
+            const permissionResults = await util
+                .promisify(connection.query)
+                .bind(connection)(
+                "INSERT INTO permissions SET ?",
+                permissionsData
+            );
 
-        res.status(201).send(userResults);
+            console.log("Permission ID:", permissionResults.insertId);
+
+            await util.promisify(connection.query).bind(connection)(
+                "UPDATE users SET permissions_id = ? WHERE user_id = ?",
+                [permissionResults.insertId, user[0].user_id]
+            );
+
+            res.status(201).send(userResults);
+        }
     } catch (error) {
         // console.error("Error executing query:", error.code);
         const errors = loginErrors(error);
@@ -88,7 +104,7 @@ const Mysignup_post = async (req, res) => {
     }
 };
 
-const mylogin_post = async (req, res) => {
+const login_post = async (req, res) => {
     const { email, password } = req.body;
     let connection;
 
@@ -155,4 +171,4 @@ const logout_get = async (req, res) => {
     }
 };
 
-export { Mysignup_post, mylogin_post, logout_get };
+export { signup_post, login_post, logout_get };

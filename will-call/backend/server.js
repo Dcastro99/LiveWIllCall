@@ -12,15 +12,15 @@ import pkg from "mongoose";
 
 
 // ----------------CRUD----------------//
-import {
-    getAllTickets,
-    createTicket,
-    deleteTicket,
-    handleUpdateTicket,
-    handleDataStorage,
-    handleGetDataStorage,
-    handleGetHistoryData,
-} from "./src/modules/MDBticket.js";
+// import {
+//     getAllTickets,
+//     createTicket,
+//     deleteTicket,
+//     handleUpdateTicket,
+//     handleDataStorage,
+//     handleGetDataStorage,
+//     handleGetHistoryData,
+// } from "./src/modules/MDBticket.js";
 
 import authRouter from "./src/routes/authRoutes.js";
 import userRouter from "./src/routes/userRoutes.js";
@@ -53,13 +53,13 @@ app.use(userRouter);
 app.use(ticketRouter);
 
 // ------------- TICKET ROUTE -------------//
-app.post("/ticket", createTicket);
-app.get("/allTickets", getAllTickets);
-app.delete("/ticket/:id", deleteTicket);
-app.put("/ticket/:id", handleUpdateTicket);
-app.put("/data/:id", handleDataStorage);
-app.get("/storeData", handleGetDataStorage);
-app.post("/history", handleGetHistoryData);
+// app.post("/ticket", createTicket);
+// app.get("/allTickets", getAllTickets);
+// app.delete("/ticket/:id", deleteTicket);
+// app.put("/ticket/:id", handleUpdateTicket);
+// app.put("/data/:id", handleDataStorage);
+// app.get("/storeData", handleGetDataStorage);
+// app.post("/history", handleGetHistoryData);
 
 const establishConnection = () => {
     return new Promise((resolve, reject) => {

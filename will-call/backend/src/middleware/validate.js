@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import {establishConnection } from "../../server.js";
+import { establishConnection } from "../../server.js";
 
 dotenv.config();
 import jwt from "jsonwebtoken";
@@ -22,7 +22,8 @@ const requireAuth = (req, res, next) => {
 const checkUser = (req, res, next) => {
     console.log("checking user!");
     const authHeader = req.headers["authorization"];
-    if (!authHeader) return res.status(401).send("Access Denied Not Authorized");
+    if (!authHeader)
+        return res.status(401).send("Access Denied Not Authorized");
     const token = authHeader.split(" ")[1];
     let connection;
     if (token) {
@@ -31,7 +32,7 @@ const checkUser = (req, res, next) => {
             process.env.ACCESS_TOKEN_SECRET,
             async (err, decodedToken) => {
                 if (err) {
-                    console.log('err.message in validate',err.message);
+                    console.log("err.message in validate", err.message);
                     res.locals.user = null;
                     next();
                 } else {
@@ -39,9 +40,10 @@ const checkUser = (req, res, next) => {
                         connection = await establishConnection();
                         const [user] = await connection
                             .promise()
-                            .query("SELECT * FROM users WHERE user_id = ?", [
-                                decodedToken.id,
-                            ]);
+                            .query(
+                                "SELECT u.*, p.branch_ids FROM users u JOIN permissions p ON u.user_id = p.user_id WHERE u.user_id = ?",
+                                [decodedToken.id]
+                            );
                         if (user.length > 0) {
                             res.locals.user = user[0];
                         } else {
