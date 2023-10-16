@@ -315,7 +315,9 @@ const forgotPassword = async (req, res) => {
                     "UPDATE users SET password_reset_token = ?, password_reset_exp = ? WHERE email = ?",
                     [hashedToken, resetExpires, email]
                 );
-                const resetURL = `http://localhost:3000/?token=${resetToken}`;
+
+            const resetURL = `http://localhost:3000/?token=${resetToken}`;
+
             // const resetURL = `${req.protocol}://${req.get(
             //     "host"
             // )}/resetPassword/${resetToken}`;
@@ -355,6 +357,7 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
     console.log("reset password", req.params);
+    console.log("reset password", req.body);
     const token = crypto
         .createHash("sha256")
         .update(req.params.token)
@@ -372,7 +375,7 @@ const resetPassword = async (req, res) => {
             );
         console.log("myuser- getOne", user[0].user_id);
         const id = user[0].user_id;
-        if (id) {
+        if (id !== undefined) {
             if (req.body.password === req.body.passwordConfirm) {
                 const hashedPassword = await bcrypt.hash(req.body.password, 10);
                 await connection

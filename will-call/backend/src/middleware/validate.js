@@ -25,8 +25,9 @@ const checkUser = (req, res, next) => {
     if (!authHeader)
         return res.status(401).send("Access Denied Not Authorized");
     const token = authHeader.split(" ")[1];
+    console.log("token", token);
     let connection;
-    if (token) {
+    if (token !== 'null') {
         jwt.verify(
             token,
             process.env.ACCESS_TOKEN_SECRET,

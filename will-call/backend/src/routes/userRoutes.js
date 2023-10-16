@@ -8,7 +8,11 @@ import {
     removeBranchId,
     forgotPassword,
     resetPassword,
+<<<<<<< HEAD
     deleteUser
+=======
+   
+>>>>>>> 2e84e01a4a40b68dfd7befa65720fe9e845476d4
 } from "../modules/users.js";
 
 const userRouter = Router();
