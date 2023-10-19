@@ -1,4 +1,7 @@
-import { establishConnection } from "../../server.js";
+import { 
+  
+     getConnection,
+    executeQuery, } from "../../server.js";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import { sendEmail } from "../handlers/email.js";
@@ -13,22 +16,22 @@ const getAllUsers = async (req, res, next) => {
     let connection;
 
     try {
-        connection = await establishConnection();
+        connection = await getConnection();
 
-        const [userData] = await connection
-            .promise()
-            .query(
+        const [userData] = await executeQuery(
                 "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE JSON_CONTAINS(CAST(p.branch_ids AS JSON), ? )AND u.emp_status = 1",
                 [JSON.stringify(idArray)]
             );
 
         console.log("userData", userData);
         res.status(200).send(userData);
+        // res.status(200).json({userData});
     } catch (err) {
         next(err);
     } finally {
         if (connection) {
-            connection.end();
+            // connection.end();
+            connection.release();
         }
     }
 };
@@ -48,11 +51,9 @@ const getUser = async (req, res, next) => {
             return;
         } else {
             const id = myUser.user_id;
-            connection = await establishConnection();
-
-            const [user] = await connection
-                .promise()
-                .query(
+            // connection = await establishConnection();
+            connection = await getConnection();
+            const [user] = await executeQuery(
                     "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE p.user_id = ?",
                     [id]
                 );
@@ -78,7 +79,8 @@ const getUser = async (req, res, next) => {
         next(err);
     } finally {
         if (connection) {
-            connection.end();
+            // connection.end();
+            connection.release();
         }
     }
 };
@@ -90,10 +92,9 @@ const deleteUser = async (req, res) => {
     let connection;
     const { user_id } = req.body;
     try {
-        connection = await establishConnection();
-        await connection
-            .promise()
-            .query("UPDATE users SET emp_status= 0  WHERE user_id = ?", [
+        // connection = await establishConnection();
+        connection = await getConnection();
+        await executeQuery("UPDATE users SET emp_status= 0  WHERE user_id = ?", [
                 user_id,
             ]);
         res.status(200).send("User deleted successfully");
@@ -107,11 +108,9 @@ const deleteUser = async (req, res) => {
 const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
     let connection;
     try {
-        connection = await establishConnection();
-
-        const [row] = await connection
-            .promise()
-            .query(
+        // connection = await establishConnection();
+        connection = await getConnection();
+        const [row] = await executeQuery(
                 "SELECT branch_ids, role FROM permissions WHERE user_id = ?",
                 [userId]
             );
@@ -135,9 +134,7 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
             ...new Set([...currentBranchIds, newBranchId]),
         ];
         // console.log("updatedBranchIds", updatedBranchIds);
-        await connection
-            .promise()
-            .query(
+        await executeQuery(
                 "UPDATE permissions SET branch_ids = ?, role = ? WHERE user_id = ?",
                 [JSON.stringify(updatedBranchIds), updatedRole, userId]
             );
@@ -147,7 +144,8 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
         console.error(err);
     } finally {
         if (connection) {
-            connection.end();
+            // connection.end();
+            connection.release();
         }
     }
 };
@@ -160,11 +158,10 @@ const add_permissions = async (req, res) => {
     const { email, branch_ids, role } = req.body;
 
     try {
-        connection = await establishConnection();
+        // connection = await establishConnection();
+        connection = await getConnection();
 
-        const [user] = await connection
-            .promise()
-            .query("SELECT * FROM users WHERE email = ?", [email]);
+        const [user] = await executeQuery("SELECT * FROM users WHERE email = ?", [email]);
         // console.log("myuser- getOne", user[0].user_id);
 
         if (user[0].user_id) {
@@ -177,7 +174,8 @@ const add_permissions = async (req, res) => {
         console.error(err);
     } finally {
         if (connection) {
-            connection.end();
+            // connection.end();
+            connection.release();
         }
     }
 };
@@ -189,11 +187,10 @@ const get_permissions = async (req, res) => {
     let connection;
     const { email } = req.body;
     try {
-        connection = await establishConnection();
+        // connection = await establishConnection();
+        connection = await getConnection();
 
-        const [user] = await connection
-            .promise()
-            .query(
+        const [user] = await executeQuery(
                 "SELECT u.user_id,u.email,u.name, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE u.email = ?",
                 [email]
             );
@@ -210,7 +207,8 @@ const get_permissions = async (req, res) => {
         console.error(err);
     } finally {
         if (connection) {
-            connection.end();
+            // connection.end();
+            connection.release();
         }
     }
 };
@@ -222,11 +220,10 @@ const removeUserIdBranchId = async (userId, branchId) => {
     console.log("userId", userId);
     console.log("branchId", branchId);
     try {
-        connection = await establishConnection();
+        // connection = await establishConnection();
+        connection = await getConnection();
 
-        const [row] = await connection
-            .promise()
-            .query("SELECT branch_ids FROM permissions WHERE user_id = ?", [
+        const [row] = await executeQuery("SELECT branch_ids FROM permissions WHERE user_id = ?", [
                 userId,
             ]);
         console.log("row", row);
@@ -238,9 +235,7 @@ const removeUserIdBranchId = async (userId, branchId) => {
             (id) => id !== branchId
         );
 
-        await connection
-            .promise()
-            .query("UPDATE permissions SET branch_ids = ? WHERE user_id = ?", [
+        await executeQuery("UPDATE permissions SET branch_ids = ? WHERE user_id = ?", [
                 JSON.stringify(updatedBranchIds),
                 userId,
             ]);
@@ -250,7 +245,8 @@ const removeUserIdBranchId = async (userId, branchId) => {
         console.error(err);
     } finally {
         if (connection) {
-            connection.end();
+            // connection.end();
+            connection.release();
         }
     }
 };
@@ -263,11 +259,10 @@ const removeBranchId = async (req, res) => {
     const { email, branch_ids } = req.body;
 
     try {
-        connection = await establishConnection();
+        // connection = await establishConnection();
+        connection = await getConnection();
 
-        const [user] = await connection
-            .promise()
-            .query("SELECT * FROM users WHERE email = ?", [email]);
+        const [user] = await executeQuery("SELECT * FROM users WHERE email = ?", [email]);
         console.log("myuser- getOne", user[0].user_id);
 
         if (user[0].user_id) {
@@ -280,7 +275,8 @@ const removeBranchId = async (req, res) => {
         console.error(err);
     } finally {
         if (connection) {
-            connection.end();
+            // connection.end();
+            connection.release();
         }
     }
 };
@@ -301,17 +297,14 @@ const forgotPassword = async (req, res) => {
     const resetExpires = new Date(Date.now() + 10 * 60 * 1000);
 
     try {
-        connection = await establishConnection();
+        // connection = await establishConnection();
+        connection = await getConnection();
 
-        const [user] = await connection
-            .promise()
-            .query("SELECT * FROM users WHERE email = ?", [email]);
+        const [user] = await executeQuery("SELECT * FROM users WHERE email = ?", [email]);
         console.log("myuser- getOne", user[0].user_id);
         const id = user[0].user_id;
         if (id) {
-            await connection
-                .promise()
-                .query(
+            await executeQuery(
                     "UPDATE users SET password_reset_token = ?, password_reset_exp = ? WHERE email = ?",
                     [hashedToken, resetExpires, email]
                 );
@@ -350,6 +343,11 @@ const forgotPassword = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
+    }finally {
+        if (connection) {
+            // connection.end();
+            connection.release();
+        }
     }
 };
 
@@ -365,11 +363,10 @@ const resetPassword = async (req, res) => {
     let connection;
 
     try {
-        connection = await establishConnection();
+        // connection = await establishConnection();
+        connection = await getConnection();
 
-        const [user] = await connection
-            .promise()
-            .query(
+        const [user] = await executeQuery(
                 "SELECT * FROM users WHERE password_reset_token = ? AND password_reset_exp > ?",
                 [token, Date.now()]
             );
@@ -378,9 +375,7 @@ const resetPassword = async (req, res) => {
         if (id !== undefined) {
             if (req.body.password === req.body.passwordConfirm) {
                 const hashedPassword = await bcrypt.hash(req.body.password, 10);
-                await connection
-                    .promise()
-                    .query(
+                await executeQuery(
                         "UPDATE users SET password = ?, password_reset_token = ?, password_reset_exp = ? WHERE user_id = ?",
                         [hashedPassword, null, null, id]
                     );
@@ -393,6 +388,42 @@ const resetPassword = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
+    }finally {
+        if (connection) {
+            // connection.end();
+            connection.release();
+        }
+    }
+};
+
+//-------------------------------ADD USER IMAGE-----------------------------//
+
+const addUserImage = async (req, res) => {
+    console.log("req.file", req.body);
+
+    let connection;
+    const { userId, image } = req.body;
+   
+
+    if (userId === 0) {
+        res.status(404).send("User not found");
+    }
+
+    try {
+        // connection = await establishConnection();
+        connection = await getConnection();
+        await executeQuery("UPDATE users SET image = ? WHERE user_id = ?", [
+                image,
+                userId,
+            ]);
+        res.status(200).send("Image added successfully");
+    } catch (err) {
+        console.error(err);
+    }finally {
+        if (connection) {
+            // connection.end();
+            connection.release();
+        }
     }
 };
 
@@ -405,4 +436,5 @@ export {
     forgotPassword,
     resetPassword,
     deleteUser,
+    addUserImage,
 };

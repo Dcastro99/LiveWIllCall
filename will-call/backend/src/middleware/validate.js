@@ -1,5 +1,9 @@
 import dotenv from "dotenv";
-import { establishConnection } from "../../server.js";
+import {
+    
+    getConnection,
+    executeQuery,
+} from "../../server.js";
 
 dotenv.config();
 import jwt from "jsonwebtoken";
@@ -27,7 +31,7 @@ const checkUser = (req, res, next) => {
     const token = authHeader.split(" ")[1];
     console.log("token", token);
     let connection;
-    if (token !== 'null') {
+    if (token !== "null") {
         jwt.verify(
             token,
             process.env.ACCESS_TOKEN_SECRET,
@@ -38,13 +42,11 @@ const checkUser = (req, res, next) => {
                     next();
                 } else {
                     try {
-                        connection = await establishConnection();
-                        const [user] = await connection
-                            .promise()
-                            .query(
-                                "SELECT u.*, p.branch_ids FROM users u JOIN permissions p ON u.user_id = p.user_id WHERE u.user_id = ?",
-                                [decodedToken.id]
-                            );
+                        connection = await getConnection();
+                        const [user] = await executeQuery(
+                            "SELECT u.*, p.branch_ids FROM users u JOIN permissions p ON u.user_id = p.user_id WHERE u.user_id = ?",
+                            [decodedToken.id]
+                        );
                         if (user.length > 0) {
                             res.locals.user = user[0];
                         } else {
@@ -53,6 +55,10 @@ const checkUser = (req, res, next) => {
                     } catch (err) {
                         console.error(err);
                         res.locals.user = null;
+                    } finally {
+                        if (connection) {
+                            connection.release();
+                        }
                     }
                     next();
                 }

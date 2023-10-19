@@ -8,11 +8,8 @@ import {
     removeBranchId,
     forgotPassword,
     resetPassword,
-<<<<<<< HEAD
-    deleteUser
-=======
-   
->>>>>>> 2e84e01a4a40b68dfd7befa65720fe9e845476d4
+    deleteUser,
+    addUserImage
 } from "../modules/users.js";
 
 const userRouter = Router();
@@ -25,5 +22,6 @@ userRouter.post("/removeBranchId", removeBranchId);
 userRouter.post("/forgotPassword", forgotPassword);
 userRouter.patch("/resetPassword/:token", resetPassword);
 userRouter.post("/deleteUser", deleteUser);
+userRouter.post("/addUserImage", addUserImage);
 
 export default userRouter;

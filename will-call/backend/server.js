@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import express, { json } from "express";
 import cors from "cors";
 import mysql from "mysql2";
+import mysql2 from "mysql2/promise";
 import util from "util";
 import { checkUser } from "./src/middleware/validate.js";
 import cookieParser from "cookie-parser";
@@ -45,8 +46,6 @@ app.use(json());
 app.use(cookieParser());
 // ------------------- ROUTES --------------------//
 
-
-
 app.get("*", checkUser);
 app.use(authRouter);
 app.use(userRouter);
@@ -61,55 +60,88 @@ app.use(ticketRouter);
 // app.get("/storeData", handleGetDataStorage);
 // app.post("/history", handleGetHistoryData);
 
-const establishConnection = () => {
-    return new Promise((resolve, reject) => {
-        let attempts = 0;
-        const maxAttempts = 3;
 
-        function tryConnect() {
-            const mysqlconnection = mysql.createConnection({
-                host: process.env.HOST,
-                user: "root",
-                password: process.env.PASSWORD,
-                database: "TeamMembers",
-            });
+const pool = mysql2.createPool({
+    host: process.env.DATABASE_URL,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
+    connectionLimit: 10, // Set the maximum number of connections in the pool
+});
+//  const pool = mysql2.createPool({
+//                 host: process.env.TEST_URL,
+//                 user: process.env.TEST_USER,
+//                 password: process.env.TEST_PASSWORD,
+//                 database: process.env.TEST_NAME,
+//             });
 
-            mysqlconnection.connect((err) => {
-                if (err) {
-                    console.error("Error connecting to MySQL:", err);
-                    attempts++;
-                    if (attempts < maxAttempts) {
-                        console.log(
-                            `Retrying connection (attempt ${attempts})...`
-                        );
-                        setTimeout(tryConnect, 2000);
-                    } else {
-                        reject(
-                            new Error(
-                                `Unable to establish a connection after ${maxAttempts} attempts`
-                            )
-                        );
-                    }
-                } else {
-                    console.log("Connected to MySQL");
-                    resolve(mysqlconnection);
-                }
-            });
-        }
-
-        tryConnect();
-    });
+export const getConnection = async () => {
+    try {
+        const connection = await pool.getConnection();
+        console.log("Connected to MySQL2");
+        return connection;
+    } catch (error) {
+        console.error("Error getting connection:", error);
+        throw error;
+    }
 };
+export const executeQuery = (query, values) => pool.query(query, values);
+
+// const establishConnection = () => {
+//     return new Promise((resolve, reject) => {
+//         let attempts = 0;
+//         const maxAttempts = 3;
+
+//         function tryConnect() {
+//             // const mysqlconnection = mysql.createConnection({
+//             //     host: process.env.DATABASE_URL,
+//             //     user: process.env.DATABASE_USER,
+//             //     password: process.env.DATABASE_PASSWORD,
+//             //     database: process.env.DATABASE_NAME,
+//             // });
+//             const mysqlconnection = mysql.createConnection({
+//                 host: process.env.TEST_URL,
+//                 user: process.env.TEST_USER,
+//                 password: process.env.TEST_PASSWORD,
+//                 database: process.env.TEST_NAME,
+//             });
+
+//             mysqlconnection.connect((err) => {
+//                 if (err) {
+//                     console.error("Error connecting to MySQL:", err);
+//                     attempts++;
+//                     if (attempts < maxAttempts) {
+//                         console.log(
+//                             `Retrying connection (attempt ${attempts})...`
+//                         );
+//                         setTimeout(tryConnect, 2000);
+//                     } else {
+//                         reject(
+//                             new Error(
+//                                 `Unable to establish a connection after ${maxAttempts} attempts`
+//                             )
+//                         );
+//                     }
+//                 } else {
+//                     console.log("Connected to MySQL");
+//                     resolve(mysqlconnection);
+//                 }
+//             });
+//         }
+
+//         tryConnect();
+//     });
+// };
 
 // ------------- MONGOOSE -------------//
-const { set, connect, connection } = pkg;
-set("strictQuery", true);
-connect(process.env.DATABASE_URL);
-const db = connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Mongoose is connected");
-});
+// const { set, connect, connection } = pkg;
+// set("strictQuery", true);
+// connect(process.env.DATABASE_URL);
+// const db = connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", () => {
+//     console.log("Mongoose is connected");
+// });
 
 app.get("/", (request, response) => {
     response.send("TESTING Will Call APP!");
@@ -126,4 +158,4 @@ app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
-export { establishConnection };
+
