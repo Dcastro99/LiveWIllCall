@@ -60,6 +60,7 @@ app.use(ticketRouter);
 // app.get("/storeData", handleGetDataStorage);
 // app.post("/history", handleGetHistoryData);
 
+//------------CLEVER_CLOUD---------------//
 
 const pool = mysql2.createPool({
     host: process.env.DATABASE_URL,
@@ -68,6 +69,9 @@ const pool = mysql2.createPool({
     database: process.env.DATABASE_NAME,
     connectionLimit: 10, // Set the maximum number of connections in the pool
 });
+
+//------------LOCAL---------------//
+
 //  const pool = mysql2.createPool({
 //                 host: process.env.TEST_URL,
 //                 user: process.env.TEST_USER,
