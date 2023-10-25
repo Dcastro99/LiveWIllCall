@@ -1,7 +1,4 @@
-import { 
-  
-     getConnection,
-    executeQuery, } from "../../server.js";
+import { getConnection, executeQuery } from "../../server.js";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import { sendEmail } from "../handlers/email.js";
@@ -19,9 +16,9 @@ const getAllUsers = async (req, res, next) => {
         connection = await getConnection();
 
         const [userData] = await executeQuery(
-                "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE JSON_CONTAINS(CAST(p.branch_ids AS JSON), ? )AND u.emp_status = 1",
-                [JSON.stringify(idArray)]
-            );
+            "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE JSON_CONTAINS(CAST(p.branch_ids AS JSON), ? )AND u.emp_status = 1",
+            [JSON.stringify(idArray)]
+        );
 
         console.log("userData", userData);
         res.status(200).send(userData);
@@ -54,10 +51,10 @@ const getUser = async (req, res, next) => {
             // connection = await establishConnection();
             connection = await getConnection();
             const [user] = await executeQuery(
-                    "SELECT u.user_id, u.name, u.empNum, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE p.user_id = ?",
-                    [id]
-                );
-            // console.log("myuser- getOne", user);
+                "SELECT u.user_id, u.name, u.empNum, u.new_emp, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE p.user_id = ?",
+                [id]
+            );
+            console.log("myuser- getOne", user);
 
             if (user.length > 0) {
                 const userObj = {
@@ -68,6 +65,7 @@ const getUser = async (req, res, next) => {
                     role: user[0].role,
                     branch_ids: user[0].branch_ids,
                     user_id: user[0].user_id,
+                    new_emp: user[0].new_emp,
                 };
                 // console.log("user", userObj);
                 res.status(200).send(userObj);
@@ -94,9 +92,10 @@ const deleteUser = async (req, res) => {
     try {
         // connection = await establishConnection();
         connection = await getConnection();
-        await executeQuery("UPDATE users SET emp_status= 0  WHERE user_id = ?", [
-                user_id,
-            ]);
+        await executeQuery(
+            "UPDATE users SET emp_status= 0  WHERE user_id = ?",
+            [user_id]
+        );
         res.status(200).send("User deleted successfully");
     } catch (err) {
         console.error(err);
@@ -111,9 +110,9 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
         // connection = await establishConnection();
         connection = await getConnection();
         const [row] = await executeQuery(
-                "SELECT branch_ids, role FROM permissions WHERE user_id = ?",
-                [userId]
-            );
+            "SELECT branch_ids, role FROM permissions WHERE user_id = ?",
+            [userId]
+        );
         const currentBranchIds = (row[0].branch_ids || [])
             .map((id) => parseInt(id))
             .filter((id) => !isNaN(id));
@@ -135,9 +134,9 @@ const addBranchIdsAndRole = async (userId, newBranchIds, role) => {
         ];
         // console.log("updatedBranchIds", updatedBranchIds);
         await executeQuery(
-                "UPDATE permissions SET branch_ids = ?, role = ? WHERE user_id = ?",
-                [JSON.stringify(updatedBranchIds), updatedRole, userId]
-            );
+            "UPDATE permissions SET branch_ids = ?, role = ? WHERE user_id = ?",
+            [JSON.stringify(updatedBranchIds), updatedRole, userId]
+        );
 
         // console.log(`Added new branch IDs and role for user ${userId}`);
     } catch (err) {
@@ -161,7 +160,10 @@ const add_permissions = async (req, res) => {
         // connection = await establishConnection();
         connection = await getConnection();
 
-        const [user] = await executeQuery("SELECT * FROM users WHERE email = ?", [email]);
+        const [user] = await executeQuery(
+            "SELECT * FROM users WHERE email = ?",
+            [email]
+        );
         // console.log("myuser- getOne", user[0].user_id);
 
         if (user[0].user_id) {
@@ -191,9 +193,9 @@ const get_permissions = async (req, res) => {
         connection = await getConnection();
 
         const [user] = await executeQuery(
-                "SELECT u.user_id,u.email,u.name, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE u.email = ?",
-                [email]
-            );
+            "SELECT u.user_id,u.email,u.name, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE u.email = ?",
+            [email]
+        );
         // console.log("user", user[0]);
         if (user[0] === undefined) {
             console.log("User not found");
@@ -223,9 +225,10 @@ const removeUserIdBranchId = async (userId, branchId) => {
         // connection = await establishConnection();
         connection = await getConnection();
 
-        const [row] = await executeQuery("SELECT branch_ids FROM permissions WHERE user_id = ?", [
-                userId,
-            ]);
+        const [row] = await executeQuery(
+            "SELECT branch_ids FROM permissions WHERE user_id = ?",
+            [userId]
+        );
         console.log("row", row);
 
         const currentBranchIds = row[0].branch_ids || "[]";
@@ -235,10 +238,10 @@ const removeUserIdBranchId = async (userId, branchId) => {
             (id) => id !== branchId
         );
 
-        await executeQuery("UPDATE permissions SET branch_ids = ? WHERE user_id = ?", [
-                JSON.stringify(updatedBranchIds),
-                userId,
-            ]);
+        await executeQuery(
+            "UPDATE permissions SET branch_ids = ? WHERE user_id = ?",
+            [JSON.stringify(updatedBranchIds), userId]
+        );
 
         console.log(`Removed branch ID ${branchId} for user ${userId}`);
     } catch (err) {
@@ -262,7 +265,10 @@ const removeBranchId = async (req, res) => {
         // connection = await establishConnection();
         connection = await getConnection();
 
-        const [user] = await executeQuery("SELECT * FROM users WHERE email = ?", [email]);
+        const [user] = await executeQuery(
+            "SELECT * FROM users WHERE email = ?",
+            [email]
+        );
         console.log("myuser- getOne", user[0].user_id);
 
         if (user[0].user_id) {
@@ -300,14 +306,17 @@ const forgotPassword = async (req, res) => {
         // connection = await establishConnection();
         connection = await getConnection();
 
-        const [user] = await executeQuery("SELECT * FROM users WHERE email = ?", [email]);
+        const [user] = await executeQuery(
+            "SELECT * FROM users WHERE email = ?",
+            [email]
+        );
         console.log("myuser- getOne", user[0].user_id);
         const id = user[0].user_id;
         if (id) {
             await executeQuery(
-                    "UPDATE users SET password_reset_token = ?, password_reset_exp = ? WHERE email = ?",
-                    [hashedToken, resetExpires, email]
-                );
+                "UPDATE users SET password_reset_token = ?, password_reset_exp = ? WHERE email = ?",
+                [hashedToken, resetExpires, email]
+            );
 
             const resetURL = `http://localhost:3000/?token=${resetToken}`;
 
@@ -343,7 +352,7 @@ const forgotPassword = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
-    }finally {
+    } finally {
         if (connection) {
             // connection.end();
             connection.release();
@@ -367,18 +376,18 @@ const resetPassword = async (req, res) => {
         connection = await getConnection();
 
         const [user] = await executeQuery(
-                "SELECT * FROM users WHERE password_reset_token = ? AND password_reset_exp > ?",
-                [token, Date.now()]
-            );
+            "SELECT * FROM users WHERE password_reset_token = ? AND password_reset_exp > ?",
+            [token, Date.now()]
+        );
         console.log("myuser- getOne", user[0].user_id);
         const id = user[0].user_id;
         if (id !== undefined) {
             if (req.body.password === req.body.passwordConfirm) {
                 const hashedPassword = await bcrypt.hash(req.body.password, 10);
                 await executeQuery(
-                        "UPDATE users SET password = ?, password_reset_token = ?, password_reset_exp = ? WHERE user_id = ?",
-                        [hashedPassword, null, null, id]
-                    );
+                    "UPDATE users SET password = ?, password_reset_token = ?, password_reset_exp = ? WHERE user_id = ?",
+                    [hashedPassword, null, null, id]
+                );
                 res.status(200).send("Password reset successfully");
             } else {
                 res.status(400).send("Passwords do not match");
@@ -388,7 +397,7 @@ const resetPassword = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
-    }finally {
+    } finally {
         if (connection) {
             // connection.end();
             connection.release();
@@ -403,7 +412,6 @@ const addUserImage = async (req, res) => {
 
     let connection;
     const { userId, image } = req.body;
-   
 
     if (userId === 0) {
         res.status(404).send("User not found");
@@ -413,13 +421,49 @@ const addUserImage = async (req, res) => {
         // connection = await establishConnection();
         connection = await getConnection();
         await executeQuery("UPDATE users SET image = ? WHERE user_id = ?", [
-                image,
-                userId,
-            ]);
+            image,
+            userId,
+        ]);
         res.status(200).send("Image added successfully");
     } catch (err) {
         console.error(err);
-    }finally {
+    } finally {
+        if (connection) {
+            // connection.end();
+            connection.release();
+        }
+    }
+};
+
+//-------------------------------- ADMIN RESET PASSWORD -------------------------------//
+
+const adminResetPassword = async (req, res) => {
+    console.log("reset password", req.body);
+
+    const { password, confirmPassword, id } = req.body;
+
+    let connection;
+
+    try {
+        // connection = await establishConnection();
+        connection = await getConnection();
+
+        if (password === confirmPassword) {
+            console.log("passwords match");
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await executeQuery(
+                "UPDATE users SET password = ?, new_emp = 0 WHERE user_id = ?",
+                [hashedPassword, id]
+            );
+            res.status(200).send("Password reset successfully");
+            console.log("password reset");
+        } else {
+            res.status(400).send("Passwords do not match");
+            console.log("passwords do not match");
+        }
+    } catch (err) {
+        console.error(err);
+    } finally {
         if (connection) {
             // connection.end();
             connection.release();
@@ -437,4 +481,5 @@ export {
     resetPassword,
     deleteUser,
     addUserImage,
+    adminResetPassword,
 };
