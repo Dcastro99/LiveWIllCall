@@ -3,6 +3,8 @@ import util from "util";
 import { ticketErrors } from "../errorHandlers/ticketErrors.js";
 import { error } from "console";
 
+//---------------------CREATE TICKET FUNCTION---------------------//
+
 const createTicket = async (req, res) => {
     // console.log("user creating ticket", req.body);
     let connection;
@@ -10,13 +12,12 @@ const createTicket = async (req, res) => {
         customerName,
         orderNumber,
         customerPO,
-        timeStamp,
+        ticketTimeStamp,
         teamMember_id,
-        // storeData,
         branch_id,
     } = req.body;
 
-    const timeConvert = parseInt(timeStamp, 10);
+    const timeConvert = parseInt(ticketTimeStamp, 10);
     const time = new Date(timeConvert);
 
     // console.log("teamMember_id 1", teamMember_id);
@@ -36,7 +37,7 @@ const createTicket = async (req, res) => {
             customerName,
             orderNumber,
             customerPO,
-            timeStamp: time,
+            ticketTimeStamp: time,
             teamMember_id: tmId,
             storeData: 0,
             branch_id,
@@ -47,7 +48,7 @@ const createTicket = async (req, res) => {
         ]);
 
         // console.log("ticketData", ticketData);
-        // console.log("ticketResults ID:", ticketResults);
+        console.log("ticketResults ID:", ticketResults);
         const updateUserData = {
             branch_id,
         };
@@ -61,7 +62,7 @@ const createTicket = async (req, res) => {
             console.log("updateUserResult:", updateUserResult);
         }
 
-        res.status(201).send(ticketResults);
+        res.status(201).send(ticketResults[0]);
     } catch (e) {
         console.log("err>>>", e);
     } finally {
@@ -71,6 +72,8 @@ const createTicket = async (req, res) => {
         }
     }
 };
+
+//---------------------GET TICKET FUNCTION---------------------//
 
 const getBranchTickets = async (req, res) => {
     // const myUser = res.locals.user;
@@ -83,7 +86,7 @@ const getBranchTickets = async (req, res) => {
         connection = await getConnection();
 
         const [tickets] = await executeQuery(
-            "SELECT t.id,u.user_id,  u.image, u.name,t.branch_id,t.customerPO,t.timeStamp, t.customerName, t.orderNumber, t.timeStamp FROM tickets t JOIN users u ON t.teamMember_id = u.user_id WHERE t.branch_id = ? AND t.storeData = 0",
+            "SELECT t.id,u.user_id,  u.image, u.name,t.pickTicket,t.branch_id,t.customerPO,t.ticketTimeStamp, t.customerName, t.orderNumber FROM tickets t JOIN users u ON t.teamMember_id = u.user_id WHERE t.branch_id = ? AND t.storeData = 0",
             [id]
         );
 
@@ -98,9 +101,11 @@ const getBranchTickets = async (req, res) => {
     }
 };
 
+//---------------------UPDATE TICKET FUNCTION---------------------//
+
 const updateTickets = async (req, res) => {
     const { ticketId, ticket, user_id } = req.body;
-    const timeConvert = parseInt(ticket.timeStamp, 10);
+    const timeConvert = parseInt(ticket.ticketTimeStamp, 10);
     const time = new Date(timeConvert);
     let connection;
 
@@ -108,7 +113,7 @@ const updateTickets = async (req, res) => {
         customerName: ticket.customerName,
         orderNumber: ticket.orderNumber,
         customerPO: ticket.customerPO,
-        timeStamp: time,
+        ticketTimeStamp: time,
         storeData: 0,
     };
 
@@ -123,7 +128,7 @@ const updateTickets = async (req, res) => {
             );
 
             const [tickets] = await executeQuery(
-                "SELECT u.user_id, u.branch_id, u.image, u.name, t.customerName, t.orderNumber, t.timeStamp From tickets t JOIN users u ON t.teamMember_id = u.user_id WHERE u.user_id = ?",
+                "SELECT u.user_id, u.branch_id, u.image, u.name, t.customerName, t.orderNumber, t.ticketTimeStamp From tickets t JOIN users u ON t.teamMember_id = u.user_id WHERE u.user_id = ?",
                 [user_id]
             );
 
@@ -146,6 +151,8 @@ const updateTickets = async (req, res) => {
         }
     }
 };
+
+//---------------------STORE DATA FUNCTION---------------------//
 
 const handleDataStorage = async (req, res) => {
     let connection;
@@ -197,6 +204,8 @@ const handleDataStorage = async (req, res) => {
     }
 };
 
+//---------------------GET STORED DATA FUNCTION---------------------//
+
 const handleGetStoredData = async (req, res) => {
     let connection;
     // console.log("handleGetDataStored req.body", req.body);
@@ -209,20 +218,13 @@ const handleGetStoredData = async (req, res) => {
 
         const branchId = req.body.branch_id;
         const [result] = await executeQuery(
-            "SELECT t.id, u.user_id, u.image, u.name, t.branch_id, t.customerPO,t.completedTimeStamp ,t.timeStamp, t.customerName, t.orderNumber, t.timeStamp " +
+            "SELECT t.id, u.user_id, u.image, u.name, t.branch_id, t.customerPO,t.completedTimeStamp ,t.ticketTimeStamp, t.customerName, t.orderNumber " +
                 "FROM tickets t " +
                 "JOIN users u ON t.teamMember_id = u.user_id " +
                 "WHERE t.branch_id = ? AND t.storeData = 1",
             [branchId]
         );
 
-        // const [result] = await mysqlconnection
-        //     .promise()
-        //     .query(
-        //         "SELECT *  FROM tickets WHERE branch_id = ? AND storeData = 1",
-        //         [branchId]
-        //     );
-        // console.log("result", result);
         res.status(200).send(result);
     } catch (e) {
         // console.log("Error getting ticket:", e);
@@ -236,12 +238,16 @@ const handleGetStoredData = async (req, res) => {
     }
 };
 
-const timeConvert = (timeStamp) => {
-    const isoTime = timeStamp;
+//---------------------TIME CONVERT HELPER FUNCTION---------------------//
+
+const timeConvert = (ticketTimeStamp) => {
+    const isoTime = ticketTimeStamp;
     const dateTime = new Date(isoTime);
     const formattedDate = dateTime.toISOString().slice(0, 19).replace("T", " ");
     return formattedDate;
 };
+
+//---------------------GET HISTORY DATA FUNCTION---------------------//
 
 const handleGetHistoryData = async (req, res) => {
     let connection;
@@ -255,7 +261,7 @@ const handleGetHistoryData = async (req, res) => {
         connection = await getConnection();
 
         let sql =
-            "SELECT t.id, u.user_id, u.image, u.name, t.branch_id, t.customerPO,t.completedTimeStamp , t.customerName, t.orderNumber, t.timeStamp " +
+            "SELECT t.id, u.user_id, u.image, u.name, t.branch_id, t.customerPO,t.completedTimeStamp , t.customerName, t.orderNumber, t.ticketTimeStamp " +
             "FROM tickets t " +
             "JOIN users u ON t.teamMember_id = u.user_id " +
             "WHERE t.branch_id = ? AND t.storeData = 1";
@@ -296,6 +302,118 @@ const handleGetHistoryData = async (req, res) => {
     }
 };
 
+//---------------------SCAN TICKET FUNCTION---------------------//
+
+const scanTicket = async (req, res) => {
+    console.log("user scanning ticket", req.body);
+
+    let connection;
+    const { pickTicket } = req.body;
+
+    try {
+        // connection = await establishConnection();
+        connection = await getConnection();
+
+        const [ticket] = await executeQuery(
+            "SELECT * FROM pickTickets t WHERE t.pickTicket = ?",
+            [pickTicket]
+        );
+
+        console.log("ticket", ticket);
+        if (ticket.length === 0) {
+            console.log("ticket not found");
+            res.status(404).send("Ticket not found");
+        } else {
+            const newTicket = await CreateScanTicket(ticket[0]);
+            console.log("newTicket", newTicket);
+            if (newTicket === undefined) {
+                res.status(409).send("Ticket already scanned");
+            } else {
+                res.status(200).send("Ticket scanned successfully.");
+            }
+        }
+    } catch (e) {
+        console.log("err>>>", e);
+    } finally {
+        if (connection) {
+            // connection.end();
+            connection.release();
+        }
+    }
+};
+
+const CreateScanTicket = async (ticketObj) => {
+    console.log("user creating ticket", ticketObj);
+    const ticketTimeStamp = new Date();
+    let connection;
+    const {
+        pickTicket,
+        customerName,
+        orderNumber,
+        customerPO,
+        branch_id,
+    } = ticketObj;
+const teamMember_id = 0;
+    // let tmId = teamMember_id;
+    // if (tmId === null) {
+    //     console.log("teamMember_id is null");
+    //     tmId = 0;
+    // }
+
+    try {
+        connection = await getConnection();
+
+        const ticketData = {
+            pickTicket,
+            customerName,
+            orderNumber,
+            customerPO,
+            ticketTimeStamp,
+            teamMember_id,
+            storeData: 0,
+            branch_id,
+        };
+
+        const [ticket] = await executeQuery(
+            "SELECT t.pickTicket FROM tickets t WHERE t.pickTicket = ?",
+            [pickTicket]
+        );
+        console.log("ticket>>>>>>>", ticket);
+
+        if (ticket.length > 0) {
+            return undefined;
+        } else {
+            const ticketResults = await executeQuery(
+                "INSERT INTO tickets SET ?",
+                [ticketData]
+            );
+            console.log("ticketResults ID:", ticketResults);
+
+            const updateUserData = {
+                branch_id,
+            };
+            if (teamMember_id === 0) {
+                // console.log("teamMember_id is 0!!!!");
+               
+                const updateUserResult = await executeQuery(
+                    "UPDATE users SET ? WHERE user_id = ?",
+                    [updateUserData, teamMember_id]
+                );
+                console.log("updateUserResult:", updateUserResult);
+            }
+            return ticketResults[0];
+        }
+        // res.status(201).send(ticketResults[0]);
+    } catch (e) {
+        console.log("err>>>", e);
+    } finally {
+        if (connection) {
+            // connection.end();
+            connection.release();
+        }
+    }
+};
+
 export {
     createTicket,
     updateTickets,
@@ -303,4 +421,5 @@ export {
     handleDataStorage,
     handleGetStoredData,
     handleGetHistoryData,
+    scanTicket,
 };

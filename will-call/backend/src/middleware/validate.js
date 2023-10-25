@@ -31,7 +31,7 @@ const checkUser = (req, res, next) => {
     const token = authHeader.split(" ")[1];
     console.log("token", token);
     let connection;
-    if (token !== "null") {
+    if (token !== "null"||token !== null) {
         jwt.verify(
             token,
             process.env.ACCESS_TOKEN_SECRET,

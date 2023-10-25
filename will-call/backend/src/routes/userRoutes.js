@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { checkUser } from "../middleware/validate.js";
 
 import {
     getAllUsers,
@@ -9,7 +10,8 @@ import {
     forgotPassword,
     resetPassword,
     deleteUser,
-    addUserImage
+    addUserImage,
+    adminResetPassword
 } from "../modules/users.js";
 
 const userRouter = Router();
@@ -23,5 +25,6 @@ userRouter.post("/forgotPassword", forgotPassword);
 userRouter.patch("/resetPassword/:token", resetPassword);
 userRouter.post("/deleteUser", deleteUser);
 userRouter.post("/addUserImage", addUserImage);
+userRouter.post("/adminResetPassword",checkUser, adminResetPassword);
 
 export default userRouter;

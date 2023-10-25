@@ -3,6 +3,12 @@ const loginErrors = (err) => {
 
     let errors = { email: "", password: "" };
 
+
+    //user_id==null
+    if (err.message === "Cannot read properties of undefined (reading 'user_id')") {
+        errors.email = "email is incorrect";
+    }
+
     // incorrect email
     if (
         err.message === "incorrect email" ||
