@@ -51,29 +51,24 @@ app.use(authRouter);
 app.use(userRouter);
 app.use(ticketRouter);
 
-
 //------------CLEVER_CLOUD---------------//
 
-
-
-
-
-const pool = mysql2.createPool({
-    host: process.env.DATABASE_URL,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    connectionLimit: 10, // Set the maximum number of connections in the pool
-});
+// const pool = mysql2.createPool({
+//     host: process.env.DATABASE_URL,
+//     user: process.env.DATABASE_USER,
+//     password: process.env.DATABASE_PASSWORD,
+//     database: process.env.DATABASE_NAME,
+//     connectionLimit: 10,
+// });
 
 //---------------------LOCAL HOST---------------------//
 
-//  const pool = mysql2.createPool({
-//                 host: process.env.TEST_URL,
-//                 user: process.env.TEST_USER,
-//                 password: process.env.TEST_PASSWORD,
-//                 database: process.env.TEST_NAME,
-//             });
+const pool = mysql2.createPool({
+    host: process.env.TEST_URL,
+    user: process.env.TEST_USER,
+    password: process.env.TEST_PASSWORD,
+    database: process.env.TEST_NAME,
+});
 
 export const getConnection = async () => {
     try {
@@ -157,5 +152,3 @@ app.get("*", notFoundHandler);
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
-
-

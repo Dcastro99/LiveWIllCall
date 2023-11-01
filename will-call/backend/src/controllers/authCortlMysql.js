@@ -15,7 +15,8 @@ const { isEmail } = pkg;
 
 // const { v4: uuidv4 } = require('uuid');
 
-const maxAge = 3 * 24 * 60 * 60;
+const maxAge = 1 * 60 * 60;
+// const maxAge = 1 * 60;
 
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
@@ -26,7 +27,8 @@ const createToken = (id) => {
 const signup_post = async (req, res) => {
     console.log("user signing up", req.body);
     let connection;
-    const { email, password, name, empNum, branch_id, image, new_emp } = req.body;
+    const { email, password, name, empNum, branch_id, image, new_emp } =
+        req.body;
 
     try {
         connection = await getConnection();
@@ -52,7 +54,7 @@ const signup_post = async (req, res) => {
             emp_status: 1,
             new_emp: new_emp ? new_emp : 1,
         };
-console.log("userData", userData);
+        console.log("userData", userData);
         const [userEmpNums] = await executeQuery("SELECT empNum FROM users");
         console.log("userEmpNums", userEmpNums);
 
@@ -113,6 +115,8 @@ console.log("userData", userData);
 //----------------------LOGIN----------------------//
 
 const login_post = async (req, res) => {
+    console.log("user logging in");
+    console.log("req.body", req.body);
     const { email, password } = req.body;
     let connection;
 
@@ -147,9 +151,11 @@ const login_post = async (req, res) => {
                     "SELECT u.user_id, u.name, u.empNum,u.new_emp, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE p.user_id = ?",
                     [id]
                 );
-                // console.log("myuser- DATA TO SEND IN LOGIN", userData[0]);
+                console.log("myuser- DATA TO SEND IN LOGIN", userData[0]);
 
-                res.status(200).send(userData[0]);
+                // res.status(200).send(userData[0]);
+                res.status(200).json({user:userData[0], token:token});
+                console.log('res',res);
             } else {
                 res.status(400).send({ password: "Incorrect password!!" });
             }

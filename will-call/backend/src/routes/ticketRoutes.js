@@ -8,7 +8,8 @@ import {
     handleDataStorage,
     handleGetStoredData,
     handleGetHistoryData,
-    scanTicket
+    scanTicket,
+    scanEmployeeBadge
 } from "../modules/tickets.js";
 
 const ticketRouter = Router();
@@ -20,5 +21,6 @@ ticketRouter.post("/storeData/:id", handleDataStorage);
 ticketRouter.post("/getStoredData", handleGetStoredData);
 ticketRouter.post("/history", handleGetHistoryData);
 ticketRouter.post("/scanTicket", scanTicket);
+ticketRouter.post("/scanEmpBadge", scanEmployeeBadge);
 
 export default ticketRouter;
