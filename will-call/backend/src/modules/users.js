@@ -7,8 +7,8 @@ import { sendEmail } from "../handlers/email.js";
 
 const getAllUsers = async (req, res, next) => {
     // const myUser = res.locals.user;
-    // console.log("branch id get all users", req.body.branch_id);
-    const id = req.body.branch_id;
+    // console.log("branch id get all users", typeof(parseInt(req.params.id)));
+    const id = parseInt(req.params.id);
     const idArray = [id];
     let connection;
 
@@ -187,7 +187,7 @@ const add_permissions = async (req, res) => {
 const get_permissions = async (req, res) => {
     // console.log("user getting permissions", req.body);
     let connection;
-    const { email } = req.body;
+    const { email } = req.params;
     try {
         // connection = await establishConnection();
         connection = await getConnection();

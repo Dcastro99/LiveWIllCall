@@ -77,8 +77,8 @@ const createTicket = async (req, res) => {
 
 const getBranchTickets = async (req, res) => {
     // const myUser = res.locals.user;
-    const id = req.body.branch_id;
-    // console.log("getting tickets");
+    const id = req.params.id;
+    // console.log("getting tickets", req.params);
     // console.log("req.body", req.body);
     let connection;
     try {
@@ -224,7 +224,7 @@ const handleGetStoredData = async (req, res) => {
         // connection = await establishConnection();
         connection = await getConnection();
 
-        const branchId = req.body.branch_id;
+        const branchId = req.params.id;
         const [result] = await executeQuery(
             "SELECT t.id, u.user_id, u.image, u.name, t.branch_id, t.customerPO,t.completedTimeStamp ,t.ticketTimeStamp, t.customerName, t.orderNumber " +
                 "FROM tickets t " +

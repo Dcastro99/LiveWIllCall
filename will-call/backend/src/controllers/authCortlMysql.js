@@ -116,7 +116,6 @@ const signup_post = async (req, res) => {
 
 const login_post = async (req, res) => {
     console.log("user logging in");
-    console.log("req.body", req.body);
     const { email, password } = req.body;
     let connection;
 

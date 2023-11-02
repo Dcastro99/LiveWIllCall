@@ -17,9 +17,9 @@ import {
 const userRouter = Router();
 
 userRouter.post("/permissions", add_permissions);
-userRouter.post("/getpermissions", get_permissions);
+userRouter.get("/getpermissions/:email", get_permissions);
 userRouter.get("/user", getUser);
-userRouter.post("/users", getAllUsers);
+userRouter.get("/users/:id", getAllUsers);
 userRouter.post("/removeBranchId", removeBranchId);
 userRouter.post("/forgotPassword", forgotPassword);
 userRouter.patch("/resetPassword/:token", resetPassword);
