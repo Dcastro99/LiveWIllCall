@@ -141,10 +141,10 @@ const login_post = async (req, res) => {
             const auth = await bcrypt.compare(password, user[0].password);
             if (auth) {
                 const token = createToken(id);
-                res.cookie("jwt", token, {
-                    httpOnly: true,
-                    maxAge: maxAge * 1000,
-                });
+                // res.cookie("jwt", token, {
+                //     httpOnly: true,
+                //     maxAge: maxAge * 1000,
+                // });
 
                 const [userData] = await executeQuery(
                     "SELECT u.user_id, u.name, u.empNum,u.new_emp, u.email, u.image, p.role, p.branch_ids FROM users u JOIN permissions p ON u.permissions_id = p.id WHERE p.user_id = ?",
