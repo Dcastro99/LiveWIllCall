@@ -42,6 +42,11 @@ const loginErrors = (err) => {
         // console.log("errors", errors);
         return errors;
     }
+    if (err.code === "ECONNREFUSED") {
+        errors.email = "Server Down";
+        // console.log("errors", errors);
+        return errors;
+    }
 
     // if (err.message.includes("myuser validation failed")) {
     //     const error = Object.values(err.errors);

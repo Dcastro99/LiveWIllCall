@@ -233,7 +233,11 @@ const handleGetStoredData = async (req, res) => {
             [branchId]
         );
 
-        res.status(200).send(result);
+        const startIndex = 0;
+        const endIndex = startIndex + 10;
+        const lastTenResults = result.slice(startIndex, endIndex);
+
+        res.status(200).send(lastTenResults);
     } catch (e) {
         // console.log("Error getting ticket:", e);
 
@@ -259,7 +263,7 @@ const timeConvert = (ticketTimeStamp) => {
 
 const handleGetHistoryData = async (req, res) => {
     let connection;
-    // console.log("handleGetHistory>>> req.body", req.body);
+    console.log("handleGetHistory>>> req.body", req.body);
     const { branch_id, from, to, customerName, name } = req.body;
 
     // console.log("newFrom", convertedFrom);
@@ -296,7 +300,9 @@ const handleGetHistoryData = async (req, res) => {
 
         const [result] = await executeQuery(sql, params);
 
-        console.log("result", result);
+       
+
+        console.log("History Result>>>", result);
         res.status(200).send(result);
     } catch (e) {
         console.log("Error getting ticket:", e);
@@ -458,9 +464,9 @@ const scanEmployeeBadge = async (req, res) => {
                 [empNum]
             );
             console.log("tickets***************", tickets[0]);
-            if (tickets[0]==undefined) {
+            if (tickets[0] == undefined) {
                 console.log("Employee Id not found");
-                res.status(404).send({message:"Employee Id not found"});
+                res.status(404).send({ message: "Employee Id not found" });
             } else {
                 updatedTicket["teamMember_id"] = tickets[0].user_id;
 

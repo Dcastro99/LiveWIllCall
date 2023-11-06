@@ -116,6 +116,7 @@ const signup_post = async (req, res) => {
 
 const login_post = async (req, res) => {
     console.log("user logging in");
+    console.log("req.body", req.body);
     const { email, password } = req.body;
     let connection;
 
@@ -123,6 +124,7 @@ const login_post = async (req, res) => {
         // connection =  await establishConnection();
         connection = await getConnection();
         if (!isEmail(email)) {
+            console.log("email is not valid");
             return res.status(400).send({ email: "Email is not valid" });
         }
         if (password.length < 6) {
